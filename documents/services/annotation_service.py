@@ -5,7 +5,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 from .metadata_extractor import MetadataExtractor
-from .mistral_service import MistralService
+from .fast_ai_service import FastAIService
 from ..models import Document, AnnotationSchema, Annotation, AnnotationField, AnnotationHistory
 
 logger = logging.getLogger('documents')
@@ -16,7 +16,7 @@ class AnnotationService:
 
     def __init__(self):
         self.metadata_extractor = MetadataExtractor()
-        self.mistral_service = MistralService()
+        self.ai_service = FastAIService()
 
     def process_uploaded_document(self, document: Document, user: User) -> Dict[str, Any]:
         """
@@ -125,7 +125,7 @@ class AnnotationService:
                 }
 
             # Analyse du type de document avec plus de contexte
-            document_type = self.mistral_service.analyze_document_type(
+            document_type = self.ai_service.analyze_document_type(
                 document.metadata,
                 full_content
             )
@@ -178,7 +178,7 @@ class AnnotationService:
             content = self._extract_full_text_content(document)
 
             # Génération du schéma avec l'IA en utilisant le contenu complet
-            ai_schema = self.mistral_service.generate_annotation_schema(
+            ai_schema = self.ai_service.generate_annotation_schema(
                 document.metadata,
                 content
             )
@@ -283,7 +283,7 @@ class AnnotationService:
             content = self._extract_full_text_content(document)
 
             # Génération des pré-annotations avec l'IA
-            ai_annotations = self.mistral_service.generate_pre_annotations(
+            ai_annotations = self.ai_service.generate_pre_annotations(
                 content,
                 schema.final_schema
             )

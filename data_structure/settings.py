@@ -142,53 +142,8 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# settings.py
-import requests
-import json
-
-import requests
-
-# Configuration du modèle llama3.2:latest optimisée pour gros documents
-MISTRAL_CONFIG = {
-    'base_url': 'http://localhost:11434',
-    'model': 'llama3.2:latest',          # Votre modèle
-    'num_ctx': 131072,                   # 128k tokens (au lieu de 32768 pour gros documents)
-    'temperature': 0.3,                  # Votre valeur (bonne pour précision)
-    'top_p': 0.95,                       # Ajout pour meilleur contrôle
-    'num_predict': 4096,                 # Plus de tokens de sortie
-    'repeat_penalty': 1.1,               # Éviter répétitions
-    'timeout': 300,                      # 5 minutes timeout pour gros docs
-}
-
-# Configuration alternative pour documents très volumineux
-MISTRAL_CONFIG_LARGE_DOCS = {
-    'base_url': 'http://localhost:11434',
-    'model': 'llama3.2:latest',
-    'num_ctx': 200000,                   # 200k tokens si votre système le supporte
-    'temperature': 0.2,                  # Plus de déterminisme
-    'top_p': 0.98,
-    'num_predict': 6144,                 # Réponses plus détaillées
-    'timeout': 600,                      # 10 minutes pour très gros docs
-}
-
-# Seuils de gestion automatique des documents
-DOCUMENT_PROCESSING_THRESHOLDS = {
-    'small_doc': 50000,        # < 50k chars: traitement complet
-    'medium_doc': 100000,      # 50k-100k chars: optimisation légère
-    'large_doc': 200000,       # 100k-200k chars: échantillonnage intelligent
-    'xlarge_doc': 500000,      # > 500k chars: stratégies spéciales
-    'max_allowed': 2000000,    # 2M chars max (refuser au-delà)
-}
-
-# Configuration de performance
-PERFORMANCE_SETTINGS = {
-    'chunk_overlap': 2000,              # Overlap entre chunks
-    'sample_ratio_large': 0.4,          # 40% du document pour les gros docs
-    'max_retries': 3,                   # Tentatives de retry
-    'fallback_threshold': 10,           # Réponse minimale acceptable (chars)
-    'timeout_per_request': 300,         # 5 min par requête
-    'memory_limit_gb': 16,              # Limite mémoire système
-}
+# Configuration des services IA
+# Les configurations IA sont maintenant centralisées dans documents/services/ai_config.py
 
 
 
