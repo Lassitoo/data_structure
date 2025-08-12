@@ -48,3 +48,15 @@ ChatOllama initialisé: model=mistral:latest, num_ctx=131072
 Métadonnées extraites pour: media/documents/2025/08/12/CELEX_52013XC080204_EN_TXT.pdf
 Métadonnées extraites pour: media/documents/2025/08/12/CELEX_52013XC080204_EN_TXT.pdf
 Métadonnées extraites pour: media/documents/2025/08/12/CELEX_52013XC080204_EN_TXT.pdf
+Début du traitement du document: CELEX
+Extraction des métadonnées pour: CELEX
+Métadonnées extraites pour: C:\Users\lasss\data_structure\media\documents\2025\08\12\CELEX_52013XC080204_EN_TXT_FNJDEFD.pdf
+Métadonnées extraites pour: CELEX
+Analyse du contenu pour: CELEX
+Contenu extrait: 275247 caractères au total
+Analyse terminée pour: CELEX - Type détecté: AUTRE
+Génération du schéma d'annotation pour: CELEX
+Contenu extrait: 275247 caractères au total
+Contenu COMPLET extrait: 275247 caractères pour CELEX
+Schéma généré pour: CELEX
+Traitement terminé pour: CELEX
