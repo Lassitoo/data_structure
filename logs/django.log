@@ -24,3 +24,4 @@ Erreur LangChain: model "llama3.2:latest" not found, try pulling it first (statu
 Génération IA échoué: ERREUR: Erreur LangChain: model "llama3.2:latest" not found, try pulling it first (status code: 404)
 Schéma généré pour: Guideline
 Traitement terminé pour: Guideline
+ChatOllama initialisé: model=llama3.2:latest, num_ctx=131072
