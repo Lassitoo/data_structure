@@ -1,0 +1,505 @@
+{% extends 'documents/base.html' %}
+
+{% block title %}Valider l'annotation - {{ document.title }} - Data Structure{% endblock %}
+
+{% block breadcrumb %}
+<div class="container mt-3">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'documents:dashboard' %}">Tableau de bord</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'documents:document_list' %}">Documents</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'documents:document_detail' document.pk %}">{{ document.title|truncatechars:30 }}</a></li>
+            <li class="breadcrumb-item active">Validation</li>
+        </ol>
+    </nav>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-start mb-4">
+            <div>
+                <h1 class="h2">
+                    <i class="fas fa-check-circle me-2"></i>Validation de l'annotation
+                </h1>
+                <p class="text-muted">{{ document.title }}</p>
+            </div>
+            <div class="text-end">
+                <span class="badge bg-primary fs-6">{{ annotation.completion_percentage|floatformat:0 }}% complété</span>
+                <br>
+                <small class="text-muted">Annoté par {{ annotation.annotated_by.username }}</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Formulaire de validation -->
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header bg-warning text-white">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-clipboard-check me-2"></i>Décision de validation
+                </h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <!-- Statut de validation -->
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">{{ form.validation_status.label }}</label>
+                        <div class="validation-options">
+                            {% for radio in form.validation_status %}
+                                <div class="form-check mb-2">
+                                    {{ radio.tag }}
+                                    <label class="form-check-label" for="{{ radio.id_for_label }}">
+                                        {% if radio.choice_value == 'approved' %}
+                                            <i class="fas fa-check-circle text-success me-2"></i>{{ radio.choice_label }}
+                                            <small class="text-muted d-block">L'annotation est correcte et complète</small>
+                                        {% elif radio.choice_value == 'rejected' %}
+                                            <i class="fas fa-times-circle text-danger me-2"></i>{{ radio.choice_label }}
+                                            <small class="text-muted d-block">L'annotation doit être refaite</small>
+                                        {% else %}
+                                            <i class="fas fa-edit text-warning me-2"></i>{{ radio.choice_label }}
+                                            <small class="text-muted d-block">Des modifications sont nécessaires</small>
+                                        {% endif %}
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        {% if form.validation_status.errors %}
+                            <div class="text-danger">
+                                {% for error in form.validation_status.errors %}
+                                    <small>{{ error }}</small>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Score de confiance -->
+                    <div class="mb-3">
+                        <label for="{{ form.confidence_score.id_for_label }}" class="form-label">
+                            {{ form.confidence_score.label }}
+                        </label>
+                        {{ form.confidence_score }}
+                        <div class="form-text">
+                            Évaluez la qualité globale de l'annotation (0 = très mauvais, 10 = excellent)
+                        </div>
+                        {% if form.confidence_score.errors %}
+                            <div class="text-danger">
+                                {% for error in form.confidence_score.errors %}
+                                    <small>{{ error }}</small>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Notes de validation -->
+                    <div class="mb-3">
+                        <label for="{{ form.validation_notes.id_for_label }}" class="form-label">
+                            {{ form.validation_notes.label }}
+                        </label>
+                        {{ form.validation_notes }}
+                        <div class="form-text">
+                            Commentaires, suggestions d'amélioration, corrections à apporter...
+                        </div>
+                        {% if form.validation_notes.errors %}
+                            <div class="text-danger">
+                                {% for error in form.validation_notes.errors %}
+                                    <small>{{ error }}</small>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Boutons d'action -->
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-1"></i>Valider la décision
+                        </button>
+                        <a href="{% url 'documents:document_detail' document.pk %}" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-1"></i>Retour
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Critères de validation -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-list-check me-2"></i>Critères de validation
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="checklist">
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="criteria1">
+                        <label class="form-check-label" for="criteria1">
+                            Tous les champs obligatoires sont remplis
+                        </label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="criteria2">
+                        <label class="form-check-label" for="criteria2">
+                            Les informations sont exactes et cohérentes
+                        </label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="criteria3">
+                        <label class="form-check-label" for="criteria3">
+                            Le format des données est respecté
+                        </label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="criteria4">
+                        <label class="form-check-label" for="criteria4">
+                            Les classifications sont appropriées
+                        </label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="criteria5">
+                        <label class="form-check-label" for="criteria5">
+                            Aucune information importante n'est manquante
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="mt-3">
+                    <small class="text-muted">
+                        <i class="fas fa-info-circle me-1"></i>
+                        Cette checklist vous aide à évaluer la qualité de l'annotation
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Aperçu de l'annotation -->
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-eye me-2"></i>Aperçu de l'annotation
+                </h5>
+                <div>
+                    <span class="badge bg-info">{{ annotation.schema.fields.count }} champs</span>
+                    <span class="badge bg-primary">{{ annotation.completion_percentage|floatformat:0 }}% complété</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <!-- Barre de progression -->
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between mb-1">
+                        <span class="small fw-bold">Progression de l'annotation</span>
+                        <span class="small">{{ annotation.completion_percentage|floatformat:0 }}%</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar" 
+                             style="width: {{ annotation.completion_percentage }}%"
+                             role="progressbar"></div>
+                    </div>
+                </div>
+                
+                <!-- Annotations -->
+                {% if annotation.final_annotations %}
+                    <div class="row">
+                        {% for field in annotation.schema.fields.all %}
+                            {% with annotation.final_annotations|lookup:field.name as value %}
+                                <div class="col-md-6 mb-3">
+                                    <div class="annotation-field {% if field.is_required %}required-field{% endif %} {% if value %}completed-field{% endif %}">
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                            <label class="fw-bold">
+                                                {{ field.label }}
+                                                {% if field.is_required %}
+                                                    <span class="text-danger">*</span>
+                                                {% endif %}
+                                            </label>
+                                            <span class="badge bg-info field-type-badge">{{ field.get_field_type_display }}</span>
+                                        </div>
+                                        
+                                        {% if field.description %}
+                                            <p class="text-muted small mb-2">{{ field.description }}</p>
+                                        {% endif %}
+                                        
+                                        <div class="annotation-value">
+                                            {% if value %}
+                                                {% if field.field_type == 'multiple_choice' %}
+                                                    {% for choice in value %}
+                                                        <span class="badge bg-secondary me-1">{{ choice }}</span>
+                                                    {% endfor %}
+                                                {% elif field.field_type == 'boolean' %}
+                                                    {% if value %}
+                                                        <i class="fas fa-check text-success"></i> Oui
+                                                    {% else %}
+                                                        <i class="fas fa-times text-danger"></i> Non
+                                                    {% endif %}
+                                                {% elif field.field_type == 'date' %}
+                                                    <i class="fas fa-calendar me-1"></i>{{ value }}
+                                                {% elif field.field_type == 'number' %}
+                                                    <i class="fas fa-hashtag me-1"></i>{{ value }}
+                                                {% else %}
+                                                    {{ value|truncatechars:100 }}
+                                                {% endif %}
+                                            {% else %}
+                                                <em class="text-muted">
+                                                    <i class="fas fa-minus-circle me-1"></i>Non renseigné
+                                                </em>
+                                            {% endif %}
+                                        </div>
+                                        
+                                        <!-- Comparaison avec la pré-annotation IA -->
+                                        {% if annotation.ai_pre_annotations %}
+                                            {% with annotation.ai_pre_annotations|lookup:field.name as ai_value %}
+                                                {% if ai_value and ai_value != value %}
+                                                    <div class="mt-2 p-2 bg-light rounded">
+                                                        <small class="text-muted">
+                                                            <i class="fas fa-robot me-1"></i>Suggestion IA : 
+                                                            <span class="fw-bold">{{ ai_value|truncatechars:50 }}</span>
+                                                        </small>
+                                                    </div>
+                                                {% endif %}
+                                            {% endwith %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endwith %}
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="text-center py-4">
+                        <i class="fas fa-exclamation-triangle fa-2x text-warning mb-3"></i>
+                        <p>Aucune annotation disponible pour ce document.</p>
+                    </div>
+                {% endif %}
+                
+                <!-- Métadonnées de l'annotation -->
+                <hr>
+                <div class="row text-muted small">
+                    <div class="col-md-6">
+                        <strong>Informations de l'annotation :</strong><br>
+                        <i class="fas fa-user me-1"></i>Annoté par : {{ annotation.annotated_by.username }}<br>
+                        <i class="fas fa-clock me-1"></i>Dernière modification : {{ annotation.updated_at|date:"d/m/Y H:i" }}<br>
+                        <i class="fas fa-calendar me-1"></i>Créé le : {{ annotation.created_at|date:"d/m/Y H:i" }}
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Schéma utilisé :</strong><br>
+                        <i class="fas fa-sitemap me-1"></i>{{ annotation.schema.name }}<br>
+                        <i class="fas fa-list me-1"></i>{{ annotation.schema.fields.count }} champ(s)<br>
+                        {% if annotation.schema.description %}
+                            <i class="fas fa-info me-1"></i>{{ annotation.schema.description|truncatechars:50 }}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Aperçu du document -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-file-alt me-2"></i>Document source
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <table class="table table-sm">
+                            <tr>
+                                <td><strong>Fichier :</strong></td>
+                                <td>{{ document.filename }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Type :</strong></td>
+                                <td>{{ document.get_file_type_display }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Taille :</strong></td>
+                                <td>{{ document.file_size|filesizeformat }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <table class="table table-sm">
+                            <tr>
+                                <td><strong>Téléversé par :</strong></td>
+                                <td>{{ document.uploaded_by.username }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Date :</strong></td>
+                                <td>{{ document.created_at|date:"d/m/Y H:i" }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                {% if document.metadata.text_preview %}
+                    <div class="mt-3">
+                        <h6>Aperçu du contenu :</h6>
+                        <div class="bg-light p-3 rounded" style="max-height: 150px; overflow-y: auto;">
+                            <pre class="mb-0 small" style="white-space: pre-wrap;">{{ document.metadata.text_preview|truncatechars:500 }}</pre>
+                        </div>
+                    </div>
+                {% endif %}
+                
+                <div class="mt-3">
+                    <a href="{{ document.file.url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                        <i class="fas fa-external-link-alt me-1"></i>Ouvrir le fichier original
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.annotation-field {
+    background-color: white;
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    padding: 1rem;
+    transition: all 0.15s ease-in-out;
+}
+
+.annotation-field.required-field {
+    border-left: 4px solid #dc3545;
+}
+
+.annotation-field.completed-field {
+    border-left: 4px solid #198754;
+}
+
+.annotation-field:hover {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.1rem rgba(13, 110, 253, 0.1);
+}
+
+.annotation-value {
+    background-color: #f8f9fa;
+    padding: 0.75rem;
+    border-radius: 0.375rem;
+    border: 1px solid #e9ecef;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.validation-options .form-check {
+    background-color: #f8f9fa;
+    padding: 0.75rem;
+    border-radius: 0.375rem;
+    border: 1px solid #e9ecef;
+    transition: all 0.15s ease-in-out;
+}
+
+.validation-options .form-check:hover {
+    background-color: #e9ecef;
+}
+
+.validation-options .form-check-input:checked {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.checklist .form-check {
+    background-color: #f8f9fa;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    margin-bottom: 0.5rem;
+}
+
+.field-type-badge {
+    font-size: 0.7em;
+}
+
+.progress {
+    height: 8px;
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(document).ready(function() {
+    // Calcul automatique du score de confiance basé sur la checklist
+    $('.checklist input[type="checkbox"]').change(function() {
+        const totalCriteria = $('.checklist input[type="checkbox"]').length;
+        const checkedCriteria = $('.checklist input[type="checkbox"]:checked').length;
+        const percentage = (checkedCriteria / totalCriteria) * 100;
+        
+        // Suggérer un score basé sur le pourcentage
+        let suggestedScore;
+        if (percentage >= 90) {
+            suggestedScore = 9;
+        } else if (percentage >= 80) {
+            suggestedScore = 8;
+        } else if (percentage >= 70) {
+            suggestedScore = 7;
+        } else if (percentage >= 60) {
+            suggestedScore = 6;
+        } else if (percentage >= 50) {
+            suggestedScore = 5;
+        } else {
+            suggestedScore = Math.ceil(percentage / 10);
+        }
+        
+        // Mettre à jour le champ score si vide
+        const scoreField = $('#{{ form.confidence_score.id_for_label }}');
+        if (!scoreField.val()) {
+            scoreField.val(suggestedScore);
+        }
+    });
+    
+    // Validation du formulaire
+    $('form').submit(function(e) {
+        const validationStatus = $('input[name="validation_status"]:checked').val();
+        const notes = $('#{{ form.validation_notes.id_for_label }}').val().trim();
+        
+        if (validationStatus === 'rejected' && notes.length < 10) {
+            e.preventDefault();
+            alert('Veuillez fournir des notes détaillées pour justifier le rejet.');
+            $('#{{ form.validation_notes.id_for_label }}').focus();
+            return false;
+        }
+        
+        if (validationStatus === 'needs_revision' && notes.length < 5) {
+            e.preventDefault();
+            alert('Veuillez préciser les révisions nécessaires.');
+            $('#{{ form.validation_notes.id_for_label }}').focus();
+            return false;
+        }
+        
+        // Confirmation pour rejet
+        if (validationStatus === 'rejected') {
+            if (!confirm('Êtes-vous sûr de vouloir rejeter cette annotation ? L\'annotateur devra recommencer.')) {
+                e.preventDefault();
+                return false;
+            }
+        }
+        
+        // Désactiver le bouton de soumission
+        $(this).find('button[type="submit"]').prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-1"></i>Validation...');
+    });
+    
+    // Mise en évidence des champs selon leur statut
+    $('.annotation-field').each(function() {
+        const $field = $(this);
+        const value = $field.find('.annotation-value').text().trim();
+        
+        if (value === 'Non renseigné' || value === '') {
+            $field.addClass('border-warning');
+        } else {
+            $field.addClass('border-success');
+        }
+    });
+    
+    // Tooltips
+    $('[title]').tooltip();
+});
+</script>
+{% endblock %}

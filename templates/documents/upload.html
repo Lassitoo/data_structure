@@ -1,0 +1,324 @@
+{#template/documents/upload.html#}
+{% extends 'documents/base.html' %}
+
+{% block title %}Téléverser un document - Data Structure{% endblock %}
+
+{% block breadcrumb %}
+<div class="container mt-3">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'documents:dashboard' %}">Tableau de bord</a></li>
+      <li class="breadcrumb-item active">Téléverser un document</li>
+    </ol>
+  </nav>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+
+    {# Messages Django (succès/erreur) #}
+    {% if messages %}
+      <div class="mb-3">
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }} mb-2">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="card">
+      <div class="card-header bg-primary text-white">
+        <h4 class="card-title mb-0">
+          <i class="fas fa-upload me-2"></i>Téléverser un nouveau document
+        </h4>
+      </div>
+      <div class="card-body">
+        <form method="post" enctype="multipart/form-data" id="uploadForm" novalidate>
+          {% csrf_token %}
+
+          <div class="alert alert-info">
+            <i class="fas fa-info-circle me-2"></i>
+            <strong>Types de fichiers supportés :</strong>
+            PDF, Word (.docx, .doc), Excel (.xlsx, .xls), Texte (.txt), Images (.jpg, .png)
+            <br>
+            <strong>Taille maximale :</strong> 10 MB
+          </div>
+
+          <!-- Titre -->
+          <div class="mb-3">
+            <label for="{{ form.title.id_for_label }}" class="form-label">
+              {{ form.title.label }} <span class="text-danger">*</span>
+            </label>
+            {{ form.title }}
+            {% if form.title.errors %}
+              <div class="text-danger">
+                {% for error in form.title.errors %}<small>{{ error }}</small>{% endfor %}
+              </div>
+            {% endif %}
+          </div>
+
+          <!-- Description -->
+          <div class="mb-3">
+            <label for="{{ form.description.id_for_label }}" class="form-label">
+              {{ form.description.label }}
+            </label>
+            {{ form.description }}
+            {% if form.description.errors %}
+              <div class="text-danger">
+                {% for error in form.description.errors %}<small>{{ error }}</small>{% endfor %}
+              </div>
+            {% endif %}
+            <div class="form-text">Description optionnelle du document</div>
+          </div>
+
+          <!-- Zone de drag & drop + input -->
+          <div class="mb-3">
+            <label for="{{ form.file.id_for_label }}" class="form-label">
+              {{ form.file.label }} <span class="text-danger">*</span>
+            </label>
+
+            <div class="file-drop-zone border-2 border-dashed rounded p-4 text-center"
+                 id="fileDropZone"
+                 style="border-color:#dee2e6; min-height: 150px; cursor: pointer; position: relative;">
+              <!-- L'input file est PLACÉ DANS la zone, transparent & cliquable partout -->
+              {{ form.file }}
+
+              <div class="file-drop-content">
+                <i class="fas fa-cloud-upload-alt fa-3x text-muted mb-3"></i>
+                <p class="mb-2" id="dzMessage">Glissez-déposez votre fichier ici ou cliquez pour sélectionner</p>
+                <p class="text-muted small">PDF, Word, Excel, Texte, Images (Max 10MB)</p>
+              </div>
+
+              <div class="file-info d-none">
+                <i class="fas fa-file fa-2x text-primary mb-2"></i>
+                <p class="mb-0 fw-bold" id="fileName"></p>
+                <p class="text-muted small" id="fileSize"></p>
+              </div>
+            </div>
+
+            {% if form.file.errors %}
+              <div class="text-danger mt-2">
+                {% for error in form.file.errors %}<small>{{ error }}</small>{% endfor %}
+              </div>
+            {% endif %}
+          </div>
+
+          <!-- Progression -->
+          <div class="mb-3 d-none" id="uploadProgress">
+            <label class="form-label">Progression du téléversement</label>
+            <div class="progress">
+              <div class="progress-bar progress-bar-striped progress-bar-animated"
+                   role="progressbar" style="width:0%"></div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between">
+            <a href="{% url 'documents:dashboard' %}" class="btn btn-secondary">
+              <i class="fas fa-arrow-left me-1"></i>Retour
+            </a>
+            <button type="submit" class="btn btn-primary" id="submitBtn">
+              <i class="fas fa-upload me-1"></i>Téléverser et traiter
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Aide -->
+    <div class="card mt-4">
+      <div class="card-header">
+        <h5 class="card-title mb-0">
+          <i class="fas fa-question-circle me-2"></i>Que se passe-t-il après le téléversement ?
+        </h5>
+      </div>
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="d-flex">
+              <div class="me-3"><span class="badge bg-primary rounded-circle">1</span></div>
+              <div>
+                <h6>Extraction des métadonnées</h6>
+                <p class="text-muted small mb-0">Extraction automatique des infos (taille, type, contenu…)</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="d-flex">
+              <div class="me-3"><span class="badge bg-success rounded-circle">2</span></div>
+              <div>
+                <h6>Génération du schéma</h6>
+                <p class="text-muted small mb-0">L’IA propose un schéma d’annotation adapté</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="d-flex">
+              <div class="me-3"><span class="badge bg-warning rounded-circle">3</span></div>
+              <div>
+                <h6>Validation du schéma</h6>
+                <p class="text-muted small mb-0">Vous pouvez modifier et valider le schéma</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="d-flex">
+              <div class="me-3"><span class="badge bg-info rounded-circle">4</span></div>
+              <div>
+                <h6>Annotation automatique</h6>
+                <p class="text-muted small mb-0">Pré-annotations générées, à affiner manuellement</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(function() {
+  const fileInput       = $('#id_file');
+  const dropZone        = $('#fileDropZone');
+  const fileDropContent = $('.file-drop-content');
+  const fileInfo        = $('.file-info');
+  const dzMessage       = $('#dzMessage');
+  const uploadProgress  = $('#uploadProgress');
+  const submitBtn       = $('#submitBtn');
+  const progressBar     = $('.progress-bar');
+
+  // Rendre l'input cliquable partout dans la zone
+  // (si le widget ne met pas déjà style, on le force ici)
+  fileInput.css({
+    position: 'absolute',
+    opacity: 0,
+    inset: 0,
+    width: '100%',
+    height: '100%',
+    cursor: 'pointer'
+  });
+
+  // Empêcher le navigateur d'ouvrir le fichier au drop hors zone
+  $(document).on('dragover drop', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+  });
+
+  // Survol / sortie
+  dropZone.on('dragover dragenter', function(e) {
+    e.preventDefault(); e.stopPropagation();
+    $(this).addClass('border-primary bg-light');
+  });
+  dropZone.on('dragleave dragend', function(e) {
+    e.preventDefault(); e.stopPropagation();
+    $(this).removeClass('border-primary bg-light');
+  });
+
+  // Drop
+  dropZone.on('drop', function(e) {
+    e.preventDefault(); e.stopPropagation();
+    $(this).removeClass('border-primary bg-light');
+
+    const files = e.originalEvent.dataTransfer && e.originalEvent.dataTransfer.files;
+    if (files && files.length > 0) {
+      // FileList est read-only -> utiliser DataTransfer
+      const dt = new DataTransfer();
+      for (let i = 0; i < files.length; i++) dt.items.add(files[i]);
+      fileInput[0].files = dt.files;
+
+      displayFileInfo(files[0]);
+    }
+  });
+
+  // Changement via le dialogue natif
+  fileInput.on('change', function() {
+    const files = this.files;
+    if (files && files.length > 0) displayFileInfo(files[0]);
+    else resetFileInfo();
+  });
+
+  // Validation
+  const allowedExtensions = ['pdf','doc','docx','txt','xls','xlsx','jpg','jpeg','png'];
+  const MAX_SIZE_BYTES    = 10 * 1024 * 1024; // 10MB
+
+  function validateFile(file) {
+    if (!file) {
+      showFileError('Veuillez sélectionner un fichier');
+      return false;
+    }
+    const fileName = file.name || '';
+    const ext = (fileName.split('.').pop() || '').toLowerCase();
+
+    if (!allowedExtensions.includes(ext)) {
+      showFileError('Type de fichier non supporté');
+      return false;
+    }
+    if (file.size > MAX_SIZE_BYTES) {
+      showFileError('Fichier trop volumineux (max 10MB)');
+      return false;
+    }
+
+    clearFileError();
+    dropZone.removeClass('border-danger').addClass('border-success');
+    return true;
+  }
+
+  // Affichage infos fichier
+  function displayFileInfo(file) {
+    if (!validateFile(file)) return;
+    $('#fileName').text(file.name);
+    $('#fileSize').text(formatFileSize(file.size));
+    fileDropContent.addClass('d-none');
+    fileInfo.removeClass('d-none');
+  }
+
+  function resetFileInfo() {
+    fileInfo.addClass('d-none');
+    fileDropContent.removeClass('d-none');
+    dropZone.removeClass('border-success border-danger bg-light border-primary');
+    clearFileError();
+  }
+
+  function showFileError(message) {
+    dropZone.addClass('border-danger').removeClass('border-success');
+    fileInfo.addClass('d-none');
+    fileDropContent.removeClass('d-none');
+    dzMessage.text(message).addClass('text-danger');
+  }
+
+  function clearFileError() {
+    dzMessage.removeClass('text-danger')
+             .text('Glissez-déposez votre fichier ici ou cliquez pour sélectionner');
+  }
+
+  function formatFileSize(bytes) {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024, sizes = ['Bytes','KB','MB','GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return (bytes / Math.pow(k, i)).toFixed(2) + ' ' + sizes[i];
+  }
+
+  // Soumission
+  $('#uploadForm').on('submit', function(e) {
+    const file = fileInput[0].files && fileInput[0].files[0];
+    if (!validateFile(file)) { e.preventDefault(); return; }
+
+    // UI progression (simulation simple)
+    uploadProgress.removeClass('d-none');
+    submitBtn.prop('disabled', true)
+             .html('<i class="fas fa-spinner fa-spin me-1"></i>Téléversement...');
+    progressBar.css('width', '0%');
+
+    let progress = 0;
+    const progressInterval = setInterval(function() {
+      progress = Math.min(90, progress + Math.random() * 15);
+      progressBar.css('width', progress + '%');
+      if (progress >= 90) clearInterval(progressInterval);
+    }, 200);
+  });
+});
+</script>
+{% endblock %}

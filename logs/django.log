@@ -1,0 +1,26 @@
+ChatOllama initialisé: model=llama3.2:latest, num_ctx=131072
+ChatOllama initialisé: model=llama3.2:latest, num_ctx=131072
+Erreur statistiques: Invalid filter: 'mul'
+ChatOllama initialisé: model=llama3.2:latest, num_ctx=131072
+ChatOllama initialisé: model=llama3.2:latest, num_ctx=131072
+Début du traitement du document: Guideline
+Extraction des métadonnées pour: Guideline
+Métadonnées extraites pour: C:\Users\lasss\data_structure\media\documents\2025\08\12\CELEX_52013XC080204_EN_TXT.pdf
+Métadonnées extraites pour: Guideline
+Analyse du contenu pour: Guideline
+Contenu extrait: 275247 caractères au total
+Analyse type document: 275247 caractères avec llama3.2:latest
+Envoi LangChain: 16652 caractères
+Erreur LangChain: model "llama3.2:latest" not found, try pulling it first (status code: 404)
+Réponse insuffisante (100 chars), fallback
+Analyse terminée pour: Guideline - Type détecté: AUTRE
+Génération du schéma d'annotation pour: Guideline
+Contenu extrait: 275247 caractères au total
+Contenu COMPLET extrait: 275247 caractères pour Guideline
+Génération schéma avec llama3.2:latest: 275247 caractères
+Échantillon pour schéma: 100069 caractères
+Envoi LangChain: 103224 caractères
+Erreur LangChain: model "llama3.2:latest" not found, try pulling it first (status code: 404)
+Génération IA échoué: ERREUR: Erreur LangChain: model "llama3.2:latest" not found, try pulling it first (status code: 404)
+Schéma généré pour: Guideline
+Traitement terminé pour: Guideline

@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - Data Structure</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            max-width: 400px;
+            width: 100%;
+            margin: 1rem;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .logo i {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #333;
+            margin: 0;
+        }
+        
+        .logo p {
+            color: #666;
+            margin: 0;
+            font-size: 0.9rem;
+        }
+        
+        .form-control {
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        
+        .btn-login {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 10px;
+            padding: 0.8rem 2rem;
+            font-weight: 600;
+            font-size: 1rem;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .alert {
+            border-radius: 10px;
+            border: none;
+        }
+        
+        .features {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            backdrop-filter: blur(5px);
+        }
+        
+        .features h5 {
+            color: white;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .features ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .features li {
+            color: rgba(255, 255, 255, 0.9);
+            padding: 0.3rem 0;
+            font-size: 0.9rem;
+        }
+        
+        .features li i {
+            color: #fff;
+            margin-right: 0.5rem;
+            width: 16px;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: none;
+            color: #666;
+            cursor: pointer;
+        }
+        
+        .input-group {
+            position: relative;
+        }
+        
+        @media (max-width: 768px) {
+            .login-container {
+                margin: 0.5rem;
+                padding: 1.5rem;
+            }
+            
+            .logo h1 {
+                font-size: 1.5rem;
+            }
+            
+            .features {
+                display: none;
+            }
+        }
+        
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 10%;
+            left: 10%;
+            animation-delay: -1s;
+        }
+        
+        .shape:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 20%;
+            right: 15%;
+            animation-delay: -2s;
+        }
+        
+        .shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            bottom: 15%;
+            left: 20%;
+            animation-delay: -3s;
+        }
+        
+        .shape:nth-child(4) {
+            width: 100px;
+            height: 100px;
+            bottom: 20%;
+            right: 10%;
+            animation-delay: -4s;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Formes flottantes d'arrière-plan -->
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="row">
+                    <!-- Formulaire de connexion -->
+                    <div class="col-md-6">
+                        <div class="login-container">
+                            <div class="logo">
+                                <i class="fas fa-file-text"></i>
+                                <h1>Data Structure</h1>
+                                <p>Système d'annotation intelligente</p>
+                            </div>
+                            
+                            {% if form.errors %}
+                                <div class="alert alert-danger">
+                                    <i class="fas fa-exclamation-triangle me-2"></i>
+                                    <strong>Erreur de connexion</strong><br>
+                                    {% for field, errors in form.errors.items %}
+                                        {% for error in errors %}
+                                            {{ error }}<br>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert alert-{{ message.tags }}">
+                                        <i class="fas fa-info-circle me-2"></i>
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            
+                            <form method="post">
+                                {% csrf_token %}
+                                
+                                <div class="mb-3">
+                                    <label for="{{ form.username.id_for_label }}" class="form-label">
+                                        <i class="fas fa-user me-2"></i>Nom d'utilisateur
+                                    </label>
+                                    <input type="text" 
+                                           class="form-control" 
+                                           id="{{ form.username.id_for_label }}"
+                                           name="{{ form.username.name }}"
+                                           value="{{ form.username.value|default:'' }}"
+                                           placeholder="Entrez votre nom d'utilisateur"
+                                           required
+                                           autocomplete="username">
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="{{ form.password.id_for_label }}" class="form-label">
+                                        <i class="fas fa-lock me-2"></i>Mot de passe
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="password" 
+                                               class="form-control" 
+                                               id="{{ form.password.id_for_label }}"
+                                               name="{{ form.password.name }}"
+                                               placeholder="Entrez votre mot de passe"
+                                               required
+                                               autocomplete="current-password">
+                                        <button type="button" class="password-toggle" onclick="togglePassword()">
+                                            <i class="fas fa-eye" id="toggleIcon"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="rememberMe" name="remember_me">
+                                    <label class="form-check-label" for="rememberMe">
+                                        Se souvenir de moi
+                                    </label>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary btn-login">
+                                    <i class="fas fa-sign-in-alt me-2"></i>Se connecter
+                                </button>
+                                
+                                <input type="hidden" name="next" value="{{ next }}">
+                            </form>
+                            
+                            <div class="text-center mt-3">
+                                <p class="text-muted small">
+                                    <i class="fas fa-shield-alt me-1"></i>
+                                    Connexion sécurisée SSL
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Panneau d'informations -->
+                    <div class="col-md-6 d-none d-md-block">
+                        <div class="features">
+                            <h5>
+                                <i class="fas fa-star me-2"></i>Fonctionnalités
+                            </h5>
+                            <ul>
+                                <li>
+                                    <i class="fas fa-upload"></i>
+                                    Téléversement de documents multiples formats
+                                </li>
+                                <li>
+                                    <i class="fas fa-robot"></i>
+                                    Extraction automatique de métadonnées
+                                </li>
+                                <li>
+                                    <i class="fas fa-brain"></i>
+                                    Génération de schémas d'annotation par IA
+                                </li>
+                                <li>
+                                    <i class="fas fa-magic"></i>
+                                    Pré-annotation automatique avec Mistral
+                                </li>
+                                <li>
+                                    <i class="fas fa-users"></i>
+                                    Workflow collaboratif de validation
+                                </li>
+                                <li>
+                                    <i class="fas fa-database"></i>
+                                    Stockage MongoDB sécurisé
+                                </li>
+                                <li>
+                                    <i class="fas fa-chart-bar"></i>
+                                    Statistiques et rapports détaillés
+                                </li>
+                                <li>
+                                    <i class="fas fa-history"></i>
+                                    Historique complet des modifications
+                                </li>
+                            </ul>
+                            
+                            <div class="mt-4 text-center">
+                                <p class="text-white small">
+                                    <i class="fas fa-info-circle me-1"></i>
+                                    Version 1.0.0 - Développé avec Django
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        function togglePassword() {
+            const passwordField = document.getElementById('{{ form.password.id_for_label }}');
+            const toggleIcon = document.getElementById('toggleIcon');
+            
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordField.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+        
+        // Focus automatique sur le champ nom d'utilisateur
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('{{ form.username.id_for_label }}').focus();
+        });
+        
+        // Animation d'entrée
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginContainer = document.querySelector('.login-container');
+            const features = document.querySelector('.features');
+            
+            loginContainer.style.opacity = '0';
+            loginContainer.style.transform = 'translateY(30px)';
+            
+            if (features) {
+                features.style.opacity = '0';
+                features.style.transform = 'translateX(30px)';
+            }
+            
+            setTimeout(() => {
+                loginContainer.style.transition = 'all 0.6s ease';
+                loginContainer.style.opacity = '1';
+                loginContainer.style.transform = 'translateY(0)';
+                
+                if (features) {
+                    setTimeout(() => {
+                        features.style.transition = 'all 0.6s ease';
+                        features.style.opacity = '1';
+                        features.style.transform = 'translateX(0)';
+                    }, 200);
+                }
+            }, 100);
+        });
+        
+        // Validation en temps réel
+        document.getElementById('{{ form.username.id_for_label }}').addEventListener('input', function() {
+            if (this.value.length >= 3) {
+                this.classList.add('is-valid');
+                this.classList.remove('is-invalid');
+            } else {
+                this.classList.add('is-invalid');
+                this.classList.remove('is-valid');
+            }
+        });
+        
+        document.getElementById('{{ form.password.id_for_label }}').addEventListener('input', function() {
+            if (this.value.length >= 6) {
+                this.classList.add('is-valid');
+                this.classList.remove('is-invalid');
+            } else {
+                this.classList.add('is-invalid');
+                this.classList.remove('is-valid');
+            }
+        });
+        
+        // Gestion de la soumission du formulaire
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const submitBtn = document.querySelector('.btn-login');
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Connexion...';
+            submitBtn.disabled = true;
+        });
+    </script>
+</body>
+</html>

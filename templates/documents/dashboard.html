@@ -1,0 +1,379 @@
+{% extends 'documents/base.html' %}
+
+{% block title %}Tableau de bord - Data Structure{% endblock %}
+
+{% block breadcrumb %}
+<div class="container mt-3">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active">Tableau de bord</li>
+        </ol>
+    </nav>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="h2 mb-4">
+            <i class="fas fa-home me-2"></i>Tableau de bord
+        </h1>
+    </div>
+</div>
+
+<!-- Statistiques générales -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5 class="card-title">Documents totaux</h5>
+                        <h2 class="mb-0">{{ stats.total_documents|default:0 }}</h2>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-file-alt fa-2x opacity-75"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5 class="card-title">Annotations validées</h5>
+                        <h2 class="mb-0">{{ stats.validated_annotations|default:0 }}</h2>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-check-circle fa-2x opacity-75"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5 class="card-title">En cours</h5>
+                        <h2 class="mb-0">
+                            {% for status in stats.by_status %}
+                                {% if status.status == 'pre_annotated' or status.status == 'annotated' %}
+                                    {{ status.count|add:0 }}
+                                {% endif %}
+                            {% empty %}
+                                0
+                            {% endfor %}
+                        </h2>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-clock fa-2x opacity-75"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5 class="card-title">Nouveaux</h5>
+                        <h2 class="mb-0">
+                            {% for status in stats.by_status %}
+                                {% if status.status == 'uploaded' or status.status == 'metadata_extracted' %}
+                                    {{ status.count|add:0 }}
+                                {% endif %}
+                            {% empty %}
+                                0
+                            {% endfor %}
+                        </h2>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-plus fa-2x opacity-75"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Actions rapides -->
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-bolt me-2"></i>Actions rapides
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{% url 'documents:upload_document' %}" class="btn btn-outline-primary">
+                        <i class="fas fa-upload me-2"></i>Téléverser un document
+                    </a>
+                    <a href="{% url 'documents:document_list' %}" class="btn btn-outline-secondary">
+                        <i class="fas fa-list me-2"></i>Voir tous les documents
+                    </a>
+                    <a href="{% url 'documents:statistics' %}" class="btn btn-outline-info">
+                        <i class="fas fa-chart-bar me-2"></i>Voir les statistiques
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Documents récents -->
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-header bg-success text-white">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-clock me-2"></i>Documents récents
+                </h5>
+            </div>
+            <div class="card-body">
+                {% if recent_documents %}
+                    <div class="list-group list-group-flush">
+                        {% for document in recent_documents %}
+                            <div class="list-group-item px-0">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h6 class="mb-1">
+                                            <a href="{% url 'documents:document_detail' document.pk %}" class="text-decoration-none">
+                                                {{ document.title|truncatechars:30 }}
+                                            </a>
+                                        </h6>
+                                        <small class="text-muted">{{ document.created_at|date:"d/m/Y H:i" }}</small>
+                                    </div>
+                                    <span class="badge bg-{{ document.status|default:'secondary' }} rounded-pill">
+                                        {{ document.get_status_display }}
+                                    </span>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-muted text-center py-3">
+                        <i class="fas fa-inbox fa-2x d-block mb-2"></i>
+                        Aucun document récent
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Annotations en cours -->
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-header bg-warning text-white">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-edit me-2"></i>Mes annotations en cours
+                </h5>
+            </div>
+            <div class="card-body">
+                {% if pending_annotations %}
+                    <div class="list-group list-group-flush">
+                        {% for annotation in pending_annotations %}
+                            <div class="list-group-item px-0">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h6 class="mb-1">
+                                            <a href="{% url 'documents:annotate_document' annotation.document.pk %}" class="text-decoration-none">
+                                                {{ annotation.document.title|truncatechars:25 }}
+                                            </a>
+                                        </h6>
+                                        <small class="text-muted">{{ annotation.updated_at|date:"d/m/Y" }}</small>
+                                    </div>
+                                    <div class="text-end">
+                                        <div class="progress" style="width: 60px; height: 6px;">
+                                            <div class="progress-bar bg-warning" 
+                                                 style="width: {{ annotation.completion_percentage }}%"></div>
+                                        </div>
+                                        <small class="text-muted">{{ annotation.completion_percentage|floatformat:0 }}%</small>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-muted text-center py-3">
+                        <i class="fas fa-check-circle fa-2x d-block mb-2"></i>
+                        Aucune annotation en cours
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Graphiques des statistiques -->
+{% if stats.by_status %}
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-chart-pie me-2"></i>Répartition par statut
+                </h5>
+            </div>
+            <div class="card-body">
+                <canvas id="statusChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-chart-bar me-2"></i>Répartition par type
+                </h5>
+            </div>
+            <div class="card-body">
+                <canvas id="typeChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Documents à valider (pour les experts) -->
+{% if documents_to_validate %}
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-danger text-white">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-exclamation-triangle me-2"></i>Documents en attente de validation
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Document</th>
+                                <th>Annoté par</th>
+                                <th>Date annotation</th>
+                                <th>Completion</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for document in documents_to_validate %}
+                                <tr>
+                                    <td>
+                                        <strong>{{ document.title }}</strong><br>
+                                        <small class="text-muted">{{ document.filename }}</small>
+                                    </td>
+                                    <td>{{ document.annotation.annotated_by.username }}</td>
+                                    <td>{{ document.annotation.updated_at|date:"d/m/Y H:i" }}</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-success" 
+                                                 style="width: {{ document.annotation.completion_percentage }}%"></div>
+                                        </div>
+                                        <small>{{ document.annotation.completion_percentage|floatformat:0 }}%</small>
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'documents:validate_annotation' document.pk %}" 
+                                           class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-check me-1"></i>Valider
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<!-- Chart.js pour les graphiques -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+
+{% if stats.by_status %}
+<script>
+// Graphique des statuts
+const statusData = {
+    labels: [
+        {% for status in stats.by_status %}
+            '{{ status.status|capfirst }}'{% if not forloop.last %},{% endif %}
+        {% endfor %}
+    ],
+    datasets: [{
+        data: [
+            {% for status in stats.by_status %}
+                {{ status.count }}{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        ],
+        backgroundColor: [
+            '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'
+        ]
+    }]
+};
+
+const statusCtx = document.getElementById('statusChart').getContext('2d');
+new Chart(statusCtx, {
+    type: 'doughnut',
+    data: statusData,
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'bottom'
+            }
+        }
+    }
+});
+
+// Graphique des types
+const typeData = {
+    labels: [
+        {% for type in stats.by_type %}
+            '{{ type.file_type|upper }}'{% if not forloop.last %},{% endif %}
+        {% endfor %}
+    ],
+    datasets: [{
+        label: 'Nombre de documents',
+        data: [
+            {% for type in stats.by_type %}
+                {{ type.count }}{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        ],
+        backgroundColor: '#36A2EB'
+    }]
+};
+
+const typeCtx = document.getElementById('typeChart').getContext('2d');
+new Chart(typeCtx, {
+    type: 'bar',
+    data: typeData,
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
+{% endif %}
+{% endblock %}

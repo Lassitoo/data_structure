@@ -1,0 +1,322 @@
+/* CSS personnalisé pour l'administration Django - Data Structure */
+
+/* Affichage JSON amélioré */
+.json-display {
+    background-color: #f8f9fa !important;
+    border: 1px solid #dee2e6 !important;
+    border-radius: 0.375rem !important;
+    padding: 0.75rem !important;
+    max-height: 300px !important;
+    overflow-y: auto !important;
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace !important;
+    font-size: 12px !important;
+    line-height: 1.4 !important;
+    color: #495057 !important;
+    margin: 0 !important;
+}
+
+/* Barre de progression pour les annotations */
+.completion-bar {
+    width: 100px !important;
+    height: 20px !important;
+    background-color: #f8f9fa !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+    position: relative !important;
+    border: 1px solid #dee2e6 !important;
+}
+
+.completion-fill {
+    height: 100% !important;
+    border-radius: 8px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: white !important;
+    font-size: 12px !important;
+    font-weight: bold !important;
+    transition: width 0.3s ease !important;
+}
+
+/* Badge de statut amélioré */
+.status-badge {
+    display: inline-block !important;
+    padding: 0.25em 0.6em !important;
+    font-size: 0.75em !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    vertical-align: baseline !important;
+    border-radius: 0.375rem !important;
+}
+
+/* Amélioration des tableaux d'admin */
+.admin table tbody tr:hover {
+    background-color: #f8f9fa !important;
+}
+
+/* Style pour les liens de document/schema */
+.field-document_link a,
+.field-schema_link a,
+.field-annotation_link a {
+    color: #007bff !important;
+    text-decoration: none !important;
+    font-weight: 500 !important;
+}
+
+.field-document_link a:hover,
+.field-schema_link a:hover,
+.field-annotation_link a:hover {
+    color: #0056b3 !important;
+    text-decoration: underline !important;
+}
+
+/* Style pour les champs de statut colorés */
+.field-status_display {
+    font-weight: bold !important;
+}
+
+/* Amélioration des fieldsets collapsibles */
+.collapse {
+    border: 1px solid #dee2e6 !important;
+    border-radius: 0.25rem !important;
+    margin-top: 0.5rem !important;
+}
+
+.collapse h2 {
+    background-color: #f8f9fa !important;
+    padding: 0.5rem 1rem !important;
+    margin: 0 !important;
+    border-bottom: 1px solid #dee2e6 !important;
+}
+
+/* Style pour les inlines */
+.inline-group {
+    border: 1px solid #dee2e6 !important;
+    border-radius: 0.25rem !important;
+    margin-bottom: 1rem !important;
+}
+
+.inline-group .tabular {
+    border: none !important;
+}
+
+.inline-group h2 {
+    background-color: #007bff !important;
+    color: white !important;
+    padding: 0.5rem 1rem !important;
+    margin: 0 !important;
+    font-size: 1rem !important;
+}
+
+/* Amélioration des boutons */
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+    border-radius: 0.25rem !important;
+    transition: all 0.2s ease-in-out !important;
+}
+
+.button:hover, input[type=submit]:hover, input[type=button]:hover, .submit-row input:hover, a.button:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+}
+
+/* Style pour les champs en lecture seule */
+.readonly {
+    background-color: #f8f9fa !important;
+    border: 1px solid #e9ecef !important;
+    color: #6c757d !important;
+}
+
+/* Amélioration des messages */
+.messagelist {
+    border-radius: 0.25rem !important;
+}
+
+.messagelist .success {
+    background-color: #d4edda !important;
+    border-color: #c3e6cb !important;
+    color: #155724 !important;
+}
+
+.messagelist .warning {
+    background-color: #fff3cd !important;
+    border-color: #ffeaa7 !important;
+    color: #856404 !important;
+}
+
+.messagelist .error {
+    background-color: #f8d7da !important;
+    border-color: #f5c6cb !important;
+    color: #721c24 !important;
+}
+
+/* Style pour les filtres sur le côté */
+#changelist-filter {
+    background-color: #f8f9fa !important;
+    border: 1px solid #dee2e6 !important;
+    border-radius: 0.25rem !important;
+}
+
+#changelist-filter h2 {
+    background-color: #007bff !important;
+    color: white !important;
+    padding: 0.5rem !important;
+    margin: 0 !important;
+    font-size: 0.9rem !important;
+}
+
+#changelist-filter h3 {
+    background-color: #6c757d !important;
+    color: white !important;
+    padding: 0.25rem 0.5rem !important;
+    margin: 0 !important;
+    font-size: 0.8rem !important;
+}
+
+/* Responsive design améliorations */
+@media (max-width: 768px) {
+    .completion-bar {
+        width: 80px !important;
+        height: 18px !important;
+    }
+
+    .completion-fill {
+        font-size: 10px !important;
+    }
+
+    .json-display {
+        font-size: 10px !important;
+        max-height: 150px !important;
+    }
+}
+
+/* Animation pour les tables */
+.results tbody tr {
+    transition: background-color 0.2s ease !important;
+}
+
+/* Style pour les nombres et statistiques */
+.field-file_size_display,
+.field-fields_count,
+.field-completion_percentage_display {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace !important;
+    font-weight: 600 !important;
+}
+
+/* Amélioration de la lisibilité */
+.form-row {
+    border-bottom: 1px solid #f0f0f0 !important;
+    padding-bottom: 1rem !important;
+    margin-bottom: 1rem !important;
+}
+
+.form-row:last-child {
+    border-bottom: none !important;
+}
+
+/* Style pour les UUID (IDs) */
+.field-id {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace !important;
+    font-size: 0.8rem !important;
+    color: #6c757d !important;
+}
+
+/* Amélioration des breadcrumbs */
+.breadcrumbs {
+    background: linear-gradient(45deg, #007bff, #0056b3) !important;
+    border-radius: 0.25rem !important;
+    margin-bottom: 1rem !important;
+}
+
+.breadcrumbs a {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.breadcrumbs a:hover {
+    color: white !important;
+}
+
+/* Header personnalisé */
+#header {
+    background: linear-gradient(45deg, #007bff, #0056b3) !important;
+    border-radius: 0 0 0.5rem 0.5rem !important;
+}
+
+#branding h1 {
+    color: white !important;
+    font-weight: 300 !important;
+}
+
+#user-tools a {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+#user-tools a:hover {
+    color: white !important;
+}
+
+/* Navigation améliorée */
+.module h2 {
+    background: linear-gradient(45deg, #6c757d, #495057) !important;
+    color: white !important;
+    border-radius: 0.25rem 0.25rem 0 0 !important;
+}
+
+.module {
+    border-radius: 0.25rem !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+    margin-bottom: 1rem !important;
+}
+
+/* Footer */
+#footer {
+    background-color: #f8f9fa !important;
+    border-top: 1px solid #dee2e6 !important;
+    color: #6c757d !important;
+    text-align: center !important;
+    padding: 1rem !important;
+    margin-top: 2rem !important;
+}
+
+/* Indicateurs visuels pour les types de champs */
+.field-field_type {
+    font-weight: 600 !important;
+}
+
+.field-field_type[title*="text"] { color: #007bff !important; }
+.field-field_type[title*="number"] { color: #28a745 !important; }
+.field-field_type[title*="date"] { color: #ffc107 !important; }
+.field-field_type[title*="boolean"] { color: #dc3545 !important; }
+.field-field_type[title*="choice"] { color: #6f42c1 !important; }
+
+/* Style pour les actions en lot */
+.actions {
+    background-color: #f8f9fa !important;
+    border: 1px solid #dee2e6 !important;
+    border-radius: 0.25rem !important;
+    padding: 0.5rem !important;
+}
+
+/* Amélioration des tooltips */
+[title] {
+    cursor: help !important;
+}
+
+/* Style pour les champs obligatoires */
+.required label:after {
+    content: " *" !important;
+    color: #dc3545 !important;
+    font-weight: bold !important;
+}
+
+/* Dark mode friendly (si activé) */
+@media (prefers-color-scheme: dark) {
+    .json-display {
+        background-color: #2d3748 !important;
+        color: #e2e8f0 !important;
+        border-color: #4a5568 !important;
+    }
+}

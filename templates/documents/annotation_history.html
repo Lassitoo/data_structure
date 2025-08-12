@@ -1,0 +1,550 @@
+{% extends 'documents/base.html' %}
+
+{% block title %}Historique des annotations - {{ document.title }} - Data Structure{% endblock %}
+
+{% block breadcrumb %}
+<div class="container mt-3">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'documents:dashboard' %}">Tableau de bord</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'documents:document_list' %}">Documents</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'documents:document_detail' document.pk %}">{{ document.title|truncatechars:30 }}</a></li>
+            <li class="breadcrumb-item active">Historique</li>
+        </ol>
+    </nav>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-start mb-4">
+            <div>
+                <h1 class="h2">
+                    <i class="fas fa-history me-2"></i>Historique des annotations
+                </h1>
+                <p class="text-muted">{{ document.title }}</p>
+            </div>
+            <div class="text-end">
+                <span class="badge bg-info fs-6">{{ page_obj.paginator.count }} modifications</span>
+                <br>
+                <small class="text-muted">Document annoté par {{ annotation.annotated_by.username }}</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Résumé de l'annotation -->
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-info-circle me-2"></i>Résumé
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <strong>Statut actuel :</strong>
+                    <br>
+                    <span class="badge bg-{{ annotation.is_validated|yesno:'success,warning' }} mt-1">
+                        {% if annotation.is_validated %}
+                            <i class="fas fa-check-circle me-1"></i>Validé
+                        {% elif annotation.is_complete %}
+                            <i class="fas fa-clock me-1"></i>En attente de validation
+                        {% else %}
+                            <i class="fas fa-edit me-1"></i>En cours d'annotation
+                        {% endif %}
+                    </span>
+                </div>
+                
+                <div class="mb-3">
+                    <strong>Progression :</strong>
+                    <div class="progress mt-1">
+                        <div class="progress-bar" style="width: {{ annotation.completion_percentage }}%"></div>
+                    </div>
+                    <small class="text-muted">{{ annotation.completion_percentage|floatformat:0 }}% complété</small>
+                </div>
+                
+                <div class="mb-3">
+                    <strong>Participants :</strong>
+                    <ul class="list-unstyled mb-0 mt-1">
+                        <li>
+                            <i class="fas fa-user me-1"></i>
+                            <strong>Annotateur :</strong> {{ annotation.annotated_by.username }}
+                        </li>
+                        {% if annotation.validated_by %}
+                            <li>
+                                <i class="fas fa-user-check me-1"></i>
+                                <strong>Validateur :</strong> {{ annotation.validated_by.username }}
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                
+                <div class="mb-3">
+                    <strong>Dates importantes :</strong>
+                    <ul class="list-unstyled mb-0 mt-1 small text-muted">
+                        <li>
+                            <i class="fas fa-plus me-1"></i>
+                            Créé : {{ annotation.created_at|date:"d/m/Y H:i" }}
+                        </li>
+                        <li>
+                            <i class="fas fa-edit me-1"></i>
+                            Modifié : {{ annotation.updated_at|date:"d/m/Y H:i" }}
+                        </li>
+                        {% if annotation.completed_at %}
+                            <li>
+                                <i class="fas fa-check me-1"></i>
+                                Complété : {{ annotation.completed_at|date:"d/m/Y H:i" }}
+                            </li>
+                        {% endif %}
+                        {% if annotation.validated_at %}
+                            <li>
+                                <i class="fas fa-check-circle me-1"></i>
+                                Validé : {{ annotation.validated_at|date:"d/m/Y H:i" }}
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                
+                {% if annotation.confidence_score %}
+                    <div class="mb-3">
+                        <strong>Score de confiance :</strong>
+                        <br>
+                        <span class="badge bg-primary mt-1">{{ annotation.confidence_score }}/10</span>
+                    </div>
+                {% endif %}
+                
+                {% if annotation.validation_notes %}
+                    <div class="mb-3">
+                        <strong>Notes de validation :</strong>
+                        <div class="bg-light p-2 rounded mt-1 small">
+                            {{ annotation.validation_notes }}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'documents:document_detail' document.pk %}" class="btn btn-outline-primary btn-sm">
+                    <i class="fas fa-arrow-left me-1"></i>Retour au document
+                </a>
+            </div>
+        </div>
+        
+        <!-- Statistiques rapides -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-chart-bar me-2"></i>Statistiques
+                </h5>
+            </div>
+            <div class="card-body">
+                {% regroup page_obj.object_list by action_type as action_groups %}
+                {% for action_group in action_groups %}
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="small">
+                            {% if action_group.grouper == 'created' %}
+                                <i class="fas fa-plus text-success me-1"></i>Créations
+                            {% elif action_group.grouper == 'updated' %}
+                                <i class="fas fa-edit text-primary me-1"></i>Modifications
+                            {% elif action_group.grouper == 'validated' %}
+                                <i class="fas fa-check text-success me-1"></i>Validations
+                            {% elif action_group.grouper == 'rejected' %}
+                                <i class="fas fa-times text-danger me-1"></i>Rejets
+                            {% endif %}
+                            {{ action_group.grouper|capfirst }}
+                        </span>
+                        <span class="badge bg-secondary">{{ action_group.list|length }}</span>
+                    </div>
+                {% empty %}
+                    <p class="text-muted small mb-0">Aucune statistique disponible</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Timeline de l'historique -->
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-timeline me-2"></i>Chronologie des modifications
+                </h5>
+                <div>
+                    <div class="btn-group btn-group-sm" role="group">
+                        <input type="radio" class="btn-check" name="filter" id="filter-all" checked>
+                        <label class="btn btn-outline-primary" for="filter-all">Tout</label>
+                        
+                        <input type="radio" class="btn-check" name="filter" id="filter-updates">
+                        <label class="btn btn-outline-primary" for="filter-updates">Modifications</label>
+                        
+                        <input type="radio" class="btn-check" name="filter" id="filter-validations">
+                        <label class="btn btn-outline-primary" for="filter-validations">Validations</label>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                {% if page_obj %}
+                    <div class="timeline">
+                        {% for history in page_obj %}
+                            <div class="timeline-item" data-action="{{ history.action_type }}">
+                                <div class="timeline-marker">
+                                    <div class="timeline-marker-icon 
+                                        {% if history.action_type == 'created' %}bg-success
+                                        {% elif history.action_type == 'updated' %}bg-primary
+                                        {% elif history.action_type == 'validated' %}bg-success
+                                        {% elif history.action_type == 'rejected' %}bg-danger
+                                        {% else %}bg-secondary{% endif %}">
+                                        {% if history.action_type == 'created' %}
+                                            <i class="fas fa-plus"></i>
+                                        {% elif history.action_type == 'updated' %}
+                                            <i class="fas fa-edit"></i>
+                                        {% elif history.action_type == 'validated' %}
+                                            <i class="fas fa-check"></i>
+                                        {% elif history.action_type == 'rejected' %}
+                                            <i class="fas fa-times"></i>
+                                        {% else %}
+                                            <i class="fas fa-circle"></i>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <h6 class="mb-1">
+                                            {{ history.get_action_type_display }}
+                                            {% if history.field_name %}
+                                                - {{ history.field_name }}
+                                            {% endif %}
+                                        </h6>
+                                        <div class="timeline-meta">
+                                            <small class="text-muted">
+                                                <i class="fas fa-user me-1"></i>{{ history.performed_by.username }}
+                                                <i class="fas fa-clock ms-2 me-1"></i>{{ history.created_at|date:"d/m/Y H:i:s" }}
+                                            </small>
+                                        </div>
+                                    </div>
+                                    
+                                    {% if history.comment %}
+                                        <div class="timeline-comment">
+                                            <p class="mb-1">{{ history.comment }}</p>
+                                        </div>
+                                    {% endif %}
+                                    
+                                    {% if history.old_value or history.new_value %}
+                                        <div class="timeline-changes">
+                                            {% if history.old_value %}
+                                                <div class="change-old">
+                                                    <strong class="text-danger">Ancienne valeur :</strong>
+                                                    <span class="bg-light p-1 rounded small d-inline-block">
+                                                        {% if history.old_value|length > 100 %}
+                                                            {{ history.old_value|truncatechars:100 }}
+                                                        {% else %}
+                                                            {{ history.old_value }}
+                                                        {% endif %}
+                                                    </span>
+                                                </div>
+                                            {% endif %}
+                                            
+                                            {% if history.new_value %}
+                                                <div class="change-new {% if history.old_value %}mt-1{% endif %}">
+                                                    <strong class="text-success">Nouvelle valeur :</strong>
+                                                    <span class="bg-light p-1 rounded small d-inline-block">
+                                                        {% if history.new_value|length > 100 %}
+                                                            {{ history.new_value|truncatechars:100 }}
+                                                        {% else %}
+                                                            {{ history.new_value }}
+                                                        {% endif %}
+                                                    </span>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <!-- Pagination -->
+                    {% if page_obj.has_other_pages %}
+                        <nav aria-label="Navigation historique" class="mt-4">
+                            <ul class="pagination justify-content-center">
+                                {% if page_obj.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page=1">
+                                            <i class="fas fa-angle-double-left"></i>
+                                        </a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                                            <i class="fas fa-angle-left"></i>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                
+                                {% for page_num in page_obj.paginator.page_range %}
+                                    {% if page_num == page_obj.number %}
+                                        <li class="page-item active">
+                                            <span class="page-link">{{ page_num }}</span>
+                                        </li>
+                                    {% elif page_num > page_obj.number|add:'-3' and page_num < page_obj.number|add:'3' %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                                
+                                {% if page_obj.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                                            <i class="fas fa-angle-right"></i>
+                                        </a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">
+                                            <i class="fas fa-angle-double-right"></i>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    {% endif %}
+                    
+                {% else %}
+                    <div class="text-center py-4">
+                        <i class="fas fa-history fa-3x text-muted mb-3"></i>
+                        <h5>Aucun historique disponible</h5>
+                        <p class="text-muted">Les modifications de cette annotation apparaîtront ici.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.timeline {
+    position: relative;
+    padding-left: 2rem;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 1rem;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #dee2e6;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 2rem;
+    padding-left: 2rem;
+}
+
+.timeline-marker {
+    position: absolute;
+    left: -2rem;
+    top: 0.5rem;
+}
+
+.timeline-marker-icon {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.75rem;
+    border: 3px solid white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.timeline-content {
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: all 0.15s ease-in-out;
+}
+
+.timeline-content:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-color: #0d6efd;
+}
+
+.timeline-header h6 {
+    color: #495057;
+    font-weight: 600;
+}
+
+.timeline-meta {
+    margin-bottom: 0.5rem;
+}
+
+.timeline-comment {
+    background: #f8f9fa;
+    padding: 0.75rem;
+    border-radius: 0.375rem;
+    border-left: 3px solid #0d6efd;
+    margin: 0.5rem 0;
+}
+
+.timeline-changes {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid #e9ecef;
+}
+
+.change-old span {
+    background-color: #f8d7da !important;
+    color: #721c24;
+}
+
+.change-new span {
+    background-color: #d1ecf1 !important;
+    color: #0c5460;
+}
+
+.timeline-item[data-action="created"] .timeline-marker-icon {
+    background-color: #198754;
+}
+
+.timeline-item[data-action="updated"] .timeline-marker-icon {
+    background-color: #0d6efd;
+}
+
+.timeline-item[data-action="validated"] .timeline-marker-icon {
+    background-color: #198754;
+}
+
+.timeline-item[data-action="rejected"] .timeline-marker-icon {
+    background-color: #dc3545;
+}
+
+/* Animations */
+.timeline-item {
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: slideInLeft 0.6s ease forwards;
+}
+
+.timeline-item:nth-child(2) { animation-delay: 0.1s; }
+.timeline-item:nth-child(3) { animation-delay: 0.2s; }
+.timeline-item:nth-child(4) { animation-delay: 0.3s; }
+.timeline-item:nth-child(5) { animation-delay: 0.4s; }
+
+@keyframes slideInLeft {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .timeline {
+        padding-left: 1.5rem;
+    }
+    
+    .timeline-item {
+        padding-left: 1.5rem;
+    }
+    
+    .timeline-marker {
+        left: -1.5rem;
+    }
+    
+    .timeline-marker-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+        font-size: 0.6rem;
+    }
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(document).ready(function() {
+    // Filtrage de l'historique
+    $('input[name="filter"]').change(function() {
+        const filter = $(this).attr('id').replace('filter-', '');
+        
+        $('.timeline-item').show();
+        
+        if (filter === 'updates') {
+            $('.timeline-item').hide();
+            $('.timeline-item[data-action="updated"], .timeline-item[data-action="created"]').show();
+        } else if (filter === 'validations') {
+            $('.timeline-item').hide();
+            $('.timeline-item[data-action="validated"], .timeline-item[data-action="rejected"]').show();
+        }
+        
+        // Réinitialiser les animations
+        $('.timeline-item:visible').each(function(index) {
+            $(this).css('animation-delay', (index * 0.1) + 's');
+        });
+    });
+    
+    // Smooth scroll pour la pagination
+    $('.pagination a').click(function(e) {
+        e.preventDefault();
+        const url = $(this).attr('href');
+        
+        // Scroll vers le haut de la timeline
+        $('html, body').animate({
+            scrollTop: $('.timeline').offset().top - 100
+        }, 500);
+        
+        // Charger la nouvelle page après l'animation
+        setTimeout(() => {
+            window.location.href = url;
+        }, 500);
+    });
+    
+    // Tooltip pour les actions
+    $('.timeline-marker-icon').tooltip({
+        title: function() {
+            const action = $(this).closest('.timeline-item').data('action');
+            const actionNames = {
+                'created': 'Création',
+                'updated': 'Modification',
+                'validated': 'Validation',
+                'rejected': 'Rejet'
+            };
+            return actionNames[action] || action;
+        }
+    });
+    
+    // Expandable pour les longues valeurs
+    $('.timeline-changes span').click(function() {
+        const $this = $(this);
+        const fullText = $this.data('full-text');
+        
+        if (fullText) {
+            $this.text(fullText);
+            $this.removeData('full-text');
+        }
+    });
+    
+    // Marquer les valeurs tronquées
+    $('.timeline-changes span').each(function() {
+        const $this = $(this);
+        const text = $this.text();
+        
+        if (text.endsWith('...')) {
+            $this.css('cursor', 'pointer');
+            $this.attr('title', 'Cliquer pour voir le texte complet');
+        }
+    });
+});
+</script>
+{% endblock %}

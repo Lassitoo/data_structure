@@ -1,0 +1,458 @@
+{% extends 'documents/base.html' %}
+
+{% block title %}Éditer le schéma - {{ document.title }} - Data Structure{% endblock %}
+
+{% block breadcrumb %}
+<div class="container mt-3">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'documents:dashboard' %}">Tableau de bord</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'documents:document_list' %}">Documents</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'documents:document_detail' document.pk %}">{{ document.title|truncatechars:30 }}</a></li>
+            <li class="breadcrumb-item active">Éditer le schéma</li>
+        </ol>
+    </nav>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="h2 mb-4">
+            <i class="fas fa-sitemap me-2"></i>Édition du schéma d'annotation
+        </h1>
+        <p class="text-muted">Document : <strong>{{ document.title }}</strong></p>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Formulaire d'édition -->
+    <div class="col-lg-8">
+        <form method="post" id="schemaForm">
+            {% csrf_token %}
+            
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-info-circle me-2"></i>Informations générales
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <!-- Nom du schéma -->
+                    <div class="mb-3">
+                        <label for="{{ form.name.id_for_label }}" class="form-label">
+                            {{ form.name.label }}
+                        </label>
+                        {{ form.name }}
+                        {% if form.name.errors %}
+                            <div class="text-danger">
+                                {% for error in form.name.errors %}
+                                    <small>{{ error }}</small>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Description -->
+                    <div class="mb-3">
+                        <label for="{{ form.description.id_for_label }}" class="form-label">
+                            {{ form.description.label }}
+                        </label>
+                        {{ form.description }}
+                        {% if form.description.errors %}
+                            <div class="text-danger">
+                                {% for error in form.description.errors %}
+                                    <small>{{ error }}</small>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-code me-2"></i>Schéma JSON
+                    </h5>
+                    <div>
+                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="formatJSON()">
+                            <i class="fas fa-magic me-1"></i>Formater
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-info" onclick="validateJSON()">
+                            <i class="fas fa-check me-1"></i>Valider
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- Éditeur JSON -->
+                    <div class="mb-3">
+                        <label for="{{ form.schema_json.id_for_label }}" class="form-label">
+                            {{ form.schema_json.label }}
+                        </label>
+                        {{ form.schema_json }}
+                        {% if form.schema_json.errors %}
+                            <div class="text-danger">
+                                {% for error in form.schema_json.errors %}
+                                    <small>{{ error }}</small>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <div class="form-text">
+                            Modifiez le schéma JSON selon vos besoins. 
+                            <a href="#schemaHelp" data-bs-toggle="collapse" class="text-decoration-none">
+                                Voir l'aide <i class="fas fa-chevron-down"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Aide sur le schéma -->
+                    <div class="collapse" id="schemaHelp">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h6>Structure du schéma :</h6>
+                                <pre class="mb-3"><code>{
+  "name": "nom_du_schema",
+  "description": "description_du_schema",
+  "fields": [
+    {
+      "name": "nom_du_champ",
+      "label": "Label affiché",
+      "type": "text|number|date|boolean|choice|multiple_choice|entity|classification",
+      "description": "description_du_champ",
+      "required": true|false,
+      "choices": ["option1", "option2"] // Pour les types choice
+    }
+  ]
+}</code></pre>
+                                
+                                <h6>Types de champs disponibles :</h6>
+                                <ul class="small">
+                                    <li><strong>text</strong> : Texte libre</li>
+                                    <li><strong>number</strong> : Nombre (entier ou décimal)</li>
+                                    <li><strong>date</strong> : Date</li>
+                                    <li><strong>boolean</strong> : Vrai/Faux</li>
+                                    <li><strong>choice</strong> : Choix unique parmi une liste</li>
+                                    <li><strong>multiple_choice</strong> : Choix multiples</li>
+                                    <li><strong>entity</strong> : Entité nommée</li>
+                                    <li><strong>classification</strong> : Classification</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Boutons d'action -->
+            <div class="d-flex justify-content-between mb-4">
+                <a href="{% url 'documents:document_detail' document.pk %}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left me-1"></i>Retour
+                </a>
+                <div>
+                    <button type="button" class="btn btn-outline-info me-2" onclick="previewSchema()">
+                        <i class="fas fa-eye me-1"></i>Aperçu
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save me-1"></i>Valider le schéma
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <!-- Panneau d'aide -->
+    <div class="col-lg-4">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-lightbulb me-2"></i>Conseils
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info">
+                    <h6><i class="fas fa-robot me-1"></i>Schéma généré par l'IA</h6>
+                    <p class="small mb-0">Ce schéma a été généré automatiquement par l'IA Mistral en analysant votre document. Vous pouvez le modifier selon vos besoins spécifiques.</p>
+                </div>
+                
+                <h6>Bonnes pratiques :</h6>
+                <ul class="small">
+                    <li>Utilisez des noms de champs explicites</li>
+                    <li>Ajoutez des descriptions claires</li>
+                    <li>Marquez les champs obligatoires</li>
+                    <li>Choisissez le bon type de champ</li>
+                    <li>Limitez le nombre de champs (10-15 max)</li>
+                </ul>
+                
+                <h6 class="mt-3">Exemples de champs :</h6>
+                <div class="accordion accordion-flush" id="examplesAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed py-2" type="button" data-bs-toggle="collapse" data-bs-target="#textExample">
+                                Champ texte
+                            </button>
+                        </h2>
+                        <div id="textExample" class="accordion-collapse collapse" data-bs-parent="#examplesAccordion">
+                            <div class="accordion-body py-2">
+                                <pre class="small"><code>{
+  "name": "summary",
+  "label": "Résumé",
+  "type": "text",
+  "description": "Résumé du document",
+  "required": true
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed py-2" type="button" data-bs-toggle="collapse" data-bs-target="#choiceExample">
+                                Champ choix
+                            </button>
+                        </h2>
+                        <div id="choiceExample" class="accordion-collapse collapse" data-bs-parent="#examplesAccordion">
+                            <div class="accordion-body py-2">
+                                <pre class="small"><code>{
+  "name": "category",
+  "label": "Catégorie",
+  "type": "choice",
+  "description": "Catégorie du document",
+  "required": true,
+  "choices": ["Contrat", "Facture", "Rapport"]
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Aperçu du schéma -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-eye me-2"></i>Aperçu
+                </h5>
+            </div>
+            <div class="card-body" id="schemaPreview">
+                <p class="text-muted text-center">
+                    <i class="fas fa-info-circle me-1"></i>
+                    Cliquez sur "Aperçu" pour voir le rendu
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de validation JSON -->
+<div class="modal fade" id="validationModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Validation du JSON</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="validationResult">
+                <!-- Résultat de la validation -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+#id_schema_json {
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+}
+
+.field-type-badge {
+    font-size: 0.7em;
+}
+
+.preview-field {
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    background-color: #f8f9fa;
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Fonctions utilitaires
+function formatJSON() {
+    const textarea = document.getElementById('id_schema_json');
+    try {
+        const parsed = JSON.parse(textarea.value);
+        textarea.value = JSON.stringify(parsed, null, 2);
+        showAlert('JSON formaté avec succès', 'success');
+    } catch (e) {
+        showAlert('JSON invalide : ' + e.message, 'danger');
+    }
+}
+
+function validateJSON() {
+    const textarea = document.getElementById('id_schema_json');
+    const modal = new bootstrap.Modal(document.getElementById('validationModal'));
+    const resultDiv = document.getElementById('validationResult');
+    
+    try {
+        const schema = JSON.parse(textarea.value);
+        
+        // Validation de base
+        let errors = [];
+        let warnings = [];
+        
+        if (!schema.name) errors.push('Le schéma doit avoir un nom');
+        if (!schema.fields || !Array.isArray(schema.fields)) errors.push('Le schéma doit avoir un tableau de champs');
+        if (schema.fields && schema.fields.length === 0) warnings.push('Aucun champ défini');
+        
+        // Validation des champs
+        const validTypes = ['text', 'number', 'date', 'boolean', 'choice', 'multiple_choice', 'entity', 'classification'];
+        const fieldNames = new Set();
+        
+        if (schema.fields) {
+            schema.fields.forEach((field, index) => {
+                if (!field.name) errors.push(`Champ ${index + 1}: nom manquant`);
+                if (!field.type) errors.push(`Champ ${index + 1}: type manquant`);
+                if (field.type && !validTypes.includes(field.type)) {
+                    errors.push(`Champ ${index + 1}: type invalide "${field.type}"`);
+                }
+                if (field.name && fieldNames.has(field.name)) {
+                    errors.push(`Champ "${field.name}": nom en double`);
+                }
+                if (field.name) fieldNames.add(field.name);
+                
+                if ((field.type === 'choice' || field.type === 'multiple_choice') && (!field.choices || field.choices.length === 0)) {
+                    errors.push(`Champ "${field.name}": choix manquants pour le type ${field.type}`);
+                }
+            });
+        }
+        
+        // Affichage du résultat
+        let html = '';
+        
+        if (errors.length === 0) {
+            html += '<div class="alert alert-success"><i class="fas fa-check-circle me-2"></i>JSON valide !</div>';
+        } else {
+            html += '<div class="alert alert-danger"><i class="fas fa-exclamation-triangle me-2"></i>Erreurs détectées :</div>';
+            html += '<ul class="text-danger">';
+            errors.forEach(error => html += `<li>${error}</li>`);
+            html += '</ul>';
+        }
+        
+        if (warnings.length > 0) {
+            html += '<div class="alert alert-warning"><i class="fas fa-exclamation-circle me-2"></i>Avertissements :</div>';
+            html += '<ul class="text-warning">';
+            warnings.forEach(warning => html += `<li>${warning}</li>`);
+            html += '</ul>';
+        }
+        
+        if (errors.length === 0 && warnings.length === 0) {
+            html += '<div class="alert alert-info">Nombre de champs : ' + schema.fields.length + '</div>';
+        }
+        
+        resultDiv.innerHTML = html;
+        modal.show();
+        
+    } catch (e) {
+        resultDiv.innerHTML = `<div class="alert alert-danger"><i class="fas fa-times-circle me-2"></i>JSON invalide : ${e.message}</div>`;
+        modal.show();
+    }
+}
+
+function previewSchema() {
+    const textarea = document.getElementById('id_schema_json');
+    const previewDiv = document.getElementById('schemaPreview');
+    
+    try {
+        const schema = JSON.parse(textarea.value);
+        
+        let html = '';
+        
+        if (schema.name) {
+            html += `<h6>${schema.name}</h6>`;
+        }
+        if (schema.description) {
+            html += `<p class="text-muted small">${schema.description}</p>`;
+        }
+        
+        if (schema.fields && schema.fields.length > 0) {
+            html += '<div class="mt-3">';
+            schema.fields.forEach(field => {
+                html += '<div class="preview-field">';
+                html += `<div class="d-flex justify-content-between align-items-start">`;
+                html += `<div><strong>${field.label || field.name}</strong>`;
+                if (field.required) html += ' <span class="text-danger">*</span>';
+                html += `</div>`;
+                html += `<span class="badge bg-info field-type-badge">${field.type}</span>`;
+                html += `</div>`;
+                if (field.description) {
+                    html += `<small class="text-muted">${field.description}</small>`;
+                }
+                if (field.choices && field.choices.length > 0) {
+                    html += '<div class="mt-1">';
+                    field.choices.forEach(choice => {
+                        html += `<span class="badge bg-secondary me-1" style="font-size: 0.6em;">${choice}</span>`;
+                    });
+                    html += '</div>';
+                }
+                html += '</div>';
+            });
+            html += '</div>';
+        } else {
+            html += '<p class="text-muted text-center mt-3">Aucun champ défini</p>';
+        }
+        
+        previewDiv.innerHTML = html;
+        
+    } catch (e) {
+        previewDiv.innerHTML = `<div class="alert alert-danger">Erreur : ${e.message}</div>`;
+    }
+}
+
+function showAlert(message, type) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+    alertDiv.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    
+    const container = document.querySelector('.container');
+    container.insertBefore(alertDiv, container.firstChild);
+    
+    setTimeout(() => {
+        alertDiv.remove();
+    }, 5000);
+}
+
+// Auto-sauvegarde (draft)
+let autoSaveTimeout;
+document.getElementById('id_schema_json').addEventListener('input', function() {
+    clearTimeout(autoSaveTimeout);
+    autoSaveTimeout = setTimeout(() => {
+        // Ici on pourrait implémenter une sauvegarde automatique en draft
+        console.log('Auto-save draft...');
+    }, 2000);
+});
+
+// Aperçu automatique lors de la modification
+document.getElementById('id_schema_json').addEventListener('input', function() {
+    clearTimeout(this.previewTimeout);
+    this.previewTimeout = setTimeout(previewSchema, 1000);
+});
+
+// Aperçu initial
+document.addEventListener('DOMContentLoaded', function() {
+    previewSchema();
+});
+</script>
+{% endblock %}

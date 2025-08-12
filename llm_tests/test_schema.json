@@ -1,0 +1,101 @@
+{
+  "name": "PDF_Document_Annotation",
+  "description": "Schema for annotating PDF documents with important information",
+  "fields": [
+    {
+      "name": "file_name",
+      "label": "File Name",
+      "type": "text",
+      "description": "The name of the document",
+      "required": true
+    },
+    {
+      "name": "document_type",
+      "label": "Document Type",
+      "type": "text",
+      "description": "The type of the document (e.g., PDF)",
+      "required": true
+    },
+    {
+      "name": "size",
+      "label": "Size",
+      "type": "number",
+      "description": "The size of the document in bytes",
+      "required": true
+    },
+    {
+      "name": "path",
+      "label": "Path",
+      "type": "text",
+      "description": "The path where the document is located",
+      "required": true
+    },
+    {
+      "name": "official_address",
+      "label": "Official Address",
+      "type": "text",
+      "description": "The official address of the organization or institution mentioned in the document",
+      "required": false
+    },
+    {
+      "name": "document_url",
+      "label": "Document URL",
+      "type": "url",
+      "description": "The URL where the document can be found (if provided)",
+      "required": false
+    },
+    {
+      "name": "contact_email",
+      "label": "Contact Email",
+      "type": "email",
+      "description": "The email address provided for contacting the organization or institution",
+      "required": false
+    },
+    {
+      "name": "contact_phone",
+      "label": "Contact Phone",
+      "type": "text",
+      "description": "The phone number provided for contacting the organization or institution",
+      "required": false
+    },
+    {
+      "name": "copyright_years",
+      "label": "Copyright Years",
+      "type": "date|multiple_choice",
+      "description": "The years mentioned in the copyright statement",
+      "required": false,
+      "choices": [
+        "YYYY",
+        "YYYY-YYYY"
+      ]
+    },
+    {
+      "name": "document_version",
+      "label": "Document Version",
+      "type": "text",
+      "description": "The version of the document mentioned (e.g., Rev.45)",
+      "required": false
+    },
+    {
+      "name": "document_number",
+      "label": "Document Number",
+      "type": "text",
+      "description": "Any document number mentioned in the text (e.g., EMA/37991/2019)",
+      "required": false
+    },
+    {
+      "name": "document_title",
+      "label": "Document Title",
+      "type": "text",
+      "description": "The title of the document if explicitly stated",
+      "required": false
+    },
+    {
+      "name": "subject_area",
+      "label": "Subject Area",
+      "type": "text",
+      "description": "The subject area or topic covered by the document",
+      "required": false
+    }
+  ]
+}

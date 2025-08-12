@@ -1,0 +1,182 @@
+# ===== REQUIREMENTS POUR DATA STRUCTURE =====
+
+# Framework Django
+Django
+djangorestframework
+
+# Base de données MongoDB
+djongo
+pymongo
+
+# Traitement des fichiers
+
+python-docx
+PyPDF2
+openpyxl
+Pillow
+
+# Intelligence Artificielle - Mistral
+transformers
+torch
+torchvision
+torchaudio
+accelerate
+sentencepiece
+tokenizers
+
+# Optionnel : GPU support pour PyTorch (décommentez si vous avez un GPU NVIDIA)
+# torch --index-url https://download.pytorch.org/whl/cu118
+# torchvision --index-url https://download.pytorch.org/whl/cu118
+# torchaudio --index-url https://download.pytorch.org/whl/cu118
+
+# Traitement de données
+numpy
+pandas
+
+# Validation et formulaires
+django-crispy-forms
+crispy-bootstrap5
+
+# Authentification et autorisation
+django-allauth
+
+# Outils de développement
+python-decouple
+django-debug-toolbar
+
+# Logging et monitoring
+django-extensions
+django-cors-headers
+
+# Utilitaires
+python-dateutil
+pytz
+requests
+
+# Tests
+pytest
+pytest-django
+factory-boy
+coverage
+
+# Production
+gunicorn
+whitenoise
+django-environ
+django-csp
+django-security
+ython-magic-bin
+
+
+# Optionnel : GPU support pour PyTorch (décommentez si vous avez un GPU NVIDIA)
+# torch>=2.0.0+cu118 --index-url https://download.pytorch.org/whl/cu118
+# torchvision>=0.15.0+cu118 --index-url https://download.pytorch.org/whl/cu118
+# torchaudio>=2.0.0+cu118 --index-url https://download.pytorch.org/whl/cu118
+
+
+# Optionnel : Cache Redis
+# redis>=4.6.0
+# django-redis>=5.3.0
+
+# Optionnel : Celery pour les tâches asynchrones
+# celery>=5.3.0
+# django-celery-beat>=2.5.0
+# django-celery-results>=2.5.0
+
+# Optionnel : API documentation
+# drf-spectacular>=0.26.0
+
+# Optionnel : Stockage cloud
+# django-storages>=1.13.0
+# boto3>=1.28.0  # Pour AWS S3
+
+# Sécurité
+
+
+# ===== NOTES D'INSTALLATION =====
+
+# 1. Créer un environnement virtuel :
+#    python -m venv venv
+#    source venv/bin/activate  # Linux/Mac
+#    venv\Scripts\activate     # Windows
+
+# 2. Installer les dépendances :
+#    pip install -r requirements.txt
+
+# 3. Configuration MongoDB :
+#    - Installer MongoDB : https://www.mongodb.com/try/download/community
+#    - Démarrer le service MongoDB
+#    - Créer une base de données 'data_structure_db'
+
+# 4. Configuration Mistral :
+#    - Télécharger un modèle Mistral compatible
+#    - Ajuster le chemin dans settings.py
+#    - Alternative : utiliser l'API Mistral
+
+# 5. Variables d'environnement à configurer :
+#    SECRET_KEY=your-secret-key
+#    DEBUG=True  # False en production
+#    MONGODB_URL=mongodb://localhost:27017
+#    MISTRAL_MODEL_PATH=/path/to/mistral/model
+
+# 6. Migrations Django :
+#    python manage.py makemigrations
+#    python manage.py migrate
+
+# 7. Créer un superutilisateur :
+#    python manage.py createsuperuser
+
+# 8. Collecter les fichiers statiques :
+#    python manage.py collectstatic
+
+# 9. Lancer le serveur de développement :
+#    python manage.py runserver
+
+# ===== VERSIONS ALTERNATIVES =====
+
+# Pour Python 3.8 (versions plus anciennes) :
+# Django>=3.2,<4.0
+# transformers>=4.20.0
+# torch>=1.13.0
+
+# Pour utilisation CPU uniquement (sans GPU) :
+# torch>=2.0.0+cpu --index-url https://download.pytorch.org/whl/cpu
+# torchvision>=0.15.0+cpu --index-url https://download.pytorch.org/whl/cpu
+# torchaudio>=2.0.0+cpu --index-url https://download.pytorch.org/whl/cpu
+
+# ===== COMMANDES UTILES =====
+
+# Mise à jour des dépendances :
+# pip list --outdated
+# pip install --upgrade package_name
+
+# Générer un nouveau requirements.txt :
+# pip freeze > requirements.txt
+
+# Installer depuis requirements.txt :
+# pip install -r requirements.txt
+
+# Vérifier les vulnérabilités :
+# pip audit
+
+# ===== CONFIGURATION POUR DIFFÉRENTS ENVIRONNEMENTS =====
+
+# Développement local :
+# pip install -r requirements.txt
+
+# Production :
+# pip install -r requirements.txt --no-dev
+
+# Test :
+# pip install -r requirements.txt
+# pip install pytest pytest-django coverage
+
+# ===== ALTERNATIVES LÉGÈRES =====
+
+# Si vous voulez une installation plus légère sans IA :
+# Commentez les lignes transformers, torch, etc.
+# Le système fonctionnera sans les fonctionnalités IA
+
+# Si vous voulez utiliser SQLite au lieu de MongoDB :
+# Commentez djongo et pymongo
+# Utilisez la configuration SQLite dans settings.py
