@@ -1,0 +1,738 @@
+{% extends 'documents/base.html' %}
+
+{% block title %}Éditeur de formulaire - {{ document.title }} - Data Structure{% endblock %}
+
+{% block breadcrumb %}
+<div class="container mt-3">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'documents:dashboard' %}">Tableau de bord</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'documents:document_list' %}">Documents</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'documents:document_detail' document.pk %}">{{ document.title|truncatechars:30 }}</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'documents:edit_schema' document.pk %}">Éditer le schéma</a></li>
+            <li class="breadcrumb-item active">Éditeur de formulaire</li>
+        </ol>
+    </nav>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="h2 mb-4">
+            <i class="fas fa-edit me-2"></i>Éditeur de formulaire du schéma
+        </h1>
+        <p class="text-muted">Document : <strong>{{ document.title }}</strong></p>
+    </div>
+</div>
+
+<form method="post" id="schemaFormEditor">
+    {% csrf_token %}
+    
+    <div class="row">
+        <!-- Informations générales -->
+        <div class="col-lg-4">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-info-circle me-2"></i>Informations générales
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="schemaName" class="form-label">Nom du schéma</label>
+                        <input type="text" class="form-control" id="schemaName" name="schema_name" 
+                               value="{{ schema_json.name|default:'' }}" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="schemaDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="schemaDescription" name="schema_description" 
+                                  rows="3">{{ schema_json.description|default:'' }}</textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Actions -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-tools me-2"></i>Actions
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <button type="button" class="btn btn-success btn-sm mb-2" onclick="addField()">
+                        <i class="fas fa-plus me-1"></i>Ajouter un champ
+                    </button>
+                    <button type="button" class="btn btn-info btn-sm mb-2" onclick="duplicateField()">
+                        <i class="fas fa-copy me-1"></i>Dupliquer le champ sélectionné
+                    </button>
+                    <button type="button" class="btn btn-warning btn-sm mb-2" onclick="moveFieldUp()">
+                        <i class="fas fa-arrow-up me-1"></i>Monter
+                    </button>
+                    <button type="button" class="btn btn-warning btn-sm mb-2" onclick="moveFieldDown()">
+                        <i class="fas fa-arrow-down me-1"></i>Descendre
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="deleteField()">
+                        <i class="fas fa-trash me-1"></i>Supprimer le champ
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Aperçu JSON -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-code me-2"></i>Aperçu JSON
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <pre id="jsonPreview" class="small" style="max-height: 200px; overflow-y: auto;"></pre>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Champs du schéma -->
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-list me-2"></i>Champs du schéma
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div id="fieldsContainer">
+                        <!-- Les champs seront générés ici dynamiquement -->
+                    </div>
+                    
+                    <div id="noFieldsMessage" class="text-center text-muted py-4" style="display: none;">
+                        <i class="fas fa-inbox fa-2x mb-3"></i>
+                        <p>Aucun champ défini</p>
+                        <button type="button" class="btn btn-primary" onclick="addField()">
+                            <i class="fas fa-plus me-1"></i>Ajouter le premier champ
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Boutons d'action -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'documents:edit_schema' document.pk %}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left me-1"></i>Retour à l'éditeur JSON
+                </a>
+                <div>
+                    <button type="button" class="btn btn-outline-info me-2" onclick="previewSchema()">
+                        <i class="fas fa-eye me-1"></i>Aperçu du formulaire
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save me-1"></i>Sauvegarder le schéma
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- Modal d'aperçu -->
+<div class="modal fade" id="previewModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Aperçu du formulaire</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="previewContent">
+                <!-- Contenu de l'aperçu -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Template pour un champ (caché) -->
+<template id="fieldTemplate">
+    <div class="field-item card mb-3" data-field-index="">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h6 class="mb-0 field-title">Nouveau champ</h6>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="fieldRequired" onchange="updateFieldRequired(this)">
+                <label class="form-check-label" for="fieldRequired">
+                    Obligatoire
+                </label>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label">Nom du champ</label>
+                        <input type="text" class="form-control field-name" placeholder="ex: title" 
+                               onchange="updateFieldName(this)" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label">Label affiché</label>
+                        <input type="text" class="form-control field-label" placeholder="ex: Titre du document" 
+                               onchange="updateFieldLabel(this)" required>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label">Type de champ</label>
+                        <select class="form-select field-type" onchange="updateFieldType(this)">
+                            <option value="text">Texte</option>
+                            <option value="number">Nombre</option>
+                            <option value="date">Date</option>
+                            <option value="boolean">Vrai/Faux</option>
+                            <option value="choice">Choix unique</option>
+                            <option value="multiple_choice">Choix multiples</option>
+                            <option value="entity">Entité nommée</option>
+                            <option value="classification">Classification</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control field-description" rows="2" 
+                                  placeholder="Description du champ" onchange="updateFieldDescription(this)"></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Options pour les champs de type choix -->
+            <div class="field-choices-container" style="display: none;">
+                <div class="mb-3">
+                    <label class="form-label">Options de choix</label>
+                    <div class="choices-list">
+                        <div class="input-group mb-2">
+                            <input type="text" class="form-control choice-input" placeholder="Option 1" 
+                                   onchange="updateChoices()">
+                            <button type="button" class="btn btn-outline-danger" onclick="removeChoice(this)">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="addChoice()">
+                        <i class="fas fa-plus me-1"></i>Ajouter une option
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.field-item {
+    border: 1px solid #dee2e6;
+    transition: all 0.3s ease;
+}
+
+.field-item:hover {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.field-item.selected {
+    border-color: #28a745;
+    background-color: #f8fff9;
+}
+
+.field-title {
+    color: #495057;
+}
+
+#jsonPreview {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    padding: 0.5rem;
+    font-size: 0.8rem;
+}
+
+.choice-input {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.btn-outline-danger {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+let currentFieldIndex = 0;
+let selectedFieldIndex = -1;
+
+// Initialisation
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Initialisation du formulaire...');
+    
+    // Charger le schéma existant
+    loadExistingSchema();
+    updateJsonPreview();
+    
+    // Pré-remplir les informations générales si elles existent
+    const schemaData = {{ schema_json|safe }};
+    if (schemaData) {
+        if (schemaData.name) {
+            document.getElementById('schemaName').value = schemaData.name;
+        }
+        if (schemaData.description) {
+            document.getElementById('schemaDescription').value = schemaData.description;
+        }
+    }
+});
+
+function loadExistingSchema() {
+    // Récupérer les données du schéma depuis Django
+    const schemaData = {{ schema_json|safe }};
+    
+    console.log('=== DEBUT loadExistingSchema ===');
+    console.log('Données du schéma chargées:', schemaData);
+    
+    if (schemaData && schemaData.fields && schemaData.fields.length > 0) {
+        console.log(`Chargement de ${schemaData.fields.length} champs...`);
+        
+        // Charger chaque champ existant
+        schemaData.fields.forEach((field, index) => {
+            console.log(`Chargement du champ ${index + 1}:`, field);
+            addField(field);
+        });
+        
+        // Sélectionner le premier champ par défaut
+        if (schemaData.fields.length > 0) {
+            selectField(0);
+        }
+        
+        console.log('Chargement terminé avec succès');
+    } else {
+        console.log('Aucun champ trouvé, affichage du message');
+        showNoFieldsMessage();
+    }
+    
+    console.log('=== FIN loadExistingSchema ===');
+}
+
+function addField(fieldData = null) {
+    const container = document.getElementById('fieldsContainer');
+    const template = document.getElementById('fieldTemplate');
+    const fieldElement = template.content.cloneNode(true);
+    
+    const fieldItem = fieldElement.querySelector('.field-item');
+    fieldItem.setAttribute('data-field-index', currentFieldIndex);
+    
+    // Remplir avec les données existantes si fournies
+    if (fieldData) {
+        console.log('Ajout du champ avec données:', fieldData);
+        
+        // Remplir les champs de base
+        fieldItem.querySelector('.field-name').value = fieldData.name || '';
+        fieldItem.querySelector('.field-label').value = fieldData.label || '';
+        fieldItem.querySelector('.field-type').value = fieldData.type || 'text';
+        fieldItem.querySelector('.field-description').value = fieldData.description || '';
+        fieldItem.querySelector('.field-title').textContent = fieldData.label || fieldData.name || 'Nouveau champ';
+        
+        // Gérer le champ obligatoire
+        if (fieldData.required) {
+            fieldItem.querySelector('#fieldRequired').checked = true;
+        }
+        
+        // Gérer les choix pour les types choice/multiple_choice
+        if ((fieldData.type === 'choice' || fieldData.type === 'multiple_choice') && fieldData.choices) {
+            const choicesContainer = fieldItem.querySelector('.field-choices-container');
+            choicesContainer.style.display = 'block';
+            
+            // Vider la liste des choix existante (garder seulement le premier)
+            const choicesList = fieldItem.querySelector('.choices-list');
+            const firstChoice = choicesList.querySelector('.input-group');
+            choicesList.innerHTML = '';
+            choicesList.appendChild(firstChoice);
+            
+            // Ajouter tous les choix
+            fieldData.choices.forEach(choice => {
+                addChoiceToField(fieldItem, choice);
+            });
+        }
+    }
+    
+    container.appendChild(fieldElement);
+    currentFieldIndex++;
+    
+    hideNoFieldsMessage();
+    updateJsonPreview();
+    
+    // Sélectionner le nouveau champ
+    selectField(currentFieldIndex - 1);
+}
+
+function duplicateField() {
+    if (selectedFieldIndex === -1) {
+        showAlert('Veuillez sélectionner un champ à dupliquer', 'warning');
+        return;
+    }
+    
+    const selectedField = document.querySelector(`[data-field-index="${selectedFieldIndex}"]`);
+    const fieldData = extractFieldData(selectedField);
+    
+    addField(fieldData);
+}
+
+function deleteField() {
+    if (selectedFieldIndex === -1) {
+        showAlert('Veuillez sélectionner un champ à supprimer', 'warning');
+        return;
+    }
+    
+    const selectedField = document.querySelector(`[data-field-index="${selectedFieldIndex}"]`);
+    selectedField.remove();
+    
+    // Réindexer les champs
+    reindexFields();
+    
+    if (document.querySelectorAll('.field-item').length === 0) {
+        showNoFieldsMessage();
+    }
+    
+    updateJsonPreview();
+}
+
+function moveFieldUp() {
+    if (selectedFieldIndex <= 0) return;
+    
+    const currentField = document.querySelector(`[data-field-index="${selectedFieldIndex}"]`);
+    const previousField = document.querySelector(`[data-field-index="${selectedFieldIndex - 1}"]`);
+    
+    if (previousField) {
+        currentField.parentNode.insertBefore(currentField, previousField);
+        reindexFields();
+        updateJsonPreview();
+    }
+}
+
+function moveFieldDown() {
+    const fields = document.querySelectorAll('.field-item');
+    if (selectedFieldIndex >= fields.length - 1) return;
+    
+    const currentField = document.querySelector(`[data-field-index="${selectedFieldIndex}"]`);
+    const nextField = document.querySelector(`[data-field-index="${selectedFieldIndex + 1}"]`);
+    
+    if (nextField) {
+        currentField.parentNode.insertBefore(nextField, currentField);
+        reindexFields();
+        updateJsonPreview();
+    }
+}
+
+function reindexFields() {
+    const fields = document.querySelectorAll('.field-item');
+    fields.forEach((field, index) => {
+        field.setAttribute('data-field-index', index);
+    });
+    currentFieldIndex = fields.length;
+}
+
+function selectField(index) {
+    // Désélectionner le champ précédent
+    if (selectedFieldIndex !== -1) {
+        const previousField = document.querySelector(`[data-field-index="${selectedFieldIndex}"]`);
+        if (previousField) {
+            previousField.classList.remove('selected');
+        }
+    }
+    
+    // Sélectionner le nouveau champ
+    selectedFieldIndex = index;
+    const newField = document.querySelector(`[data-field-index="${index}"]`);
+    if (newField) {
+        newField.classList.add('selected');
+    }
+}
+
+// Gestion des événements de clic sur les champs
+document.addEventListener('click', function(e) {
+    const fieldItem = e.target.closest('.field-item');
+    if (fieldItem) {
+        const index = parseInt(fieldItem.getAttribute('data-field-index'));
+        selectField(index);
+    }
+});
+
+function updateFieldName(input) {
+    const fieldItem = input.closest('.field-item');
+    const titleElement = fieldItem.querySelector('.field-title');
+    const labelInput = fieldItem.querySelector('.field-label');
+    
+    // Mettre à jour le titre si le label est vide
+    if (!labelInput.value) {
+        titleElement.textContent = input.value || 'Nouveau champ';
+    }
+    
+    updateJsonPreview();
+}
+
+function updateFieldLabel(input) {
+    const fieldItem = input.closest('.field-item');
+    const titleElement = fieldItem.querySelector('.field-title');
+    titleElement.textContent = input.value || 'Nouveau champ';
+    updateJsonPreview();
+}
+
+function updateFieldType(select) {
+    const fieldItem = select.closest('.field-item');
+    const choicesContainer = fieldItem.querySelector('.field-choices-container');
+    
+    if (select.value === 'choice' || select.value === 'multiple_choice') {
+        choicesContainer.style.display = 'block';
+    } else {
+        choicesContainer.style.display = 'none';
+    }
+    
+    updateJsonPreview();
+}
+
+function updateFieldDescription(textarea) {
+    updateJsonPreview();
+}
+
+function updateFieldRequired(checkbox) {
+    updateJsonPreview();
+}
+
+function addChoice() {
+    const selectedField = document.querySelector(`[data-field-index="${selectedFieldIndex}"]`);
+    if (selectedFieldIndex === -1) {
+        showAlert('Veuillez sélectionner un champ de type choix', 'warning');
+        return;
+    }
+    
+    addChoiceToField(selectedField);
+    updateJsonPreview();
+}
+
+function addChoiceToField(fieldItem, choiceValue = '') {
+    const choicesList = fieldItem.querySelector('.choices-list');
+    const choiceDiv = document.createElement('div');
+    choiceDiv.className = 'input-group mb-2';
+    choiceDiv.innerHTML = `
+        <input type="text" class="form-control choice-input" placeholder="Nouvelle option" 
+               value="${choiceValue}" onchange="updateChoices()">
+        <button type="button" class="btn btn-outline-danger" onclick="removeChoice(this)">
+            <i class="fas fa-times"></i>
+        </button>
+    `;
+    choicesList.appendChild(choiceDiv);
+    
+    // Mettre à jour l'aperçu JSON après ajout d'un choix
+    updateJsonPreview();
+}
+
+function removeChoice(button) {
+    button.closest('.input-group').remove();
+    updateJsonPreview();
+}
+
+function updateChoices() {
+    updateJsonPreview();
+}
+
+function extractFieldData(fieldElement) {
+    const name = fieldElement.querySelector('.field-name').value;
+    const label = fieldElement.querySelector('.field-label').value;
+    const type = fieldElement.querySelector('.field-type').value;
+    const description = fieldElement.querySelector('.field-description').value;
+    const required = fieldElement.querySelector('#fieldRequired').checked;
+    
+    const fieldData = {
+        name: name,
+        label: label,
+        type: type,
+        description: description,
+        required: required
+    };
+    
+    // Ajouter les choix pour les types appropriés
+    if (type === 'choice' || type === 'multiple_choice') {
+        const choices = [];
+        fieldElement.querySelectorAll('.choice-input').forEach(input => {
+            if (input.value.trim()) {
+                choices.push(input.value.trim());
+            }
+        });
+        if (choices.length > 0) {
+            fieldData.choices = choices;
+        }
+    }
+    
+    return fieldData;
+}
+
+function generateSchemaJson() {
+    const schemaName = document.getElementById('schemaName').value;
+    const schemaDescription = document.getElementById('schemaDescription').value;
+    
+    const fields = [];
+    document.querySelectorAll('.field-item').forEach(fieldElement => {
+        const fieldData = extractFieldData(fieldElement);
+        if (fieldData.name) { // Ne pas inclure les champs sans nom
+            fields.push(fieldData);
+        }
+    });
+    
+    return {
+        name: schemaName,
+        description: schemaDescription,
+        fields: fields
+    };
+}
+
+function updateJsonPreview() {
+    const jsonPreview = document.getElementById('jsonPreview');
+    const schema = generateSchemaJson();
+    jsonPreview.textContent = JSON.stringify(schema, null, 2);
+}
+
+function previewSchema() {
+    const schema = generateSchemaJson();
+    const previewContent = document.getElementById('previewContent');
+    
+    let html = '';
+    
+    if (schema.name) {
+        html += `<h5>${schema.name}</h5>`;
+    }
+    if (schema.description) {
+        html += `<p class="text-muted">${schema.description}</p>`;
+    }
+    
+    if (schema.fields && schema.fields.length > 0) {
+        html += '<form class="mt-3">';
+        schema.fields.forEach(field => {
+            html += '<div class="mb-3">';
+            html += `<label class="form-label">${field.label || field.name}`;
+            if (field.required) html += ' <span class="text-danger">*</span>';
+            html += '</label>';
+            
+            switch (field.type) {
+                case 'text':
+                    html += `<input type="text" class="form-control" placeholder="${field.description || ''}">`;
+                    break;
+                case 'number':
+                    html += `<input type="number" class="form-control" placeholder="${field.description || ''}">`;
+                    break;
+                case 'date':
+                    html += `<input type="date" class="form-control">`;
+                    break;
+                case 'boolean':
+                    html += `<div class="form-check"><input type="checkbox" class="form-check-input"><label class="form-check-label">${field.description || ''}</label></div>`;
+                    break;
+                case 'choice':
+                    if (field.choices) {
+                        html += '<select class="form-select">';
+                        field.choices.forEach(choice => {
+                            html += `<option>${choice}</option>`;
+                        });
+                        html += '</select>';
+                    }
+                    break;
+                case 'multiple_choice':
+                    if (field.choices) {
+                        field.choices.forEach(choice => {
+                            html += `<div class="form-check"><input type="checkbox" class="form-check-input"><label class="form-check-label">${choice}</label></div>`;
+                        });
+                    }
+                    break;
+                default:
+                    html += `<input type="text" class="form-control" placeholder="${field.description || ''}">`;
+            }
+            
+            if (field.description && field.type !== 'boolean' && field.type !== 'multiple_choice') {
+                html += `<div class="form-text">${field.description}</div>`;
+            }
+            
+            html += '</div>';
+        });
+        html += '</form>';
+    } else {
+        html += '<p class="text-muted text-center">Aucun champ défini</p>';
+    }
+    
+    previewContent.innerHTML = html;
+    
+    const modal = new bootstrap.Modal(document.getElementById('previewModal'));
+    modal.show();
+}
+
+function showNoFieldsMessage() {
+    document.getElementById('noFieldsMessage').style.display = 'block';
+}
+
+function hideNoFieldsMessage() {
+    document.getElementById('noFieldsMessage').style.display = 'none';
+}
+
+function showAlert(message, type) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+    alertDiv.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    
+    const container = document.querySelector('.container');
+    container.insertBefore(alertDiv, container.firstChild);
+    
+    setTimeout(() => {
+        alertDiv.remove();
+    }, 5000);
+}
+
+// Gestion de la soumission du formulaire
+document.getElementById('schemaFormEditor').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const schema = generateSchemaJson();
+    
+    // Validation de base
+    if (!schema.name) {
+        showAlert('Le nom du schéma est obligatoire', 'danger');
+        return;
+    }
+    
+    if (schema.fields.length === 0) {
+        showAlert('Au moins un champ doit être défini', 'danger');
+        return;
+    }
+    
+    // Créer un champ caché avec les données JSON
+    let hiddenInput = document.getElementById('schema_data');
+    if (!hiddenInput) {
+        hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = 'schema_data';
+        hiddenInput.id = 'schema_data';
+        this.appendChild(hiddenInput);
+    }
+    
+    hiddenInput.value = JSON.stringify(schema);
+    
+    // Soumettre le formulaire
+    this.submit();
+});
+</script>
+{% endblock %}

@@ -235,6 +235,54 @@ def edit_schema(request, document_pk):
 
 
 @login_required
+def schema_form_editor(request, document_pk):
+    """Éditeur de schéma avec interface formulaire"""
+    try:
+        document = get_object_or_404(Document, pk=document_pk)
+        schema = get_object_or_404(AnnotationSchema, document=document)
+        
+        if request.method == 'POST':
+            # Traitement du formulaire de schéma
+            schema_data = request.POST.get('schema_data')
+            if schema_data:
+                try:
+                    # Parser le JSON et sauvegarder dans final_schema
+                    schema_json = json.loads(schema_data)
+                    schema.final_schema = schema_json
+                    schema.save()
+                    
+                    messages.success(request, "Schéma mis à jour avec succès!")
+                    return redirect('documents:schema_editor', document_pk=document.pk)
+                except Exception as e:
+                    messages.error(request, f"Erreur lors de la sauvegarde: {str(e)}")
+        
+        # Récupération du schéma JSON actuel
+        try:
+            # Utiliser final_schema s'il existe, sinon ai_generated_schema
+            if schema.final_schema and schema.final_schema.get('fields'):
+                schema_json = schema.final_schema
+            elif schema.ai_generated_schema and schema.ai_generated_schema.get('fields'):
+                schema_json = schema.ai_generated_schema
+            else:
+                schema_json = {}
+        except:
+            schema_json = {}
+        
+        context = {
+            'document': document,
+            'schema': schema,
+            'schema_json': schema_json,
+        }
+        
+        return render(request, 'documents/schema_form_editor.html', context)
+        
+    except Exception as e:
+        logger.error(f"Erreur éditeur formulaire schéma: {str(e)}")
+        messages.error(request, f"Erreur lors de l'édition du schéma: {str(e)}")
+        return redirect('documents:document_detail', pk=document_pk)
+
+
+@login_required
 def annotate_document(request, document_pk):
     """Annotation d'un document"""
     try:

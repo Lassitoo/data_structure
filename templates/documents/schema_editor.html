@@ -82,6 +82,9 @@
                         <button type="button" class="btn btn-sm btn-outline-info" onclick="validateJSON()">
                             <i class="fas fa-check me-1"></i>Valider
                         </button>
+                        <button type="button" class="btn btn-sm btn-outline-success" onclick="openFormEditor()">
+                            <i class="fas fa-edit me-1"></i>Éditer avec formulaire
+                        </button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -432,6 +435,19 @@ function showAlert(message, type) {
     setTimeout(() => {
         alertDiv.remove();
     }, 5000);
+}
+
+function openFormEditor() {
+    const textarea = document.getElementById('id_schema_json');
+    try {
+        const schema = JSON.parse(textarea.value);
+        // Stockage temporaire du schéma actuel
+        sessionStorage.setItem('currentSchema', textarea.value);
+        // Redirection vers l'éditeur de formulaire
+        window.location.href = `{% url 'documents:schema_form_editor' document.pk %}`;
+    } catch (e) {
+        showAlert('JSON invalide. Veuillez d\'abord valider le schéma.', 'danger');
+    }
 }
 
 // Auto-sauvegarde (draft)

@@ -75,7 +75,7 @@ class FastAIService:
                         content = data.get("response", "").strip()
                         
                         if content and len(content) > 10:  # Réponse valide
-                            logger.info(f"✅ Réponse API: {len(content)} chars")
+                            logger.info(f"Reponse API: {len(content)} chars")
                             return content
                         else:
                             logger.warning(f"⚠️ Réponse vide ou trop courte: {len(content)} chars")
@@ -162,7 +162,7 @@ class FastAIService:
             schema = self._parse_schema_response(response)
             schema = self._validate_and_fix_schema(schema)
 
-            logger.info(f"✅ Schéma généré: {len(schema.get('fields', []))} champs")
+            logger.info(f"Schema genere: {len(schema.get('fields', []))} champs")
             return schema
 
         except Exception as e:

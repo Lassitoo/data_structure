@@ -16,6 +16,7 @@ urlpatterns = [
 
     # Schémas d'annotation
     path('document/<uuid:document_pk>/schema/edit/', views.edit_schema, name='edit_schema'),
+    path('document/<uuid:document_pk>/schema/form-editor/', views.schema_form_editor, name='schema_form_editor'),
     path('document/<uuid:document_pk>/schema/regenerate/', views.regenerate_schema, name='regenerate_schema'),
 
     # Annotations
