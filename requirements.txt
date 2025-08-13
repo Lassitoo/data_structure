@@ -5,7 +5,7 @@ Django
 djangorestframework
 
 # Base de données MongoDB
-djongo
+mongoengine
 pymongo
 
 # Traitement des fichiers

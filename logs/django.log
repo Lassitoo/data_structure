@@ -116,3 +116,31 @@ schema_data reçu: {"name":"Schéma Modifié via Formulaire","description":"Ce sché
 JSON parsé avec succès: {'name': 'Schéma Modifié via Formulaire', 'description': "Ce schéma a été modifié via l'éditeur de formulaire", 'fields': [{'name': 'titre_document', 'label': 'Titre du Document', 'type': 'text', 'description': 'Le titre principal du document', 'required': True}, {'name': 'type_document', 'label': 'Type de Document', 'type': 'choice', 'description': 'Le type du document', 'required': True, 'choices': ['Word', 'Image']}, {'name': 'date_creation', 'label': 'Date de Création', 'type': 'date', 'description': 'Date de création du document', 'required': False}]}
 Schéma sauvegardé avec succès
 Erreur lors de la sauvegarde: Reverse for 'schema_editor' not found. 'schema_editor' is not a valid view function or pattern name.
+Début du traitement du document: DTC
+Extraction des métadonnées pour: DTC
+Métadonnées extraites pour: C:\Users\lasss\data_structure\media\documents\2025\08\13\DTC_S020098_PF_N_SPE_50520_EN_3.0.pdf
+Métadonnées extraites pour: DTC
+Analyse du contenu pour: DTC
+Contenu extrait: 2802 caractères au total
+Analyse terminée pour: DTC - Type détecté: AUTRE
+Génération du schéma d'annotation pour: DTC
+Contenu extrait: 2802 caractères au total
+Contenu COMPLET extrait: 2802 caractères pour DTC
+Reponse API: 1549 chars
+Schema genere: 8 champs
+Schéma généré pour: DTC
+Traitement terminé pour: DTC
+Validation du schéma pour: DTC
+Schéma validé pour: DTC
+Génération des pré-annotations pour: DTC
+Contenu extrait: 2802 caractères au total
+Contenu COMPLET extrait: 2802 caractères pour DTC
+Reponse API: 743 chars
+Pré-annotations générées pour: DTC
+Erreur lors du calcul des statistiques: You have not defined a default connection
+Erreur lors du calcul des statistiques: You have not defined a default connection
+Schéma d'annotation créé: 689cb0a81efad4f6620f7ca9 pour document 5383c08d-55a2-4cc9-b359-4b47c3ba786d
+Schéma synchronisé avec MongoDB pour document 5383c08d-55a2-4cc9-b359-4b47c3ba786d
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'])
+Annotation créée: 689cb0a81efad4f6620f7caa pour document 5383c08d-55a2-4cc9-b359-4b47c3ba786d
+Annotation synchronisée avec MongoDB pour document 5383c08d-55a2-4cc9-b359-4b47c3ba786d

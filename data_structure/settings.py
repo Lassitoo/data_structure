@@ -72,9 +72,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'data_structure.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
+# Database - Configuration hybride Django + MongoDB
+# Django ORM pour les modèles relationnels (User, Document de base)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -82,16 +81,12 @@ DATABASES = {
     }
 }
 
-# # Database - MongoDB configuration
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'djongo',
-#         'NAME': 'data_structure_db',
-#         'CLIENT': {
-#             'host': 'mongodb://localhost:27017',
-#         }
-#     }
-# }
+# Configuration MongoDB avec MongoEngine pour les données JSON
+MONGODB_SETTINGS = {
+    'db': 'data_structure_db',
+    'host': 'mongodb://localhost:27017/data_structure_db',
+    'connect': False,  # Connexion lazy pour éviter les conflits
+}
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
