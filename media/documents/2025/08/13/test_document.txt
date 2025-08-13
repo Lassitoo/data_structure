@@ -1,0 +1,18 @@
+Document de test pour l'éditeur de schéma
+            
+Ce document a été créé automatiquement pour tester l'éditeur de formulaire de schéma.
+
+Contenu du document:
+- Nom du fichier: test_document.pdf
+- Type de document: PDF
+- Taille: Petite
+- Chemin: /documents/test/
+- Date de création: 2024-01-01
+- Auteur: Système de test
+- Version: 1.0
+- Statut: Actif
+- Catégorie: Test
+- Tags: test, schema, editor
+- Langue: Français
+- Encodage: UTF-8
+- Nombre de pages: 1

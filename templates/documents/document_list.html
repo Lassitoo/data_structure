@@ -180,12 +180,18 @@
                                                     <i class="fas fa-check"></i>
                                                 </a>
                                             {% endif %}
-                                            <a href="{{ document.file.url }}" 
-                                               target="_blank" 
-                                               class="btn btn-outline-secondary btn-sm"
-                                               title="Télécharger">
-                                                <i class="fas fa-download"></i>
-                                            </a>
+                                            {% if document.file %}
+                                                <a href="{{ document.file.url }}" 
+                                                   target="_blank" 
+                                                   class="btn btn-outline-secondary btn-sm"
+                                                   title="Télécharger">
+                                                    <i class="fas fa-download"></i>
+                                                </a>
+                                            {% else %}
+                                                <span class="btn btn-outline-secondary btn-sm disabled" title="Aucun fichier">
+                                                    <i class="fas fa-download"></i>
+                                                </span>
+                                            {% endif %}
                                         </div>
                                     </td>
                                 </tr>

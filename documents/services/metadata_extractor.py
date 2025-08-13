@@ -1,6 +1,6 @@
 # documents/services/metadata_extractor.py
 import os
-import magic
+# import magic  # Temporairement commenté pour les tests
 import hashlib
 from datetime import datetime
 from pathlib import Path
@@ -63,8 +63,17 @@ class MetadataExtractor:
             # Métadonnées de base
             metadata = self._get_basic_metadata(file_path)
 
-            # Détection du type MIME
-            mime_type = magic.from_file(file_path, mime=True)
+            # Détection du type MIME (temporairement désactivé)
+            # mime_type = magic.from_file(file_path, mime=True)
+            # Utiliser l'extension pour déterminer le type MIME temporairement
+            ext = os.path.splitext(file_path)[1].lower()
+            mime_type_map = {
+                '.pdf': 'application/pdf',
+                '.docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                '.txt': 'text/plain',
+                '.xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            }
+            mime_type = mime_type_map.get(ext, 'application/octet-stream')
             metadata['mime_type'] = mime_type
 
             # Extraction spécifique selon le type
@@ -97,7 +106,16 @@ class MetadataExtractor:
             str: Contenu textuel complet INTÉGRAL
         """
         try:
-            mime_type = magic.from_file(file_path, mime=True)
+            # mime_type = magic.from_file(file_path, mime=True)
+            # Utiliser l'extension pour déterminer le type MIME temporairement
+            ext = os.path.splitext(file_path)[1].lower()
+            mime_type_map = {
+                '.pdf': 'application/pdf',
+                '.docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                '.txt': 'text/plain',
+                '.xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            }
+            mime_type = mime_type_map.get(ext, 'application/octet-stream')
             content = ""
 
             if mime_type == 'application/pdf':

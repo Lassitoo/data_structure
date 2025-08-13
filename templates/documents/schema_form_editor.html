@@ -28,6 +28,7 @@
 
 <form method="post" id="schemaFormEditor">
     {% csrf_token %}
+    <input type="hidden" id="hiddenSchemaJson" name="schema_json" value="">
     
     <div class="row">
         <!-- Informations générales -->
@@ -63,6 +64,9 @@
                 <div class="card-body">
                     <button type="button" class="btn btn-success btn-sm mb-2" onclick="addField()">
                         <i class="fas fa-plus me-1"></i>Ajouter un champ
+                    </button>
+                    <button type="button" class="btn btn-primary btn-sm mb-2" onclick="testLoadExistingSchema()">
+                        <i class="fas fa-sync me-1"></i>Test Charger Schéma
                     </button>
                     <button type="button" class="btn btn-info btn-sm mb-2" onclick="duplicateField()">
                         <i class="fas fa-copy me-1"></i>Dupliquer le champ sélectionné
@@ -193,6 +197,8 @@
                             <option value="text">Texte</option>
                             <option value="number">Nombre</option>
                             <option value="date">Date</option>
+                            <option value="email">Email</option>
+                            <option value="url">URL</option>
                             <option value="boolean">Vrai/Faux</option>
                             <option value="choice">Choix unique</option>
                             <option value="multiple_choice">Choix multiples</option>
@@ -283,31 +289,55 @@ let selectedFieldIndex = -1;
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Initialisation du formulaire...');
     
+    // Test simple d'ajout de champ (désactivé)
+    // console.log('Test d\'ajout d\'un champ simple...');
+    // setTimeout(() => {
+    //     addField({
+    //         name: 'test_field',
+    //         label: 'Champ de test',
+    //         type: 'text',
+    //         description: 'Un champ de test',
+    //         required: true
+    //     });
+    // }, 1000);
+    
     // Charger le schéma existant
     loadExistingSchema();
     updateJsonPreview();
-    
-    // Pré-remplir les informations générales si elles existent
-    const schemaData = {{ schema_json|safe }};
-    if (schemaData) {
-        if (schemaData.name) {
-            document.getElementById('schemaName').value = schemaData.name;
-        }
-        if (schemaData.description) {
-            document.getElementById('schemaDescription').value = schemaData.description;
-        }
-    }
 });
 
 function loadExistingSchema() {
     // Récupérer les données du schéma depuis Django
-    const schemaData = {{ schema_json|safe }};
+    let schemaData;
+    try {
+        schemaData = {{ schema_json_js|safe }};
+        // Si schema_json est None ou vide, utiliser un objet vide
+        if (!schemaData || typeof schemaData !== 'object') {
+            schemaData = {'name': '', 'description': '', 'fields': []};
+        }
+    } catch (e) {
+        console.error('Erreur lors du parsing des données du schéma:', e);
+        console.error('Données brutes:', {{ schema_json_js|safe }});
+        schemaData = {'name': '', 'description': '', 'fields': []};
+    }
     
     console.log('=== DEBUT loadExistingSchema ===');
     console.log('Données du schéma chargées:', schemaData);
     
-    if (schemaData && schemaData.fields && schemaData.fields.length > 0) {
+    // Pré-remplir les informations générales si elles existent
+    if (schemaData.name) {
+        document.getElementById('schemaName').value = schemaData.name;
+    }
+    if (schemaData.description) {
+        document.getElementById('schemaDescription').value = schemaData.description;
+    }
+    
+    // Charger les champs s'ils existent
+    if (schemaData && schemaData.fields && Array.isArray(schemaData.fields) && schemaData.fields.length > 0) {
         console.log(`Chargement de ${schemaData.fields.length} champs...`);
+        
+        // Réinitialiser l'index des champs
+        currentFieldIndex = 0;
         
         // Charger chaque champ existant
         schemaData.fields.forEach((field, index) => {
@@ -329,13 +359,50 @@ function loadExistingSchema() {
     console.log('=== FIN loadExistingSchema ===');
 }
 
-function addField(fieldData = null) {
+function testLoadExistingSchema() {
+    console.log('=== TEST MANUEL LOAD EXISTING SCHEMA ===');
+    
+    // Vider d'abord les champs existants
     const container = document.getElementById('fieldsContainer');
+    container.innerHTML = '';
+    currentFieldIndex = 0;
+    
+    // Forcer le chargement
+    loadExistingSchema();
+}
+
+function addField(fieldData = null) {
+    console.log('=== DEBUT addField ===');
+    console.log('fieldData:', fieldData);
+    
+    const container = document.getElementById('fieldsContainer');
+    console.log('container:', container);
+    
     const template = document.getElementById('fieldTemplate');
+    console.log('template:', template);
+    
+    if (!container) {
+        console.error('Container fieldsContainer non trouvé !');
+        return;
+    }
+    
+    if (!template) {
+        console.error('Template fieldTemplate non trouvé !');
+        return;
+    }
+    
     const fieldElement = template.content.cloneNode(true);
+    console.log('fieldElement cloné:', fieldElement);
     
     const fieldItem = fieldElement.querySelector('.field-item');
     fieldItem.setAttribute('data-field-index', currentFieldIndex);
+    
+    // Corriger les IDs uniques pour les checkboxes
+    const requiredCheckbox = fieldItem.querySelector('#fieldRequired');
+    const requiredLabel = fieldItem.querySelector('label[for="fieldRequired"]');
+    const uniqueId = `fieldRequired_${currentFieldIndex}`;
+    requiredCheckbox.id = uniqueId;
+    requiredLabel.setAttribute('for', uniqueId);
     
     // Remplir avec les données existantes si fournies
     if (fieldData) {
@@ -344,34 +411,49 @@ function addField(fieldData = null) {
         // Remplir les champs de base
         fieldItem.querySelector('.field-name').value = fieldData.name || '';
         fieldItem.querySelector('.field-label').value = fieldData.label || '';
-        fieldItem.querySelector('.field-type').value = fieldData.type || 'text';
+        
+        // Gérer les types non standard (comme "date|multiple_choice")
+        let fieldType = fieldData.type || 'text';
+        if (fieldType.includes('|')) {
+            // Si le type contient un pipe, prendre la première partie
+            fieldType = fieldType.split('|')[0];
+        }
+        // Vérifier que le type est supporté
+        const supportedTypes = ['text', 'number', 'date', 'email', 'url', 'boolean', 'choice', 'multiple_choice', 'entity', 'classification'];
+        if (!supportedTypes.includes(fieldType)) {
+            fieldType = 'text'; // Type par défaut
+        }
+        
+        fieldItem.querySelector('.field-type').value = fieldType;
         fieldItem.querySelector('.field-description').value = fieldData.description || '';
         fieldItem.querySelector('.field-title').textContent = fieldData.label || fieldData.name || 'Nouveau champ';
         
         // Gérer le champ obligatoire
         if (fieldData.required) {
-            fieldItem.querySelector('#fieldRequired').checked = true;
+            requiredCheckbox.checked = true;
         }
         
         // Gérer les choix pour les types choice/multiple_choice
-        if ((fieldData.type === 'choice' || fieldData.type === 'multiple_choice') && fieldData.choices) {
+        if ((fieldType === 'choice' || fieldType === 'multiple_choice' || fieldData.choices) && fieldData.choices && Array.isArray(fieldData.choices)) {
             const choicesContainer = fieldItem.querySelector('.field-choices-container');
             choicesContainer.style.display = 'block';
             
-            // Vider la liste des choix existante (garder seulement le premier)
+            // Vider la liste des choix existante
             const choicesList = fieldItem.querySelector('.choices-list');
-            const firstChoice = choicesList.querySelector('.input-group');
             choicesList.innerHTML = '';
-            choicesList.appendChild(firstChoice);
             
             // Ajouter tous les choix
             fieldData.choices.forEach(choice => {
                 addChoiceToField(fieldItem, choice);
             });
         }
+    } else {
+        // Pour un nouveau champ, s'assurer que le titre est correct
+        fieldItem.querySelector('.field-title').textContent = 'Nouveau champ';
     }
     
     container.appendChild(fieldElement);
+    console.log('Champ ajouté au container, currentFieldIndex:', currentFieldIndex);
     currentFieldIndex++;
     
     hideNoFieldsMessage();
@@ -379,6 +461,8 @@ function addField(fieldData = null) {
     
     // Sélectionner le nouveau champ
     selectField(currentFieldIndex - 1);
+    
+    console.log('=== FIN addField ===');
 }
 
 function duplicateField() {
@@ -556,7 +640,7 @@ function extractFieldData(fieldElement) {
     const label = fieldElement.querySelector('.field-label').value;
     const type = fieldElement.querySelector('.field-type').value;
     const description = fieldElement.querySelector('.field-description').value;
-    const required = fieldElement.querySelector('#fieldRequired').checked;
+    const required = fieldElement.querySelector('input[type="checkbox"]').checked;
     
     const fieldData = {
         name: name,
@@ -638,6 +722,12 @@ function previewSchema() {
                 case 'date':
                     html += `<input type="date" class="form-control">`;
                     break;
+                case 'email':
+                    html += `<input type="email" class="form-control" placeholder="${field.description || ''}">`;
+                    break;
+                case 'url':
+                    html += `<input type="url" class="form-control" placeholder="${field.description || ''}">`;
+                    break;
                 case 'boolean':
                     html += `<div class="form-check"><input type="checkbox" class="form-check-input"><label class="form-check-label">${field.description || ''}</label></div>`;
                     break;
@@ -656,6 +746,10 @@ function previewSchema() {
                             html += `<div class="form-check"><input type="checkbox" class="form-check-input"><label class="form-check-label">${choice}</label></div>`;
                         });
                     }
+                    break;
+                case 'entity':
+                case 'classification':
+                    html += `<input type="text" class="form-control" placeholder="${field.description || ''}">`;
                     break;
                 default:
                     html += `<input type="text" class="form-control" placeholder="${field.description || ''}">`;
@@ -719,17 +813,10 @@ document.getElementById('schemaFormEditor').addEventListener('submit', function(
         return;
     }
     
-    // Créer un champ caché avec les données JSON
-    let hiddenInput = document.getElementById('schema_data');
-    if (!hiddenInput) {
-        hiddenInput = document.createElement('input');
-        hiddenInput.type = 'hidden';
-        hiddenInput.name = 'schema_data';
-        hiddenInput.id = 'schema_data';
-        this.appendChild(hiddenInput);
-    }
+    // Mettre à jour le champ caché avec les données JSON
+    document.getElementById('hiddenSchemaJson').value = JSON.stringify(schema);
     
-    hiddenInput.value = JSON.stringify(schema);
+    console.log('Soumission du formulaire avec schéma:', schema);
     
     // Soumettre le formulaire
     this.submit();

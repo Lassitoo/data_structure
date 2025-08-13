@@ -242,36 +242,58 @@ def schema_form_editor(request, document_pk):
         schema = get_object_or_404(AnnotationSchema, document=document)
         
         if request.method == 'POST':
+            logger.info(f"POST reçu pour schema_form_editor, données: {request.POST}")
+            
             # Traitement du formulaire de schéma
-            schema_data = request.POST.get('schema_data')
+            schema_data = request.POST.get('schema_json') or request.POST.get('schema_data')
+            logger.info(f"schema_data reçu: {schema_data}")
+            
             if schema_data:
                 try:
                     # Parser le JSON et sauvegarder dans final_schema
-                    schema_json = json.loads(schema_data)
-                    schema.final_schema = schema_json
+                    schema_json_data = json.loads(schema_data)
+                    logger.info(f"JSON parsé avec succès: {schema_json_data}")
+                    
+                    schema.final_schema = schema_json_data
                     schema.save()
+                    logger.info("Schéma sauvegardé avec succès")
                     
                     messages.success(request, "Schéma mis à jour avec succès!")
                     return redirect('documents:schema_editor', document_pk=document.pk)
                 except Exception as e:
+                    logger.error(f"Erreur lors de la sauvegarde: {str(e)}")
                     messages.error(request, f"Erreur lors de la sauvegarde: {str(e)}")
+            else:
+                logger.warning("Aucune donnée schema_json reçue")
+                # Traitement des données du formulaire structuré
+                schema_name = request.POST.get('schema_name', '')
+                schema_description = request.POST.get('schema_description', '')
+                
+                # Construire le schéma à partir des données du formulaire
+                # (Cette partie sera implémentée si nécessaire)
+                messages.info(request, "Fonctionnalité de sauvegarde du formulaire en cours de développement.")
         
         # Récupération du schéma JSON actuel
         try:
             # Utiliser final_schema s'il existe, sinon ai_generated_schema
-            if schema.final_schema and schema.final_schema.get('fields'):
+            if schema.final_schema and isinstance(schema.final_schema, dict) and schema.final_schema.get('fields'):
                 schema_json = schema.final_schema
-            elif schema.ai_generated_schema and schema.ai_generated_schema.get('fields'):
+            elif schema.ai_generated_schema and isinstance(schema.ai_generated_schema, dict) and schema.ai_generated_schema.get('fields'):
                 schema_json = schema.ai_generated_schema
             else:
-                schema_json = {}
-        except:
-            schema_json = {}
+                schema_json = {'name': '', 'description': '', 'fields': []}
+        except Exception as e:
+            logger.error(f"Erreur lors de la récupération du schéma JSON: {str(e)}")
+            schema_json = {'name': '', 'description': '', 'fields': []}
+        
+        # Sérialiser correctement le JSON pour JavaScript
+        schema_json_js = json.dumps(schema_json) if schema_json else json.dumps({'name': '', 'description': '', 'fields': []})
         
         context = {
             'document': document,
             'schema': schema,
             'schema_json': schema_json,
+            'schema_json_js': schema_json_js,
         }
         
         return render(request, 'documents/schema_form_editor.html', context)
