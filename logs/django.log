@@ -304,3 +304,58 @@ Contenu COMPLET extrait: 2096 caractères pour DTC III
 Mise à jour des annotations pour: DTC III
 Annotations mises à jour pour: DTC III
 Erreur validation annotation: Invalid filter: 'lookup'
+Erreur validation annotation: Invalid filter: 'lookup'
+Erreur validation annotation: Invalid filter: 'lookup'
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Validation des annotations pour: DTC III
+Annotations validées pour: DTC III
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Validation des annotations pour: DTC II
+Annotations validées pour: DTC II
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Validation des annotations pour: DTC
+Annotations validées pour: DTC
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Début du traitement du document: Guideline
+Extraction des métadonnées pour: Guideline
+Métadonnées extraites pour: C:\Users\lasss\data_structure\media\documents\2025\08\14\Q1AR2_Guideline.pdf
+Métadonnées extraites pour: Guideline
+Analyse du contenu pour: Guideline
+Contenu extrait: 59089 caractères au total
+[ANALYZE] Analyse type document: 59089 chars
+[API] Appel API Ollama (tentative 1) - 10339 chars
+Reponse API: 419 chars
+[RESULT] Type detecte: RAPPORT
+Analyse terminée pour: Guideline - Type détecté: RAPPORT
+Génération du schéma d'annotation pour: Guideline
+Contenu extrait: 59089 caractères au total
+Contenu COMPLET extrait: 59089 caractères pour Guideline
+[SCHEMA] Generation schema: 59089 chars
+[API] Appel API Ollama (tentative 1) - 61666 chars
+Reponse API: 1615 chars
+Schema genere: 6 champs
+Schéma généré pour: Guideline
+Traitement terminé pour: Guideline
+POST reçu pour schema_form_editor, données: <QueryDict: {'csrfmiddlewaretoken': ['qc5Co69fikaFvjMW8Qd96Pa5D6ORONoEIOM0LXgguXZAlhIpqv9busvr5AXTeSq2'], 'schema_json': ['{"name":"schema_stabilité_médicaments","description":"Description complète du schéma de stabilité médicamenteuse","fields":[{"name":"Titre","label":"Type de dossier","type":"choice","description":"Rapport, Note technique, etc.","required":true,"choices":["RAPPORT","NOTE TECHNIQUE"]},{"name":"Periode","label":"Période de re-test","type":"number","description":"Durée pendant laquelle le médicament peut être utilisé après un contrôle de qualité.","required":true},{"name":"Conditions","label":"Conditions de stockage","type":"text","description":"Description des conditions de stockage (température, humidité, etc.)","required":false},{"name":"Bilan","label":"Bilan massique","type":"boolean","description":"Indication si les résultats du bilan massique sont acceptables.","required":true},{"name":"Conception","label":"Conception de Matrixing","type":"text","description":"Description de la conception utilisée pour l\'étude de stabilité","required":false},{"name":"Données","label":"Données complémentaires","type":"text","description":"Liste des données supplémentaires fournies pour étayer les résultats (stabilité, toxicité, etc.)","required":false}]}'], 'schema_name': ['schema_stabilité_médicaments'], 'schema_description': ['Description complète du schéma de stabilité médicamenteuse']}>
+schema_data reçu: {"name":"schema_stabilité_médicaments","description":"Description complète du schéma de stabilité médicamenteuse","fields":[{"name":"Titre","label":"Type de dossier","type":"choice","description":"Rapport, Note technique, etc.","required":true,"choices":["RAPPORT","NOTE TECHNIQUE"]},{"name":"Periode","label":"Période de re-test","type":"number","description":"Durée pendant laquelle le médicament peut être utilisé après un contrôle de qualité.","required":true},{"name":"Conditions","label":"Conditions de stockage","type":"text","description":"Description des conditions de stockage (température, humidité, etc.)","required":false},{"name":"Bilan","label":"Bilan massique","type":"boolean","description":"Indication si les résultats du bilan massique sont acceptables.","required":true},{"name":"Conception","label":"Conception de Matrixing","type":"text","description":"Description de la conception utilisée pour l'étude de stabilité","required":false},{"name":"Données","label":"Données complémentaires","type":"text","description":"Liste des données supplémentaires fournies pour étayer les résultats (stabilité, toxicité, etc.)","required":false}]}
+JSON parsé avec succès: {'name': 'schema_stabilité_médicaments', 'description': 'Description complète du schéma de stabilité médicamenteuse', 'fields': [{'name': 'Titre', 'label': 'Type de dossier', 'type': 'choice', 'description': 'Rapport, Note technique, etc.', 'required': True, 'choices': ['RAPPORT', 'NOTE TECHNIQUE']}, {'name': 'Periode', 'label': 'Période de re-test', 'type': 'number', 'description': 'Durée pendant laquelle le médicament peut être utilisé après un contrôle de qualité.', 'required': True}, {'name': 'Conditions', 'label': 'Conditions de stockage', 'type': 'text', 'description': 'Description des conditions de stockage (température, humidité, etc.)', 'required': False}, {'name': 'Bilan', 'label': 'Bilan massique', 'type': 'boolean', 'description': 'Indication si les résultats du bilan massique sont acceptables.', 'required': True}, {'name': 'Conception', 'label': 'Conception de Matrixing', 'type': 'text', 'description': "Description de la conception utilisée pour l'étude de stabilité", 'required': False}, {'name': 'Données', 'label': 'Données complémentaires', 'type': 'text', 'description': 'Liste des données supplémentaires fournies pour étayer les résultats (stabilité, toxicité, etc.)', 'required': False}]}
+Schéma sauvegardé avec succès
+Erreur lors de la sauvegarde: Reverse for 'schema_editor' not found. 'schema_editor' is not a valid view function or pattern name.
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Validation du schéma pour: Guideline
+Schéma validé pour: Guideline
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Génération des pré-annotations pour: Guideline
+Contenu extrait: 59089 caractères au total
+Contenu COMPLET extrait: 59089 caractères pour Guideline
+[ANNOTATIONS] Generation pre-annotations
+[API] Appel API Ollama (tentative 1) - 52111 chars
+Reponse API: 1596 chars
+[SUCCESS] Pre-annotations generees: 6 champs
+Pré-annotations générées pour: Guideline
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Mise à jour des annotations pour: Guideline
+Annotations mises à jour pour: Guideline
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Validation des annotations pour: Guideline
+Annotations validées pour: Guideline
