@@ -268,3 +268,39 @@ Traitement terminé pour: DTC III
 [OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
 Validation du schéma pour: DTC III
 Schéma validé pour: DTC III
+Erreur validation annotation: Invalid filter: 'lookup'
+Erreur validation annotation: Invalid filter: 'lookup'
+Erreur validation annotation: Invalid filter: 'lookup'
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Génération des pré-annotations pour: DTC III
+Contenu extrait: 2096 caractères au total
+Contenu COMPLET extrait: 2096 caractères pour DTC III
+[ANNOTATIONS] Generation pre-annotations
+[API] Appel API Ollama (tentative 1) - 5051 chars
+Reponse API: 1395 chars
+[SUCCESS] Pre-annotations generees: 9 champs
+Pré-annotations générées pour: DTC III
+Erreur validation annotation: Invalid filter: 'lookup'
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Génération des pré-annotations pour: DTC
+Contenu extrait: 2802 caractères au total
+Contenu COMPLET extrait: 2802 caractères pour DTC
+[ANNOTATIONS] Generation pre-annotations
+[API] Appel API Ollama (tentative 1) - 5588 chars
+Reponse API: 1386 chars
+[SUCCESS] Pre-annotations generees: 7 champs
+Pré-annotations générées pour: DTC
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Mise à jour des annotations pour: DTC
+Annotations mises à jour pour: DTC
+Erreur validation annotation: Invalid filter: 'lookup'
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Génération des pré-annotations pour: DTC III
+Contenu extrait: 2096 caractères au total
+Contenu COMPLET extrait: 2096 caractères pour DTC III
+[ANNOTATIONS] Generation pre-annotations
+[API] Appel API Ollama (tentative 1) - 5051 chars
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Mise à jour des annotations pour: DTC III
+Annotations mises à jour pour: DTC III
+Erreur validation annotation: Invalid filter: 'lookup'
