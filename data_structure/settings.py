@@ -87,6 +87,15 @@ MONGODB_SETTINGS = {
     'host': 'mongodb://localhost:27017/data_structure_db',
     'connect': False,  # Connexion lazy pour éviter les conflits
 }
+
+# Configuration Llama3.1 pour l'IA
+LLAMA_CONFIG = {
+    'base_url': 'http://localhost:11434',
+    'model': 'llama3.1:8b-instruct-q4_K_M',
+    'temperature': 0.3,
+    'top_p': 0.95,
+    'num_ctx': 131072,  # 128k tokens de contexte
+}
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 

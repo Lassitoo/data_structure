@@ -17,25 +17,27 @@ from .forms import (
     ValidationForm, SearchForm
 )
 from .services.annotation_service import AnnotationService
+from .services.hybrid_service import HybridAnnotationService
 
 logger = logging.getLogger('documents')
+
+# Instance globale du service hybride
+hybrid_service = HybridAnnotationService()
 
 
 @login_required
 def dashboard(request):
     """Vue principale du tableau de bord"""
     try:
-        annotation_service = AnnotationService()
-
-        # Statistiques générales
-        stats = annotation_service.get_document_statistics()
+        # Utiliser le service hybride pour les statistiques combinées
+        stats = hybrid_service.get_combined_statistics()
 
         # Documents récents de l'utilisateur
         recent_documents = Document.objects.filter(
             uploaded_by=request.user
         ).order_by('-created_at')[:5]
 
-        # Annotations en cours pour l'utilisateur
+        # Annotations en cours pour l'utilisateur (Django + MongoDB)
         pending_annotations = Annotation.objects.filter(
             annotated_by=request.user,
             is_complete=False

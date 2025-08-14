@@ -1,4 +1,4 @@
-# documents/services/mistral_service.py
+# documents/services/llama_service.py
 import json
 import logging
 from typing import Dict, Any
@@ -32,8 +32,8 @@ except Exception:
 logger = logging.getLogger("documents")
 
 
-class MistralService:
-    """Service pour l'intégration avec llama3.2:latest via Ollama avec gestion des gros documents."""
+class LlamaService:
+    """Service pour l'intégration avec llama3.1:8b-instruct-q4_K_M via Ollama avec gestion des gros documents."""
 
     def __init__(self):
         self.llm = None
@@ -52,14 +52,14 @@ class MistralService:
 
     def _initialize_model(self):
         """
-        Initialise le modèle llama3.2:latest avec double stratégie:
+        Initialise le modèle llama3.1:8b-instruct-q4_K_M avec double stratégie:
         1. ChatOllama (LangChain) - recommandé
         2. API directe Ollama - fallback
         """
         try:
-            cfg = getattr(settings, "MISTRAL_CONFIG", {}) or {}
+            cfg = getattr(settings, "LLAMA_CONFIG", {}) or {}
             base_url = cfg.get("base_url", "http://localhost:11434")
-            model = cfg.get("model", "llama3.2:latest")
+            model = cfg.get("model", "llama3.1:8b-instruct-q4_K_M")
             temperature = cfg.get("temperature", 0.3)
             top_p = cfg.get("top_p", 0.95)
             num_ctx = cfg.get("num_ctx", 32768)
@@ -205,7 +205,7 @@ class MistralService:
     def _create_intelligent_sample(self, content: str) -> str:
         """
         Crée un échantillon intelligent pour les très gros documents
-        Optimisé pour llama3.2:latest avec 32k contexte
+        Optimisé pour llama3.1:8b-instruct-q4_K_M avec contexte étendu
         """
         try:
             if len(content) <= 150000:  # < 150k chars, garde tout
@@ -250,10 +250,10 @@ class MistralService:
 
     # ---------- Fonctions métier adaptées ----------
     def analyze_document_type(self, metadata: Dict, content: str = "") -> str:
-        """Analyse le type de document avec llama3.2:latest et gestion des gros volumes"""
+        """Analyse le type de document avec llama3.1:8b-instruct-q4_K_M et gestion des gros volumes"""
         try:
             content_length = len(content)
-            logger.info(f"Analyse type document: {content_length} caractères avec llama3.2:latest")
+            logger.info(f"Analyse type document: {content_length} caractères avec llama3.1:8b-instruct-q4_K_M")
 
             # Gestion intelligente selon la taille
             if content_length > 100000:
@@ -326,11 +326,11 @@ FIN:
 
     def generate_annotation_schema(self, document_metadata: Dict, document_content: str = "") -> Dict:
         """
-        Génère un schéma d'annotation avec llama3.2:latest et gestion optimisée des gros documents
+        Génère un schéma d'annotation avec llama3.1:8b-instruct-q4_K_M et gestion optimisée des gros documents
         """
         try:
             content_length = len(document_content)
-            logger.info(f"Génération schéma avec llama3.2:latest: {content_length} caractères")
+            logger.info(f"Génération schéma avec llama3.1:8b-instruct-q4_K_M: {content_length} caractères")
 
             # Adaptation du contenu selon la taille pour optimiser avec llama3.2
             if content_length > 150000:
@@ -357,7 +357,7 @@ FIN:
             # Validation et correction des choix manquants
             schema = self._validate_and_fix_schema(schema)
 
-            logger.info("Schéma généré avec llama3.2:latest")
+            logger.info("Schéma généré avec llama3.1:8b-instruct-q4_K_M")
             return schema
 
         except Exception as e:
@@ -399,7 +399,7 @@ FIN:
             return content[:80000]
 
     def _build_document_analysis_prompt(self, metadata: Dict, content: str, is_sample: bool = False) -> str:
-        """Prompt optimisé pour llama3.2:latest"""
+        """Prompt optimisé pour llama3.1:8b-instruct-q4_K_M"""
         sample_info = " (ÉCHANTILLON REPRÉSENTATIF)" if is_sample else ""
 
         prompt = f"""Tu es un expert en classification de documents. Analyse ce document{sample_info} et détermine son type principal.
@@ -488,9 +488,9 @@ TYPE:"""
         # Choix génériques par défaut
         return ["Option 1", "Option 2", "Option 3", "Autre"]
 
-    # ---------- Prompts optimisés pour llama3.2:latest ----------
+    # ---------- Prompts optimisés pour llama3.1:8b-instruct-q4_K_M ----------
     def _build_schema_prompt(self, metadata: Dict, content: str) -> str:
-        """Prompt optimisé pour llama3.2:latest avec instructions précises"""
+        """Prompt optimisé pour llama3.1:8b-instruct-q4_K_M avec instructions précises"""
         document_type = metadata.get('document_type', 'UNKNOWN')
 
         prompt = f"""Tu es un expert en annotation de documents. Analyse ce document et crée un schéma d'annotation JSON complet et précis.

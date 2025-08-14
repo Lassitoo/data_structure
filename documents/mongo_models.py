@@ -206,10 +206,10 @@ def connect_mongodb():
         })
         
         connect(**mongodb_settings)
-        print("✅ Connexion MongoDB établie avec succès")
+        print("[OK] Connexion MongoDB etablie avec succes")
         return True
     except Exception as e:
-        print(f"❌ Erreur de connexion MongoDB: {e}")
+        print(f"[ERROR] Erreur de connexion MongoDB: {e}")
         return False
 
 
@@ -222,8 +222,8 @@ def init_mongodb_indexes():
         AnnotationHistoryMongo.ensure_indexes()
         DocumentMetadataMongo.ensure_indexes()
         
-        print("✅ Index MongoDB créés avec succès")
+        print("[OK] Index MongoDB crees avec succes")
         return True
     except Exception as e:
-        print(f"❌ Erreur lors de la création des index: {e}")
+        print(f"[ERROR] Erreur lors de la creation des index: {e}")
         return False

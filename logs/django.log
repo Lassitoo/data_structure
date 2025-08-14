@@ -144,3 +144,127 @@ Schéma synchronisé avec MongoDB pour document 5383c08d-55a2-4cc9-b359-4b47c3ba78
 Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'])
 Annotation créée: 689cb0a81efad4f6620f7caa pour document 5383c08d-55a2-4cc9-b359-4b47c3ba786d
 Annotation synchronisée avec MongoDB pour document 5383c08d-55a2-4cc9-b359-4b47c3ba786d
+Début du traitement du document: Document DTC
+Extraction des métadonnées pour: Document DTC
+Métadonnées extraites pour: C:\Users\lasss\data_structure\media\documents\2025\08\13\DTC_S006597_PF_R_FAB_17319_EN_15.0.pdf
+Métadonnées extraites pour: Document DTC
+Analyse du contenu pour: Document DTC
+Contenu extrait: 758 caractères au total
+Analyse terminée pour: Document DTC - Type détecté: AUTRE
+Génération du schéma d'annotation pour: Document DTC
+Contenu extrait: 758 caractères au total
+Contenu COMPLET extrait: 758 caractères pour Document DTC
+Schema genere: 3 champs
+Schéma généré pour: Document DTC
+Traitement terminé pour: Document DTC
+Validation du schéma pour: Document DTC
+Schéma validé pour: Document DTC
+Reponse API: 13 chars
+Reponse API: 2033 chars
+Schema genere: 8 champs
+Reponse API: 13 chars
+Erreur validation annotation: Invalid filter: 'lookup'
+Mise à jour des annotations pour: guideline
+Annotations mises à jour pour: guideline
+Erreur validation annotation: Invalid filter: 'lookup'
+Début du traitement du document: DTC
+Extraction des métadonnées pour: DTC
+Métadonnées extraites pour: C:\Users\lasss\data_structure\media\documents\2025\08\13\DTC_S020098_PF_N_SPE_50520_EN_3.0.pdf
+Métadonnées extraites pour: DTC
+Analyse du contenu pour: DTC
+Contenu extrait: 2802 caractères au total
+Reponse API: 486 chars
+Analyse terminée pour: DTC - Type détecté: RAPPORT
+Génération du schéma d'annotation pour: DTC
+Contenu extrait: 2802 caractères au total
+Contenu COMPLET extrait: 2802 caractères pour DTC
+Reponse API: 2852 chars
+Schema genere: 7 champs
+Schéma généré pour: DTC
+Traitement terminé pour: DTC
+Validation du schéma pour: DTC
+Schéma validé pour: DTC
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Début du traitement du document: DTC II
+Extraction des métadonnées pour: DTC II
+Métadonnées extraites pour: C:\Users\lasss\data_structure\media\documents\2025\08\14\DTC_S006597_PF_R_FAB_17319_EN_15.0.pdf
+Métadonnées extraites pour: DTC II
+Analyse du contenu pour: DTC II
+Contenu extrait: 758 caractères au total
+[ANALYZE] Analyse type document: 758 chars
+[API] Appel API Ollama (tentative 1) - 1116 chars
+[WARNING] Reponse vide ou trop courte: 7 chars
+[API] Appel API Ollama (tentative 2) - 1116 chars
+[WARNING] Reponse vide ou trop courte: 7 chars
+[API] Appel API Ollama (tentative 3) - 1116 chars
+[WARNING] Reponse vide ou trop courte: 7 chars
+[RESULT] Type detecte: AUTRE
+Analyse terminée pour: DTC II - Type détecté: AUTRE
+Génération du schéma d'annotation pour: DTC II
+Contenu extrait: 758 caractères au total
+Contenu COMPLET extrait: 758 caractères pour DTC II
+[SCHEMA] Generation schema: 758 chars
+[API] Appel API Ollama (tentative 1) - 3348 chars
+Reponse API: 2481 chars
+Schema genere: 8 champs
+Schéma généré pour: DTC II
+Traitement terminé pour: DTC II
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+POST reçu pour schema_form_editor, données: <QueryDict: {'csrfmiddlewaretoken': ['Ue6Im8AG1W7Nwt31K3qDQWX84JylhyCjA420Da31ustIt0YK0v2m8vi6BtbgZHAP'], 'schema_json': ['{"name":"schema_descriptif_DTC_S006597_PF_R_FAB_17319_EN","description":"Description complète du schéma pour le document DTC_S006597_PF_R_FAB_17319_EN","fields":[{"name":"Nom","label":"Titre du document","type":"text","description":"Le titre du document","required":true},{"name":"Adresse","label":"Adresse de l\'industrie pharmaceutique en Europe","type":"text","description":"L\'adresse de l\'industrie pharmaceutique en Europe","required":false},{"name":"Marque","label":"Marque du médicament","type":"text","description":"La marque du médicament","required":true},{"name":"Formule","label":"Formule active","type":"text","description":"La formule active du médicament","required":false},{"name":"Dose","label":"Dose recommandée","type":"number","description":"La dose recommandée du médicament","required":false},{"name":"Pays","label":"Pays de production","type":"choice","description":"Le pays de production du médicament","required":true,"choices":["France","Irlande","Pologne"]},{"name":"Entreprise","label":"Entreprise de production","type":"choice","description":"L\'entreprise de production du médicament","required":false,"choices":["Servier","Anpharm"]},{"name":"Date","label":"Date de création","type":"date","description":"La date de création du document","required":true}]}'], 'schema_name': ['schema_descriptif_DTC_S006597_PF_R_FAB_17319_EN'], 'schema_description': ['Description complète du schéma pour le document DTC_S006597_PF_R_FAB_17319_EN']}>
+schema_data reçu: {"name":"schema_descriptif_DTC_S006597_PF_R_FAB_17319_EN","description":"Description complète du schéma pour le document DTC_S006597_PF_R_FAB_17319_EN","fields":[{"name":"Nom","label":"Titre du document","type":"text","description":"Le titre du document","required":true},{"name":"Adresse","label":"Adresse de l'industrie pharmaceutique en Europe","type":"text","description":"L'adresse de l'industrie pharmaceutique en Europe","required":false},{"name":"Marque","label":"Marque du médicament","type":"text","description":"La marque du médicament","required":true},{"name":"Formule","label":"Formule active","type":"text","description":"La formule active du médicament","required":false},{"name":"Dose","label":"Dose recommandée","type":"number","description":"La dose recommandée du médicament","required":false},{"name":"Pays","label":"Pays de production","type":"choice","description":"Le pays de production du médicament","required":true,"choices":["France","Irlande","Pologne"]},{"name":"Entreprise","label":"Entreprise de production","type":"choice","description":"L'entreprise de production du médicament","required":false,"choices":["Servier","Anpharm"]},{"name":"Date","label":"Date de création","type":"date","description":"La date de création du document","required":true}]}
+JSON parsé avec succès: {'name': 'schema_descriptif_DTC_S006597_PF_R_FAB_17319_EN', 'description': 'Description complète du schéma pour le document DTC_S006597_PF_R_FAB_17319_EN', 'fields': [{'name': 'Nom', 'label': 'Titre du document', 'type': 'text', 'description': 'Le titre du document', 'required': True}, {'name': 'Adresse', 'label': "Adresse de l'industrie pharmaceutique en Europe", 'type': 'text', 'description': "L'adresse de l'industrie pharmaceutique en Europe", 'required': False}, {'name': 'Marque', 'label': 'Marque du médicament', 'type': 'text', 'description': 'La marque du médicament', 'required': True}, {'name': 'Formule', 'label': 'Formule active', 'type': 'text', 'description': 'La formule active du médicament', 'required': False}, {'name': 'Dose', 'label': 'Dose recommandée', 'type': 'number', 'description': 'La dose recommandée du médicament', 'required': False}, {'name': 'Pays', 'label': 'Pays de production', 'type': 'choice', 'description': 'Le pays de production du médicament', 'required': True, 'choices': ['France', 'Irlande', 'Pologne']}, {'name': 'Entreprise', 'label': 'Entreprise de production', 'type': 'choice', 'description': "L'entreprise de production du médicament", 'required': False, 'choices': ['Servier', 'Anpharm']}, {'name': 'Date', 'label': 'Date de création', 'type': 'date', 'description': 'La date de création du document', 'required': True}]}
+Schéma sauvegardé avec succès
+Erreur lors de la sauvegarde: Reverse for 'schema_editor' not found. 'schema_editor' is not a valid view function or pattern name.
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Validation du schéma pour: DTC II
+Schéma validé pour: DTC II
+Erreur annotation document: No Document matches the given query.
+Erreur détail document: No Document matches the given query.
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Génération des pré-annotations pour: DTC II
+Contenu extrait: 758 caractères au total
+Contenu COMPLET extrait: 758 caractères pour DTC II
+[ANNOTATIONS] Generation pre-annotations
+[API] Appel API Ollama (tentative 1) - 3159 chars
+Erreur validation annotation: No Document matches the given query.
+Erreur détail document: No Document matches the given query.
+Erreur détail document: No Document matches the given query.
+Erreur détail document: No Document matches the given query.
+Reponse API: 1990 chars
+[SUCCESS] Pre-annotations generees: 8 champs
+Pré-annotations générées pour: DTC II
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Mise à jour des annotations pour: DTC II
+Annotations mises à jour pour: DTC II
+Erreur validation annotation: Invalid filter: 'lookup'
+Erreur validation annotation: Invalid filter: 'lookup'
+Erreur validation annotation: Invalid filter: 'lookup'
+Erreur validation annotation: Invalid filter: 'lookup'
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Début du traitement du document: DTC III
+Extraction des métadonnées pour: DTC III
+Métadonnées extraites pour: C:\Users\lasss\data_structure\media\documents\2025\08\14\DTC_S06490_PF_R_FOR_504_EN_1.0-1_1.pdf
+Métadonnées extraites pour: DTC III
+Analyse du contenu pour: DTC III
+Contenu extrait: 2096 caractères au total
+[ANALYZE] Analyse type document: 2096 chars
+[API] Appel API Ollama (tentative 1) - 2454 chars
+Reponse API: 419 chars
+[RESULT] Type detecte: RAPPORT
+Analyse terminée pour: DTC III - Type détecté: RAPPORT
+Génération du schéma d'annotation pour: DTC III
+Contenu extrait: 2096 caractères au total
+Contenu COMPLET extrait: 2096 caractères pour DTC III
+[SCHEMA] Generation schema: 2096 chars
+[API] Appel API Ollama (tentative 1) - 4793 chars
+Reponse API: 3018 chars
+Schema genere: 9 champs
+Schéma généré pour: DTC III
+Traitement terminé pour: DTC III
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Validation du schéma pour: DTC III
+Schéma validé pour: DTC III

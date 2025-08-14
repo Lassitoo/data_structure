@@ -33,13 +33,13 @@ class FastAIService:
         try:
             response = requests.get(f"{self.base_url}/api/tags", timeout=5)
             if response.status_code == 200:
-                logger.info(f"✅ Connexion Ollama OK - Modèle: {self.model}")
+                logger.info(f"[OK] Connexion Ollama OK - Modele: {self.model}")
                 return True
             else:
-                logger.error(f"❌ Erreur connexion Ollama: {response.status_code}")
+                logger.error(f"[ERROR] Erreur connexion Ollama: {response.status_code}")
                 return False
         except Exception as e:
-            logger.error(f"❌ Impossible de se connecter à Ollama: {e}")
+            logger.error(f"[ERROR] Impossible de se connecter a Ollama: {e}")
             return False
 
     def _call_ollama_api(self, prompt: str, config_type: str = 'default') -> str:
@@ -62,7 +62,7 @@ class FastAIService:
             # Appel API avec retry
             for attempt in range(self.max_retries):
                 try:
-                    logger.info(f"🚀 Appel API Ollama (tentative {attempt + 1}) - {len(prompt)} chars")
+                    logger.info(f"[API] Appel API Ollama (tentative {attempt + 1}) - {len(prompt)} chars")
                     
                     response = requests.post(
                         f"{self.base_url}/api/generate",
@@ -78,24 +78,24 @@ class FastAIService:
                             logger.info(f"Reponse API: {len(content)} chars")
                             return content
                         else:
-                            logger.warning(f"⚠️ Réponse vide ou trop courte: {len(content)} chars")
+                            logger.warning(f"[WARNING] Reponse vide ou trop courte: {len(content)} chars")
                             
                     else:
-                        logger.error(f"❌ Erreur API: {response.status_code} - {response.text}")
+                        logger.error(f"[ERROR] Erreur API: {response.status_code} - {response.text}")
                         
                 except requests.exceptions.Timeout:
-                    logger.warning(f"⏰ Timeout tentative {attempt + 1}")
+                    logger.warning(f"[TIMEOUT] Timeout tentative {attempt + 1}")
                     if attempt == self.max_retries - 1:
                         raise
                 except Exception as e:
-                    logger.error(f"❌ Erreur tentative {attempt + 1}: {e}")
+                    logger.error(f"[ERROR] Erreur tentative {attempt + 1}: {e}")
                     if attempt == self.max_retries - 1:
                         raise
 
             return self._fallback_response("Toutes les tentatives ont échoué")
 
         except Exception as e:
-            logger.error(f"❌ Erreur critique API Ollama: {e}")
+            logger.error(f"[ERROR] Erreur critique API Ollama: {e}")
             return self._fallback_response(f"Erreur API: {e}")
 
     def analyze_document_type(self, metadata: Dict, content: str = "") -> str:
@@ -105,12 +105,12 @@ class FastAIService:
         """
         try:
             content_length = len(content)
-            logger.info(f"🔍 Analyse type document: {content_length} chars")
+            logger.info(f"[ANALYZE] Analyse type document: {content_length} chars")
 
             # Échantillonnage intelligent pour les gros documents
             if content_length > DOCUMENT_THRESHOLDS['large_doc']:
                 content = self._create_smart_sample(content, target_size=15000)
-                logger.info(f"📝 Échantillon créé: {len(content)} chars")
+                logger.info(f"[SAMPLE] Echantillon cree: {len(content)} chars")
 
             # Construction du prompt
             prompt = PROMPTS['document_type'].format(
@@ -125,11 +125,11 @@ class FastAIService:
 
             # Extraction du type
             doc_type = self._extract_document_type(response)
-            logger.info(f"📋 Type détecté: {doc_type}")
+            logger.info(f"[RESULT] Type detecte: {doc_type}")
             return doc_type
 
         except Exception as e:
-            logger.error(f"❌ Erreur analyse type: {e}")
+            logger.error(f"[ERROR] Erreur analyse type: {e}")
             return self._analyze_type_fallback(metadata, content)
 
     def generate_annotation_schema(self, document_metadata: Dict, document_content: str = "") -> Dict:
@@ -139,12 +139,12 @@ class FastAIService:
         """
         try:
             content_length = len(document_content)
-            logger.info(f"🏗️ Génération schéma: {content_length} chars")
+            logger.info(f"[SCHEMA] Generation schema: {content_length} chars")
 
             # Échantillonnage intelligent pour les gros documents
             if content_length > DOCUMENT_THRESHOLDS['medium_doc']:
                 content_for_schema = self._create_schema_sample(document_content)
-                logger.info(f"📝 Échantillon schéma: {len(content_for_schema)} chars")
+                logger.info(f"[SAMPLE] Echantillon schema: {len(content_for_schema)} chars")
             else:
                 content_for_schema = document_content
 
@@ -166,7 +166,7 @@ class FastAIService:
             return schema
 
         except Exception as e:
-            logger.error(f"❌ Erreur génération schéma: {e}")
+            logger.error(f"[ERROR] Erreur generation schema: {e}")
             return FALLBACKS['default_schema']
 
     def generate_pre_annotations(self, content: str, schema: Dict) -> Dict:
@@ -175,7 +175,7 @@ class FastAIService:
         Optimisé pour la vitesse
         """
         try:
-            logger.info(f"🏷️ Génération pré-annotations")
+            logger.info(f"[ANNOTATIONS] Generation pre-annotations")
 
             # Échantillonnage pour les gros documents
             if len(content) > DOCUMENT_THRESHOLDS['medium_doc']:
@@ -210,11 +210,11 @@ class FastAIService:
             # Validation et nettoyage
             annotations = self._validate_annotations(annotations, schema)
 
-            logger.info(f"✅ Pré-annotations générées: {len(annotations)} champs")
+            logger.info(f"[SUCCESS] Pre-annotations generees: {len(annotations)} champs")
             return annotations
 
         except Exception as e:
-            logger.error(f"❌ Erreur pré-annotations: {e}")
+            logger.error(f"[ERROR] Erreur pre-annotations: {e}")
             return self._fallback_annotations(schema)
 
     # ========== MÉTHODES UTILITAIRES OPTIMISÉES ==========
@@ -247,7 +247,7 @@ class FastAIService:
             return sample
 
         except Exception as e:
-            logger.error(f"❌ Erreur échantillon: {e}")
+            logger.error(f"[ERROR] Erreur echantillon: {e}")
             return content[:target_size]
 
     def _create_schema_sample(self, content: str) -> str:
@@ -279,7 +279,7 @@ class FastAIService:
             return sample
 
         except Exception as e:
-            logger.error(f"❌ Erreur échantillon schéma: {e}")
+            logger.error(f"[ERROR] Erreur echantillon schema: {e}")
             return content[:60000]
 
     def _extract_document_type(self, response: str) -> str:
@@ -308,7 +308,7 @@ class FastAIService:
                     
             return FALLBACKS['default_schema']
         except json.JSONDecodeError as e:
-            logger.error(f"❌ Erreur parsing JSON schéma: {e}")
+            logger.error(f"[ERROR] Erreur parsing JSON schema: {e}")
             return FALLBACKS['default_schema']
 
     def _parse_annotation_response(self, response: str) -> Dict:
@@ -323,7 +323,7 @@ class FastAIService:
                 return json.loads(json_str)
             return {}
         except json.JSONDecodeError as e:
-            logger.error(f"❌ Erreur parsing JSON annotations: {e}")
+            logger.error(f"[ERROR] Erreur parsing JSON annotations: {e}")
             return {}
 
     def _validate_and_fix_schema(self, schema: Dict) -> Dict:
@@ -357,7 +357,7 @@ class FastAIService:
             return schema
 
         except Exception as e:
-            logger.error(f"❌ Erreur validation schéma: {e}")
+            logger.error(f"[ERROR] Erreur validation schema: {e}")
             return schema
 
     def _validate_annotations(self, annotations: Dict, schema: Dict) -> Dict:
@@ -392,7 +392,7 @@ class FastAIService:
             return validated
 
         except Exception as e:
-            logger.error(f"❌ Erreur validation annotations: {e}")
+            logger.error(f"[ERROR] Erreur validation annotations: {e}")
             return annotations
 
     def _generate_smart_choices(self, field_name: str) -> list:

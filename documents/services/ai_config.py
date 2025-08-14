@@ -6,33 +6,37 @@ Configuration centralisée pour les services d'IA
 # Configuration Ollama - API directe (plus rapide que ChatOllama)
 OLLAMA_CONFIG = {
     'base_url': 'http://localhost:11434',
-    'model': 'mistral:latest',
+    'model': 'llama3.1:8b-instruct-q4_K_M',
     'timeout': 300,  # 5 minutes
     'max_retries': 3,
 }
 
 # Configuration du modèle pour différents types de documents
+# Optimisé pour llama3.1:8b-instruct-q4_K_M (modèle quantifié)
 MODEL_CONFIGS = {
     'default': {
-        'num_ctx': 131072,        # 128k tokens
-        'temperature': 0.3,
-        'top_p': 0.95,
+        'num_ctx': 131072,        # 128k tokens (Llama 3.1 supporte jusqu'à 128k)
+        'temperature': 0.2,       # Plus bas pour plus de précision avec le modèle quantifié
+        'top_p': 0.9,            # Réduit pour améliorer la cohérence
         'num_predict': 4096,
         'repeat_penalty': 1.1,
+        'top_k': 40,             # Ajouté pour le modèle quantifié
     },
     'large_docs': {
-        'num_ctx': 200000,        # 200k tokens
-        'temperature': 0.2,
-        'top_p': 0.98,
+        'num_ctx': 131072,        # Limité à 128k pour Llama 3.1
+        'temperature': 0.1,       # Très bas pour les gros documents
+        'top_p': 0.85,
         'num_predict': 6144,
-        'repeat_penalty': 1.1,
+        'repeat_penalty': 1.15,
+        'top_k': 30,
     },
     'fast': {
         'num_ctx': 32768,         # 32k tokens (plus rapide)
-        'temperature': 0.1,
-        'top_p': 0.9,
+        'temperature': 0.1,       # Très déterministe pour la rapidité
+        'top_p': 0.8,
         'num_predict': 2048,
         'repeat_penalty': 1.0,
+        'top_k': 20,
     }
 }
 
@@ -53,7 +57,7 @@ PERFORMANCE_CONFIG = {
     'memory_limit_gb': 16,
 }
 
-# Prompts optimisés pour différents types de tâches
+# Prompts optimisés pour Llama 3.1 Instruct
 PROMPTS = {
     'document_type': """Tu es un expert en classification de documents. Analyse ce document et détermine son type principal.
 
@@ -105,7 +109,7 @@ FORMAT JSON REQUIS:
       "type": "type_valide",
       "description": "Description détaillée",
       "required": true/false,
-      "choices": ["option1", "option2", "option3"] // OBLIGATOIRE pour choice/multiple_choice
+      "choices": ["option1", "option2", "option3"]
     }}
   ]
 }}
