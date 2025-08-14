@@ -1136,3 +1136,272 @@ Erreur détail document: The 'file' attribute has no file associated with it.
 Erreur détail document: The 'file' attribute has no file associated with it.
 [OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
 Erreur statistiques: Cannot resolve keyword 'completion_percentage' into field. Choices are: ai_pre_annotations, annotated_by, annotated_by_id, completed_at, confidence_score, created_at, document, document_id, final_annotations, history, id, is_complete, is_validated, schema, schema_id, updated_at, validated_at, validated_by, validated_by_id, validation_notes
+Suppression du document 2e6ed8f7-de01-443f-9dae-e56a45117fda (Document Test 050) par lasss
+Éléments associés: 0 annotation(s), 1 schéma(s), 0 entrée(s) d'historique
+Schéma pour document 2e6ed8f7-de01-443f-9dae-e56a45117fda supprimé de MongoDB
+Schéma abd42628-e750-494c-8cd7-31b4ecea9942 supprimé de MongoDB
+Document 2e6ed8f7-de01-443f-9dae-e56a45117fda et données associées supprimés de MongoDB
+Document 2e6ed8f7-de01-443f-9dae-e56a45117fda supprimé de MongoDB
+Document 2e6ed8f7-de01-443f-9dae-e56a45117fda supprimé avec succès
+Annotation pour document feb069e8-2da0-431d-9108-b522e36307e6 supprimée de MongoDB
+Annotation fe7747ff-3398-44ed-8ba2-7be0fd2e6453 supprimée de MongoDB
+Annotation pour document 5df4ebdd-27cb-49f7-bf46-a50da16a84a3 supprimée de MongoDB
+Annotation e358e991-3aef-4eb0-948d-6df1d469dd2a supprimée de MongoDB
+Annotation pour document 1ac7a509-83a2-4393-8489-61cd1d551612 supprimée de MongoDB
+Annotation c8fd5acc-8cc9-43d8-b7fd-5b9f61c4d89e supprimée de MongoDB
+Annotation pour document 05b5efb2-b054-4384-8530-df052a9f3e61 supprimée de MongoDB
+Annotation c8a4d09d-f6d7-4f9b-89a0-de525fb17754 supprimée de MongoDB
+Annotation pour document 48312ca2-f651-400b-b291-d8b953ffee08 supprimée de MongoDB
+Annotation bedfc73b-60b4-4348-a7ff-50093207bbbf supprimée de MongoDB
+Annotation pour document 38bfae7b-aa15-4901-b95d-ae3665aec1d9 supprimée de MongoDB
+Annotation aa861b22-6a4b-444f-ac5e-79f22970e2a7 supprimée de MongoDB
+Annotation pour document f01265b5-8e7c-42e9-8c3c-3de6f94296f0 supprimée de MongoDB
+Annotation a17bb47e-f857-47a9-acf1-7bb401ff11af supprimée de MongoDB
+Annotation pour document 9c27f247-2ba2-454e-b147-7e930cb393c5 supprimée de MongoDB
+Annotation 984b1931-4e59-4f4f-a6ed-0c9e5e82bae8 supprimée de MongoDB
+Annotation pour document b4e769cb-8902-4cd2-8960-93c67ff4f5eb supprimée de MongoDB
+Annotation 8ff67b27-5eb1-4b40-b1c0-5239f30d4c55 supprimée de MongoDB
+Annotation pour document 69ec2085-7016-4106-bd18-f99bca120eb1 supprimée de MongoDB
+Annotation 8630ee51-59a1-4642-b3fa-0a284f83f81d supprimée de MongoDB
+Annotation pour document ef6b7cf6-f189-4b97-87da-6c41640eeb89 supprimée de MongoDB
+Annotation 7716d1f5-6161-488a-b4cb-e04d8d9904a3 supprimée de MongoDB
+Annotation pour document c0bb00b4-8ff2-4ebd-acb4-eb456fea36a8 supprimée de MongoDB
+Annotation 74efc3e0-b8f3-4644-9d07-59ea240f4972 supprimée de MongoDB
+Annotation pour document 814c7248-f051-4366-810a-0000e044eeed supprimée de MongoDB
+Annotation 64fc4578-909f-4ed2-b1a0-3fb9a03eced6 supprimée de MongoDB
+Annotation pour document 8fa64951-4811-4f94-9173-3c5f8ef50d62 supprimée de MongoDB
+Annotation 6225f16e-c3a5-45d4-bd9d-0bbf755bebaa supprimée de MongoDB
+Annotation pour document a2454edc-4056-4886-a819-9b4042dac07a supprimée de MongoDB
+Annotation 50ea39b7-fe5c-4465-9a93-7829d2300ec9 supprimée de MongoDB
+Annotation pour document 511621e5-4eb2-41a5-8a8a-bb5373b22372 supprimée de MongoDB
+Annotation 507dc9d7-b858-4fc5-a392-888b7c3cab31 supprimée de MongoDB
+Annotation pour document 6c1901f8-ff2a-468b-9f8f-7dc99a55b52a supprimée de MongoDB
+Annotation 46b6d105-04a7-4596-881b-00b7f35680b1 supprimée de MongoDB
+Annotation pour document 02c5599d-2fe2-444a-8b74-a022be015ad1 supprimée de MongoDB
+Annotation 383b19a3-25ce-47b7-b923-9c9a480c54bd supprimée de MongoDB
+Annotation pour document 4953a343-2d12-482f-bcbf-38961be899f8 supprimée de MongoDB
+Annotation 32ded166-5cda-4b51-b801-c2f10488df86 supprimée de MongoDB
+Annotation pour document de92919c-de8e-463d-af98-2a3aa52e7918 supprimée de MongoDB
+Annotation 2bb197ad-38b4-4b88-aa82-0311af0ee498 supprimée de MongoDB
+Annotation pour document cfe5d134-d698-4eb9-bb19-763de4a85a2e supprimée de MongoDB
+Annotation 28971ea0-ab99-4a28-9312-22d5d25a4613 supprimée de MongoDB
+Annotation pour document 4e18cde8-ef6e-449b-a238-efd3a4f14257 supprimée de MongoDB
+Annotation 19aff7fb-7df9-42ca-bffb-488e08daf2f5 supprimée de MongoDB
+Annotation pour document 39ad8a51-289f-4945-9a35-6307b1c04efd supprimée de MongoDB
+Annotation 0c75f7cc-d32d-4534-a465-666af4d18695 supprimée de MongoDB
+Annotation pour document bef6a2c0-7675-4ff8-b869-923548725748 supprimée de MongoDB
+Annotation 094d7c8a-e7de-4aaf-ab93-0b2e8ba32364 supprimée de MongoDB
+Annotation pour document 61467d60-bc88-4fbb-8d60-b8c25229df77 supprimée de MongoDB
+Annotation 015c4f98-d0e9-4eaa-a151-0bbc1d488a4e supprimée de MongoDB
+Annotation pour document b1b01054-c59f-466e-b310-891558855770 supprimée de MongoDB
+Annotation 012fc53b-0526-4eae-bbf1-cde1991a2d19 supprimée de MongoDB
+Annotation pour document ea878846-9678-4486-abf4-1c1279a76c8a supprimée de MongoDB
+Annotation 0029b92d-df8a-4373-9539-715eef97e36b supprimée de MongoDB
+Schéma pour document cfe5d134-d698-4eb9-bb19-763de4a85a2e supprimé de MongoDB
+Schéma ffe63ac2-f11e-456b-8c5c-b042809c5ce2 supprimé de MongoDB
+Schéma pour document 7a5adfc2-9e66-4e43-9417-742acdafc18b supprimé de MongoDB
+Schéma fe1ae359-f7e2-4b49-8db6-ee45e4f79944 supprimé de MongoDB
+Schéma pour document 511621e5-4eb2-41a5-8a8a-bb5373b22372 supprimé de MongoDB
+Schéma fd841176-0791-4c20-9600-e9403b216046 supprimé de MongoDB
+Schéma pour document 5df4ebdd-27cb-49f7-bf46-a50da16a84a3 supprimé de MongoDB
+Schéma f929c48a-e730-44b9-bbb0-2fc1c247e416 supprimé de MongoDB
+Schéma pour document b1b01054-c59f-466e-b310-891558855770 supprimé de MongoDB
+Schéma f6ce67e7-8465-4582-8166-22f124a7918b supprimé de MongoDB
+Schéma pour document 02c5599d-2fe2-444a-8b74-a022be015ad1 supprimé de MongoDB
+Schéma e90adc03-d0f3-4fe2-ac48-fa906c7060c7 supprimé de MongoDB
+Schéma pour document bef6a2c0-7675-4ff8-b869-923548725748 supprimé de MongoDB
+Schéma e6ad7d17-8fc7-4995-b129-d2003b1da4e0 supprimé de MongoDB
+Schéma pour document 8fa64951-4811-4f94-9173-3c5f8ef50d62 supprimé de MongoDB
+Schéma e659c4ff-df6b-4eb3-a429-68c75eda7db2 supprimé de MongoDB
+Schéma pour document ddb6e115-797d-4a24-abbb-0607a274e883 supprimé de MongoDB
+Schéma e3afd992-5c0a-4417-a0b9-77b03cd00fa4 supprimé de MongoDB
+Schéma pour document 05b5efb2-b054-4384-8530-df052a9f3e61 supprimé de MongoDB
+Schéma d37cd96f-f002-4d6f-9955-38c333001a52 supprimé de MongoDB
+Schéma pour document dbea2753-b806-40be-9160-c63941b01b37 supprimé de MongoDB
+Schéma c1422257-ef3f-4399-aa7f-fc7c722f1bdd supprimé de MongoDB
+Schéma pour document 6c1901f8-ff2a-468b-9f8f-7dc99a55b52a supprimé de MongoDB
+Schéma 9d60d253-883c-4bf6-87a8-8afaf09d73db supprimé de MongoDB
+Schéma pour document 4e18cde8-ef6e-449b-a238-efd3a4f14257 supprimé de MongoDB
+Schéma 99508115-b027-4b84-8bf0-bee5e020bd85 supprimé de MongoDB
+Schéma pour document 814c7248-f051-4366-810a-0000e044eeed supprimé de MongoDB
+Schéma 9925b9ed-2c52-4bf4-81a8-7036d042f58c supprimé de MongoDB
+Schéma pour document 5b98cd80-bf4b-48eb-9d43-c26fe16b1d6d supprimé de MongoDB
+Schéma 97912175-19e0-4009-871d-d9333faff43f supprimé de MongoDB
+Schéma pour document ef6b7cf6-f189-4b97-87da-6c41640eeb89 supprimé de MongoDB
+Schéma 94f43eb6-a244-4500-9832-c0fd9917ab0b supprimé de MongoDB
+Schéma pour document b313ccee-48dc-418f-a7b5-24317ba91d70 supprimé de MongoDB
+Schéma 8d9c8c88-0b06-49eb-9a47-29129e60411c supprimé de MongoDB
+Schéma pour document 39ad8a51-289f-4945-9a35-6307b1c04efd supprimé de MongoDB
+Schéma 815b0062-5e13-435a-b11e-d430cdbd4c60 supprimé de MongoDB
+Schéma pour document 0a596018-ec47-4238-8388-5f0f751a37b1 supprimé de MongoDB
+Schéma 7e7e5615-82d0-4b60-9256-aaad6ea054f5 supprimé de MongoDB
+Schéma pour document f99b62ea-f626-4ff9-a703-a0eaa5619582 supprimé de MongoDB
+Schéma 7beb813e-a5ad-4da2-adab-0dd9f3c5f8fd supprimé de MongoDB
+Schéma pour document ee14b58a-4159-4c7e-b915-cb482df691df supprimé de MongoDB
+Schéma 7aec0df0-31b2-4960-98c0-6e3d67043939 supprimé de MongoDB
+Schéma pour document c0bb00b4-8ff2-4ebd-acb4-eb456fea36a8 supprimé de MongoDB
+Schéma 7ae9945a-497a-462c-844e-8f0d177c02b8 supprimé de MongoDB
+Schéma pour document daeef1d2-693d-40ae-b0b4-898fd822e3d5 supprimé de MongoDB
+Schéma 789dfa86-8aa8-48b1-bb78-754f676d07f6 supprimé de MongoDB
+Schéma pour document 9c27f247-2ba2-454e-b147-7e930cb393c5 supprimé de MongoDB
+Schéma 77455aad-5aca-4c62-ae51-e4b1d69dde67 supprimé de MongoDB
+Schéma pour document a2454edc-4056-4886-a819-9b4042dac07a supprimé de MongoDB
+Schéma 5af0ffab-96c4-421b-98eb-5e3c96d06adf supprimé de MongoDB
+Schéma pour document 97de147c-c958-4f83-862a-21d399c8a01c supprimé de MongoDB
+Schéma 59c2e143-d709-4f2a-a13f-e02a33b5d4f0 supprimé de MongoDB
+Schéma pour document 555bd290-c30b-4fe1-8f8f-a9c6458aa7c3 supprimé de MongoDB
+Schéma 55c47dd3-f211-4eea-b7b6-30217a7bd777 supprimé de MongoDB
+Schéma pour document 69ec2085-7016-4106-bd18-f99bca120eb1 supprimé de MongoDB
+Schéma 544b5208-9eb8-41cb-a7c7-d6fb0a030f16 supprimé de MongoDB
+Schéma pour document 38bfae7b-aa15-4901-b95d-ae3665aec1d9 supprimé de MongoDB
+Schéma 5382cba8-b459-456d-bb54-fc85a710f0ce supprimé de MongoDB
+Schéma pour document 61467d60-bc88-4fbb-8d60-b8c25229df77 supprimé de MongoDB
+Schéma 526bd284-9920-4f2a-b1fc-3ebbfabc51bb supprimé de MongoDB
+Schéma pour document b4144bcb-607f-4e07-9553-01ff51dd2801 supprimé de MongoDB
+Schéma 5195bab2-6060-4c4e-81ca-397cc887e420 supprimé de MongoDB
+Schéma pour document f01265b5-8e7c-42e9-8c3c-3de6f94296f0 supprimé de MongoDB
+Schéma 4e3fa789-12a7-4a31-a96b-6e509b63226b supprimé de MongoDB
+Schéma pour document ea878846-9678-4486-abf4-1c1279a76c8a supprimé de MongoDB
+Schéma 42f5ad8f-86df-4818-9871-b8a09c2c0fbf supprimé de MongoDB
+Schéma pour document feb069e8-2da0-431d-9108-b522e36307e6 supprimé de MongoDB
+Schéma 3cc82519-b6ca-4379-942f-005fd23e8de4 supprimé de MongoDB
+Schéma pour document 4953a343-2d12-482f-bcbf-38961be899f8 supprimé de MongoDB
+Schéma 3aadeb70-c77f-4494-b48b-d748e5f1242e supprimé de MongoDB
+Schéma pour document 4b2c9dbc-ecb2-4caf-9383-2c9217c49f91 supprimé de MongoDB
+Schéma 31228b72-8fd4-41c8-9b88-3f54e53747eb supprimé de MongoDB
+Schéma pour document 5ce4f3b4-9b59-4ddc-8a5e-18ac3d1851cf supprimé de MongoDB
+Schéma 2f78414b-e682-4b26-ba06-5b2b964aabcd supprimé de MongoDB
+Schéma pour document 48312ca2-f651-400b-b291-d8b953ffee08 supprimé de MongoDB
+Schéma 2c8bf587-0d38-4860-abc1-28d420d3f362 supprimé de MongoDB
+Schéma pour document 1ac7a509-83a2-4393-8489-61cd1d551612 supprimé de MongoDB
+Schéma 1fa7773a-d873-43e5-b4f4-2d6c79205385 supprimé de MongoDB
+Schéma pour document de92919c-de8e-463d-af98-2a3aa52e7918 supprimé de MongoDB
+Schéma 1a016318-6f74-4838-a6d7-82408cc101cf supprimé de MongoDB
+Schéma pour document d71970ec-a475-41e4-8602-76e95af6e166 supprimé de MongoDB
+Schéma 199108fc-b1c4-49f7-8e3f-05ec51d65e5b supprimé de MongoDB
+Schéma pour document b4e769cb-8902-4cd2-8960-93c67ff4f5eb supprimé de MongoDB
+Schéma 16c25ca8-cfd4-49a3-8f4b-1e1232782ca3 supprimé de MongoDB
+Schéma pour document d09f4485-7cdc-4d08-91fa-c793441afcb1 supprimé de MongoDB
+Schéma 12ab5709-ce44-45eb-b333-4abfce1d8de9 supprimé de MongoDB
+Schéma pour document 37573f85-6345-4c67-9121-6c6d309f6022 supprimé de MongoDB
+Schéma 0ccb2993-367e-426e-8f77-9e9b873d10ec supprimé de MongoDB
+Schéma pour document 630922a2-ef9c-485a-9640-0618682f2627 supprimé de MongoDB
+Schéma 0652ca26-6723-45bc-9219-375c4afa831d supprimé de MongoDB
+Schéma pour document 2bad1507-f3f6-4f09-9d43-5e9b8f5ba6cd supprimé de MongoDB
+Schéma 031287c5-ab08-48ca-a006-69f31494f207 supprimé de MongoDB
+Document feb069e8-2da0-431d-9108-b522e36307e6 et données associées supprimés de MongoDB
+Document feb069e8-2da0-431d-9108-b522e36307e6 supprimé de MongoDB
+Document f99b62ea-f626-4ff9-a703-a0eaa5619582 et données associées supprimés de MongoDB
+Document f99b62ea-f626-4ff9-a703-a0eaa5619582 supprimé de MongoDB
+Document f01265b5-8e7c-42e9-8c3c-3de6f94296f0 et données associées supprimés de MongoDB
+Document f01265b5-8e7c-42e9-8c3c-3de6f94296f0 supprimé de MongoDB
+Document ef6b7cf6-f189-4b97-87da-6c41640eeb89 et données associées supprimés de MongoDB
+Document ef6b7cf6-f189-4b97-87da-6c41640eeb89 supprimé de MongoDB
+Document eeda9c5f-abc4-4c1c-bf0a-dce6d28ed206 et données associées supprimés de MongoDB
+Document eeda9c5f-abc4-4c1c-bf0a-dce6d28ed206 supprimé de MongoDB
+Document ee14b58a-4159-4c7e-b915-cb482df691df et données associées supprimés de MongoDB
+Document ee14b58a-4159-4c7e-b915-cb482df691df supprimé de MongoDB
+Document ea878846-9678-4486-abf4-1c1279a76c8a et données associées supprimés de MongoDB
+Document ea878846-9678-4486-abf4-1c1279a76c8a supprimé de MongoDB
+Document de92919c-de8e-463d-af98-2a3aa52e7918 et données associées supprimés de MongoDB
+Document de92919c-de8e-463d-af98-2a3aa52e7918 supprimé de MongoDB
+Document ddb6e115-797d-4a24-abbb-0607a274e883 et données associées supprimés de MongoDB
+Document ddb6e115-797d-4a24-abbb-0607a274e883 supprimé de MongoDB
+Document dbea2753-b806-40be-9160-c63941b01b37 et données associées supprimés de MongoDB
+Document dbea2753-b806-40be-9160-c63941b01b37 supprimé de MongoDB
+Document daeef1d2-693d-40ae-b0b4-898fd822e3d5 et données associées supprimés de MongoDB
+Document daeef1d2-693d-40ae-b0b4-898fd822e3d5 supprimé de MongoDB
+Document d71970ec-a475-41e4-8602-76e95af6e166 et données associées supprimés de MongoDB
+Document d71970ec-a475-41e4-8602-76e95af6e166 supprimé de MongoDB
+Document d1210c09-935a-4c91-ad8f-3aa91f99cdf3 et données associées supprimés de MongoDB
+Document d1210c09-935a-4c91-ad8f-3aa91f99cdf3 supprimé de MongoDB
+Document d09f4485-7cdc-4d08-91fa-c793441afcb1 et données associées supprimés de MongoDB
+Document d09f4485-7cdc-4d08-91fa-c793441afcb1 supprimé de MongoDB
+Document cfe5d134-d698-4eb9-bb19-763de4a85a2e et données associées supprimés de MongoDB
+Document cfe5d134-d698-4eb9-bb19-763de4a85a2e supprimé de MongoDB
+Document c0bb00b4-8ff2-4ebd-acb4-eb456fea36a8 et données associées supprimés de MongoDB
+Document c0bb00b4-8ff2-4ebd-acb4-eb456fea36a8 supprimé de MongoDB
+Document bef6a2c0-7675-4ff8-b869-923548725748 et données associées supprimés de MongoDB
+Document bef6a2c0-7675-4ff8-b869-923548725748 supprimé de MongoDB
+Document b4e769cb-8902-4cd2-8960-93c67ff4f5eb et données associées supprimés de MongoDB
+Document b4e769cb-8902-4cd2-8960-93c67ff4f5eb supprimé de MongoDB
+Document b4144bcb-607f-4e07-9553-01ff51dd2801 et données associées supprimés de MongoDB
+Document b4144bcb-607f-4e07-9553-01ff51dd2801 supprimé de MongoDB
+Document b313ccee-48dc-418f-a7b5-24317ba91d70 et données associées supprimés de MongoDB
+Document b313ccee-48dc-418f-a7b5-24317ba91d70 supprimé de MongoDB
+Document b29ca443-1ab4-4e11-9cc2-507b04252f93 et données associées supprimés de MongoDB
+Document b29ca443-1ab4-4e11-9cc2-507b04252f93 supprimé de MongoDB
+Document b1b01054-c59f-466e-b310-891558855770 et données associées supprimés de MongoDB
+Document b1b01054-c59f-466e-b310-891558855770 supprimé de MongoDB
+Document a2454edc-4056-4886-a819-9b4042dac07a et données associées supprimés de MongoDB
+Document a2454edc-4056-4886-a819-9b4042dac07a supprimé de MongoDB
+Document a15c9adb-d2ca-44ba-9141-65b08e699960 et données associées supprimés de MongoDB
+Document a15c9adb-d2ca-44ba-9141-65b08e699960 supprimé de MongoDB
+Document 9c27f247-2ba2-454e-b147-7e930cb393c5 et données associées supprimés de MongoDB
+Document 9c27f247-2ba2-454e-b147-7e930cb393c5 supprimé de MongoDB
+Document 97de147c-c958-4f83-862a-21d399c8a01c et données associées supprimés de MongoDB
+Document 97de147c-c958-4f83-862a-21d399c8a01c supprimé de MongoDB
+Document 8fa64951-4811-4f94-9173-3c5f8ef50d62 et données associées supprimés de MongoDB
+Document 8fa64951-4811-4f94-9173-3c5f8ef50d62 supprimé de MongoDB
+Document 814c7248-f051-4366-810a-0000e044eeed et données associées supprimés de MongoDB
+Document 814c7248-f051-4366-810a-0000e044eeed supprimé de MongoDB
+Document 7a5adfc2-9e66-4e43-9417-742acdafc18b et données associées supprimés de MongoDB
+Document 7a5adfc2-9e66-4e43-9417-742acdafc18b supprimé de MongoDB
+Document 78794699-12f0-476f-be06-abc3e790a527 et données associées supprimés de MongoDB
+Document 78794699-12f0-476f-be06-abc3e790a527 supprimé de MongoDB
+Document 73fb864d-9a34-4adb-8e9c-faca8b8a40e2 et données associées supprimés de MongoDB
+Document 73fb864d-9a34-4adb-8e9c-faca8b8a40e2 supprimé de MongoDB
+Document 6c1901f8-ff2a-468b-9f8f-7dc99a55b52a et données associées supprimés de MongoDB
+Document 6c1901f8-ff2a-468b-9f8f-7dc99a55b52a supprimé de MongoDB
+Document 6ac95294-a37a-4378-ba13-8d0528c8c165 et données associées supprimés de MongoDB
+Document 6ac95294-a37a-4378-ba13-8d0528c8c165 supprimé de MongoDB
+Document 69ec2085-7016-4106-bd18-f99bca120eb1 et données associées supprimés de MongoDB
+Document 69ec2085-7016-4106-bd18-f99bca120eb1 supprimé de MongoDB
+Document 630922a2-ef9c-485a-9640-0618682f2627 et données associées supprimés de MongoDB
+Document 630922a2-ef9c-485a-9640-0618682f2627 supprimé de MongoDB
+Document 61467d60-bc88-4fbb-8d60-b8c25229df77 et données associées supprimés de MongoDB
+Document 61467d60-bc88-4fbb-8d60-b8c25229df77 supprimé de MongoDB
+Document 5e30df34-bfcf-48bf-979e-cf638f262b55 et données associées supprimés de MongoDB
+Document 5e30df34-bfcf-48bf-979e-cf638f262b55 supprimé de MongoDB
+Document 5df4ebdd-27cb-49f7-bf46-a50da16a84a3 et données associées supprimés de MongoDB
+Document 5df4ebdd-27cb-49f7-bf46-a50da16a84a3 supprimé de MongoDB
+Document 5ce4f3b4-9b59-4ddc-8a5e-18ac3d1851cf et données associées supprimés de MongoDB
+Document 5ce4f3b4-9b59-4ddc-8a5e-18ac3d1851cf supprimé de MongoDB
+Document 5b98cd80-bf4b-48eb-9d43-c26fe16b1d6d et données associées supprimés de MongoDB
+Document 5b98cd80-bf4b-48eb-9d43-c26fe16b1d6d supprimé de MongoDB
+Document 555bd290-c30b-4fe1-8f8f-a9c6458aa7c3 et données associées supprimés de MongoDB
+Document 555bd290-c30b-4fe1-8f8f-a9c6458aa7c3 supprimé de MongoDB
+Document 511621e5-4eb2-41a5-8a8a-bb5373b22372 et données associées supprimés de MongoDB
+Document 511621e5-4eb2-41a5-8a8a-bb5373b22372 supprimé de MongoDB
+Document 4e18cde8-ef6e-449b-a238-efd3a4f14257 et données associées supprimés de MongoDB
+Document 4e18cde8-ef6e-449b-a238-efd3a4f14257 supprimé de MongoDB
+Document 4b2c9dbc-ecb2-4caf-9383-2c9217c49f91 et données associées supprimés de MongoDB
+Document 4b2c9dbc-ecb2-4caf-9383-2c9217c49f91 supprimé de MongoDB
+Document 4953a343-2d12-482f-bcbf-38961be899f8 et données associées supprimés de MongoDB
+Document 4953a343-2d12-482f-bcbf-38961be899f8 supprimé de MongoDB
+Document 48312ca2-f651-400b-b291-d8b953ffee08 et données associées supprimés de MongoDB
+Document 48312ca2-f651-400b-b291-d8b953ffee08 supprimé de MongoDB
+Document 39ad8a51-289f-4945-9a35-6307b1c04efd et données associées supprimés de MongoDB
+Document 39ad8a51-289f-4945-9a35-6307b1c04efd supprimé de MongoDB
+Document 38bfae7b-aa15-4901-b95d-ae3665aec1d9 et données associées supprimés de MongoDB
+Document 38bfae7b-aa15-4901-b95d-ae3665aec1d9 supprimé de MongoDB
+Document 37573f85-6345-4c67-9121-6c6d309f6022 et données associées supprimés de MongoDB
+Document 37573f85-6345-4c67-9121-6c6d309f6022 supprimé de MongoDB
+Document 32bb338b-ddea-4a2a-91db-aad6e8d8d590 et données associées supprimés de MongoDB
+Document 32bb338b-ddea-4a2a-91db-aad6e8d8d590 supprimé de MongoDB
+Document 2bad1507-f3f6-4f09-9d43-5e9b8f5ba6cd et données associées supprimés de MongoDB
+Document 2bad1507-f3f6-4f09-9d43-5e9b8f5ba6cd supprimé de MongoDB
+Document 1ac7a509-83a2-4393-8489-61cd1d551612 et données associées supprimés de MongoDB
+Document 1ac7a509-83a2-4393-8489-61cd1d551612 supprimé de MongoDB
+Document 0a596018-ec47-4238-8388-5f0f751a37b1 et données associées supprimés de MongoDB
+Document 0a596018-ec47-4238-8388-5f0f751a37b1 supprimé de MongoDB
+Document 05b5efb2-b054-4384-8530-df052a9f3e61 et données associées supprimés de MongoDB
+Document 05b5efb2-b054-4384-8530-df052a9f3e61 supprimé de MongoDB
+Document 057f3e68-c9db-4f9f-b6e7-4f0441606eb6 et données associées supprimés de MongoDB
+Document 057f3e68-c9db-4f9f-b6e7-4f0441606eb6 supprimé de MongoDB
+Document 02c5599d-2fe2-444a-8b74-a022be015ad1 et données associées supprimés de MongoDB
+Document 02c5599d-2fe2-444a-8b74-a022be015ad1 supprimé de MongoDB
+Document 012d9c85-771f-454e-860c-eca67a6ce5b8 et données associées supprimés de MongoDB
+Document 012d9c85-771f-454e-860c-eca67a6ce5b8 supprimé de MongoDB
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Erreur statistiques: Cannot resolve keyword 'completion_percentage' into field. Choices are: ai_pre_annotations, annotated_by, annotated_by_id, completed_at, confidence_score, created_at, document, document_id, final_annotations, history, id, is_complete, is_validated, schema, schema_id, updated_at, validated_at, validated_by, validated_by_id, validation_notes
