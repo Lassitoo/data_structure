@@ -1,6 +1,157 @@
 {% extends 'documents/base.html' %}
+{% load math_filters %}
 
 {% block title %}Statistiques - Data Structure{% endblock %}
+
+{% block extra_css %}
+<style>
+    .stat-card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    }
+    
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0.3) 100%);
+    }
+    
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin: 0;
+        animation: countUp 2s ease-out;
+    }
+    
+    @keyframes countUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .stat-icon {
+        opacity: 0.8;
+        transition: all 0.3s ease;
+    }
+    
+    .stat-card:hover .stat-icon {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+    
+    .chart-container {
+        position: relative;
+        height: 300px;
+        margin: 20px 0;
+    }
+    
+    .progress-ring {
+        transform: rotate(-90deg);
+    }
+    
+    .progress-ring-circle {
+        transition: stroke-dashoffset 2s ease-in-out;
+    }
+    
+    .metric-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 20px;
+        color: white;
+        padding: 30px;
+        margin-bottom: 20px;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .metric-card::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+        transform: rotate(45deg);
+        animation: shimmer 3s infinite;
+    }
+    
+    @keyframes shimmer {
+        0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+        100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+    
+    .workflow-step {
+        background: white;
+        border-radius: 15px;
+        padding: 20px;
+        margin: 10px 0;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+        border-left: 4px solid #007bff;
+        transition: all 0.3s ease;
+    }
+    
+    .workflow-step:hover {
+        transform: translateX(5px);
+        box-shadow: 0 4px 25px rgba(0,0,0,0.12);
+    }
+    
+    .pulse {
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+    
+    .gradient-bg-1 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+    .gradient-bg-2 { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+    .gradient-bg-3 { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+    .gradient-bg-4 { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+    .gradient-bg-5 { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+    
+    .chart-card {
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        border: none;
+        overflow: hidden;
+    }
+    
+    .chart-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px;
+        border: none;
+    }
+    
+    .loading-spinner {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(255,255,255,.3);
+        border-radius: 50%;
+        border-top-color: #fff;
+        animation: spin 1s ease-in-out infinite;
+    }
+    
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+</style>
+{% endblock %}
 
 {% block breadcrumb %}
 <div class="container mt-3">
@@ -14,146 +165,231 @@
 {% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-12">
-        <h1 class="h2 mb-4">
-            <i class="fas fa-chart-bar me-2"></i>Statistiques du système
+<!-- En-tête avec animation -->
+<div class="row mb-5">
+    <div class="col-12 text-center">
+        <h1 class="display-4 mb-3" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+            <i class="fas fa-chart-line me-3"></i>Tableau de Bord Analytique
         </h1>
+        <p class="lead text-muted">Analyse complète de vos données et processus d'annotation</p>
     </div>
 </div>
 
-<!-- Métriques principales -->
-<div class="row mb-4">
-    <div class="col-lg-3 col-md-6 mb-3">
-        <div class="card stat-card bg-primary text-white">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h6 class="card-title text-uppercase">Documents totaux</h6>
-                        <h2 class="mb-0">{{ stats.total_documents|default:0 }}</h2>
-                        <small>Tous types confondus</small>
-                    </div>
-                    <div class="align-self-center">
-                        <i class="fas fa-file-alt fa-3x opacity-75"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="col-lg-3 col-md-6 mb-3">
-        <div class="card stat-card bg-success text-white">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h6 class="card-title text-uppercase">Annotations validées</h6>
-                        <h2 class="mb-0">{{ stats.validated_annotations|default:0 }}</h2>
-                        <small>Processus terminé</small>
-                    </div>
-                    <div class="align-self-center">
-                        <i class="fas fa-check-circle fa-3x opacity-75"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="col-lg-3 col-md-6 mb-3">
-        <div class="card stat-card bg-warning text-white">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h6 class="card-title text-uppercase">En cours</h6>
-                        <h2 class="mb-0">
-                            {% with in_progress=0 %}
-                                {% for status in stats.by_status %}
-                                    {% if status.status == 'pre_annotated' or status.status == 'annotated' or status.status == 'schema_proposed' %}
-                                        {% with in_progress=in_progress|add:status.count %}{% endwith %}
-                                    {% endif %}
-                                {% endfor %}
-                                {{ in_progress }}
-                            {% endwith %}
-                        </h2>
-                        <small>Traitement en cours</small>
-                    </div>
-                    <div class="align-self-center">
-                        <i class="fas fa-clock fa-3x opacity-75"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="col-lg-3 col-md-6 mb-3">
-        <div class="card stat-card bg-info text-white">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h6 class="card-title text-uppercase">Taux de réussite</h6>
-                        <h2 class="mb-0">
-                            {% if stats.total_documents > 0 %}
-                                {{ stats.validated_annotations|floatformat:0|mul:100|div:stats.total_documents|floatformat:0 }}%
+<!-- Métriques principales avec animations -->
+<div class="row mb-5">
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card stat-card gradient-bg-1 text-white h-100">
+            <div class="card-body d-flex align-items-center">
+                <div class="flex-grow-1">
+                    <h6 class="card-title text-uppercase mb-2 opacity-75">Documents Totaux</h6>
+                    <h2 class="stat-number mb-1" data-target="{{ total_documents }}">0</h2>
+                    <small class="opacity-75">
+                        <i class="fas fa-arrow-up me-1"></i>
+                        {% with last_month=monthly_stats|last %}
+                            {% if last_month %}
+                                +{{ last_month.documents|default:0 }} ce mois
                             {% else %}
-                                0%
+                                +0 ce mois
                             {% endif %}
-                        </h2>
-                        <small>Documents validés</small>
-                    </div>
-                    <div class="align-self-center">
-                        <i class="fas fa-percentage fa-3x opacity-75"></i>
-                    </div>
+                        {% endwith %}
+                    </small>
+                </div>
+                <div class="stat-icon">
+                    <i class="fas fa-file-alt fa-3x"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card stat-card gradient-bg-2 text-white h-100">
+            <div class="card-body d-flex align-items-center">
+                <div class="flex-grow-1">
+                    <h6 class="card-title text-uppercase mb-2 opacity-75">Annotations Validées</h6>
+                    <h2 class="stat-number mb-1" data-target="{{ completion_stats.total_validated }}">0</h2>
+                    <small class="opacity-75">
+                        <i class="fas fa-check-circle me-1"></i>
+                        {{ quality_stats.final_validation_rate|floatformat:1 }}% de réussite
+                    </small>
+                </div>
+                <div class="stat-icon">
+                    <i class="fas fa-check-double fa-3x"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card stat-card gradient-bg-3 text-white h-100">
+            <div class="card-body d-flex align-items-center">
+                <div class="flex-grow-1">
+                    <h6 class="card-title text-uppercase mb-2 opacity-75">Schémas Créés</h6>
+                    <h2 class="stat-number mb-1" data-target="{{ total_schemas }}">0</h2>
+                    <small class="opacity-75">
+                        <i class="fas fa-sitemap me-1"></i>
+                        {{ quality_stats.schema_validation_rate|floatformat:1 }}% validés
+                    </small>
+                </div>
+                <div class="stat-icon">
+                    <i class="fas fa-project-diagram fa-3x"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card stat-card gradient-bg-4 text-white h-100">
+            <div class="card-body d-flex align-items-center">
+                <div class="flex-grow-1">
+                    <h6 class="card-title text-uppercase mb-2 opacity-75">Taux de Completion</h6>
+                    <h2 class="stat-number mb-1" data-target="{{ quality_stats.avg_completion_percentage|floatformat:0 }}">0</h2>
+                    <small class="opacity-75">
+                        <i class="fas fa-percentage me-1"></i>
+                        Moyenne générale
+                    </small>
+                </div>
+                <div class="stat-icon">
+                    <i class="fas fa-chart-pie fa-3x"></i>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="row">
+<!-- Graphiques principaux -->
+<div class="row mb-5">
     <!-- Répartition par statut -->
     <div class="col-lg-6 mb-4">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title mb-0">
-                    <i class="fas fa-chart-pie me-2"></i>Répartition par statut
+        <div class="card chart-card h-100">
+            <div class="chart-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-chart-pie me-2"></i>
+                    Répartition par Statut
+                    <span class="loading-spinner ms-2 d-none" id="status-loading"></span>
                 </h5>
             </div>
             <div class="card-body">
-                {% if stats.by_status %}
-                    <canvas id="statusChart" width="400" height="300"></canvas>
-                    
-                    <div class="mt-3">
-                        <div class="row">
-                            {% for status in stats.by_status %}
-                                <div class="col-6 mb-2">
-                                    <div class="d-flex align-items-center">
-                                        <div class="legend-color me-2" style="width: 12px; height: 12px; border-radius: 2px; background-color: {{ status.color|default:'#6c757d' }};"></div>
-                                        <small>{{ status.status|capfirst }} ({{ status.count }})</small>
-                                    </div>
-                                </div>
-                            {% endfor %}
+                <div class="chart-container">
+                    <canvas id="statusChart"></canvas>
+                </div>
+                <div class="row mt-3">
+                    {% for item in status_data %}
+                    <div class="col-6 mb-2">
+                        <div class="d-flex align-items-center">
+                            <div class="me-2" style="width: 12px; height: 12px; border-radius: 50%; background-color: {{ item.color }};"></div>
+                            <small class="text-muted">{{ item.label }} ({{ item.count }})</small>
                         </div>
                     </div>
-                {% else %}
-                    <p class="text-muted text-center py-4">Aucune donnée disponible</p>
-                {% endif %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>
     
-    <!-- Répartition par type de fichier -->
+    <!-- Évolution temporelle -->
     <div class="col-lg-6 mb-4">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title mb-0">
-                    <i class="fas fa-chart-bar me-2"></i>Types de fichiers
+        <div class="card chart-card h-100">
+            <div class="chart-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-chart-line me-2"></i>
+                    Évolution sur 6 Mois
+                    <span class="loading-spinner ms-2 d-none" id="trend-loading"></span>
                 </h5>
             </div>
             <div class="card-body">
-                {% if stats.by_type %}
-                    <canvas id="typeChart" width="400" height="300"></canvas>
-                {% else %}
-                    <p class="text-muted text-center py-4">Aucune donnée disponible</p>
-                {% endif %}
+                <div class="chart-container">
+                    <canvas id="trendChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Workflow et métriques de qualité -->
+<div class="row mb-5">
+    <div class="col-lg-8 mb-4">
+        <div class="card chart-card">
+            <div class="chart-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-route me-2"></i>
+                    Workflow de Traitement
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="workflow-step text-center">
+                            <i class="fas fa-upload fa-2x text-primary mb-3"></i>
+                            <h6>Upload</h6>
+                            <div class="progress mb-2">
+                                <div class="progress-bar bg-primary" style="width: 100%"></div>
+                            </div>
+                            <small class="text-muted">{{ total_documents }} documents</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="workflow-step text-center">
+                            <i class="fas fa-cogs fa-2x text-warning mb-3"></i>
+                            <h6>Schéma</h6>
+                            <div class="progress mb-2">
+                                <div class="progress-bar bg-warning" style="width: {{ quality_stats.schema_validation_rate }}%"></div>
+                            </div>
+                            <small class="text-muted">{{ quality_stats.schema_validation_rate|floatformat:1 }}% validés</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="workflow-step text-center">
+                            <i class="fas fa-check-circle fa-2x text-success mb-3"></i>
+                            <h6>Validation</h6>
+                            <div class="progress mb-2">
+                                <div class="progress-bar bg-success" style="width: {{ quality_stats.final_validation_rate }}%"></div>
+                            </div>
+                            <small class="text-muted">{{ quality_stats.final_validation_rate|floatformat:1 }}% finalisés</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Métriques de performance -->
+    <div class="col-lg-4 mb-4">
+        <div class="metric-card">
+            <h6 class="text-uppercase mb-3">Performance Système</h6>
+            
+            <div class="mb-4">
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Efficacité Globale</span>
+                    <span class="fw-bold">{{ quality_stats.final_validation_rate|floatformat:0 }}%</span>
+                </div>
+                <div class="progress" style="height: 8px;">
+                    <div class="progress-bar bg-white" style="width: {{ quality_stats.final_validation_rate }}%"></div>
+                </div>
+            </div>
+            
+            <div class="mb-4">
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Taux de Completion</span>
+                    <span class="fw-bold">{{ quality_stats.annotation_completion_rate|floatformat:0 }}%</span>
+                </div>
+                <div class="progress" style="height: 8px;">
+                    <div class="progress-bar bg-white" style="width: {{ quality_stats.annotation_completion_rate }}%"></div>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <div class="d-inline-block position-relative">
+                    <svg width="120" height="120" class="progress-ring">
+                        <circle cx="60" cy="60" r="50" stroke="rgba(255,255,255,0.3)" stroke-width="8" fill="transparent"/>
+                        <circle cx="60" cy="60" r="50" stroke="white" stroke-width="8" fill="transparent"
+                                stroke-dasharray="314" stroke-dashoffset="{% with offset=quality_stats.avg_completion_percentage|multiply:3.14 %}{{ 314|subtract:offset }}{% endwith %}"
+                                class="progress-ring-circle"/>
+                    </svg>
+                    <div class="position-absolute top-50 start-50 translate-middle text-center">
+                        <div class="h4 mb-0">{{ quality_stats.avg_completion_percentage|floatformat:0 }}%</div>
+                        <small>Moyenne</small>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -161,12 +397,13 @@
 
 <!-- Performance des utilisateurs -->
 {% if user_stats %}
-<div class="row mb-4">
+<div class="row mb-5">
     <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title mb-0">
-                    <i class="fas fa-users me-2"></i>Performance des utilisateurs
+        <div class="card chart-card">
+            <div class="chart-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-users me-2"></i>
+                    Top Contributeurs
                 </h5>
             </div>
             <div class="card-body">
@@ -175,48 +412,49 @@
                         <thead>
                             <tr>
                                 <th>Utilisateur</th>
-                                <th>Documents téléversés</th>
-                                <th>Documents validés</th>
-                                <th>Taux de validation</th>
+                                <th>Documents</th>
+                                <th>Validés</th>
+                                <th>Taux de Réussite</th>
                                 <th>Performance</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for user_stat in user_stats %}
-                                <tr>
-                                    <td>
-                                        <i class="fas fa-user me-2"></i>
-                                        <strong>{{ user_stat.uploaded_by__username }}</strong>
-                                    </td>
-                                    <td>
-                                        <span class="badge bg-primary">{{ user_stat.count }}</span>
-                                    </td>
-                                    <td>
-                                        <span class="badge bg-success">{{ user_stat.validated_count }}</span>
-                                    </td>
-                                    <td>
-                                        {% if user_stat.count > 0 %}
-                                            {% with rate=user_stat.validated_count|floatformat:0|mul:100|div:user_stat.count %}
-                                                {{ rate|floatformat:0 }}%
-                                            {% endwith %}
-                                        {% else %}
-                                            0%
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        {% with rate=user_stat.validated_count|floatformat:0|mul:100|div:user_stat.count %}
-                                            <div class="progress" style="height: 20px;">
-                                                <div class="progress-bar 
-                                                    {% if rate >= 80 %}bg-success
-                                                    {% elif rate >= 60 %}bg-warning
-                                                    {% else %}bg-danger{% endif %}"
-                                                     style="width: {{ rate|floatformat:0 }}%">
-                                                    {{ rate|floatformat:0 }}%
-                                                </div>
-                                            </div>
-                                        {% endwith %}
-                                    </td>
-                                </tr>
+                            {% for user in user_stats %}
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar-circle me-3">
+                                            <i class="fas fa-user"></i>
+                                        </div>
+                                        <div>
+                                            <div class="fw-bold">{{ user.uploaded_by__username }}</div>
+                                            {% if user.uploaded_by__first_name %}
+                                            <small class="text-muted">{{ user.uploaded_by__first_name }} {{ user.uploaded_by__last_name }}</small>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge bg-primary rounded-pill">{{ user.total_docs }}</span>
+                                </td>
+                                <td>
+                                    <span class="badge bg-success rounded-pill">{{ user.validated_docs }}</span>
+                                </td>
+                                <td>
+                                    {{ user.success_rate }}%
+                                </td>
+                                <td>
+                                    <div class="progress" style="height: 20px; width: 100px;">
+                                        <div class="progress-bar 
+                                            {% if user.success_rate >= 80 %}bg-success
+                                            {% elif user.success_rate >= 60 %}bg-warning  
+                                            {% else %}bg-danger{% endif %}"
+                                             style="width: {{ user.success_rate }}%">
+                                            {{ user.success_rate }}%
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
                             {% endfor %}
                         </tbody>
                     </table>
@@ -227,432 +465,329 @@
 </div>
 {% endif %}
 
-<!-- Temps de traitement -->
-{% if processing_times %}
-<div class="row mb-4">
-    <div class="col-lg-8">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title mb-0">
-                    <i class="fas fa-stopwatch me-2"></i>Temps de traitement
+<!-- Types de fichiers -->
+<div class="row mb-5">
+    <div class="col-lg-6 mb-4">
+        <div class="card chart-card">
+            <div class="chart-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-file-alt me-2"></i>
+                    Types de Fichiers
                 </h5>
             </div>
             <div class="card-body">
-                <canvas id="processingTimeChart" width="400" height="200"></canvas>
-            </div>
-        </div>
-    </div>
-    
-    <div class="col-lg-4">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title mb-0">
-                    <i class="fas fa-clock me-2"></i>Moyennes
-                </h5>
-            </div>
-            <div class="card-body">
-                <div class="mb-3">
-                    <h6>Temps moyen de traitement</h6>
-                    <p class="h4 text-primary mb-1">
-                        {% with total_time=0 total_docs=processing_times|length %}
-                            {% for time in processing_times %}
-                                {% with total_time=total_time|add:time.processing_time.total_seconds %}{% endwith %}
-                            {% endfor %}
-                            {% if total_docs > 0 %}
-                                {% with avg_hours=total_time|div:total_docs|div:3600 %}
-                                    {{ avg_hours|floatformat:1 }}h
-                                {% endwith %}
-                            {% else %}
-                                0h
-                            {% endif %}
-                        {% endwith %}
-                    </p>
-                    <small class="text-muted">Du téléversement à la validation</small>
-                </div>
-                
-                <div class="mb-3">
-                    <h6>Documents traités</h6>
-                    <p class="h4 text-success mb-1">{{ processing_times|length }}</p>
-                    <small class="text-muted">Processus complet terminé</small>
-                </div>
-                
-                <div>
-                    <h6>Efficacité du système</h6>
-                    <div class="progress">
-                        <div class="progress-bar bg-info" style="width: 85%">85%</div>
-                    </div>
-                    <small class="text-muted">Basé sur la satisfaction utilisateur</small>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-{% endif %}
-
-<!-- Tendances mensuelles -->
-<div class="row mb-4">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="card-title mb-0">
-                    <i class="fas fa-chart-line me-2"></i>Évolution mensuelle
-                </h5>
-                <div class="btn-group btn-group-sm" role="group">
-                    <input type="radio" class="btn-check" name="period" id="period-3m" checked>
-                    <label class="btn btn-outline-primary" for="period-3m">3 mois</label>
-                    
-                    <input type="radio" class="btn-check" name="period" id="period-6m">
-                    <label class="btn btn-outline-primary" for="period-6m">6 mois</label>
-                    
-                    <input type="radio" class="btn-check" name="period" id="period-1y">
-                    <label class="btn btn-outline-primary" for="period-1y">1 an</label>
-                </div>
-            </div>
-            <div class="card-body">
-                <canvas id="trendsChart" width="400" height="150"></canvas>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Insights et recommandations -->
-<div class="row">
-    <div class="col-lg-8">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title mb-0">
-                    <i class="fas fa-lightbulb me-2"></i>Insights du système
-                </h5>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h6><i class="fas fa-trophy text-warning me-2"></i>Points forts</h6>
-                        <ul class="list-unstyled">
-                            <li class="mb-2">
-                                <i class="fas fa-check text-success me-2"></i>
-                                {% if stats.validated_annotations > 0 %}
-                                    {{ stats.validated_annotations }} documents validés avec succès
-                                {% else %}
-                                    Système prêt à traiter les documents
-                                {% endif %}
-                            </li>
-                            <li class="mb-2">
-                                <i class="fas fa-check text-success me-2"></i>
-                                IA Mistral fonctionnelle pour l'annotation automatique
-                            </li>
-                            <li class="mb-2">
-                                <i class="fas fa-check text-success me-2"></i>
-                                Interface utilisateur intuitive et responsive
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-md-6">
-                        <h6><i class="fas fa-exclamation-triangle text-warning me-2"></i>Améliorations possibles</h6>
-                        <ul class="list-unstyled">
-                            <li class="mb-2">
-                                <i class="fas fa-arrow-up text-primary me-2"></i>
-                                Augmenter le nombre d'utilisateurs actifs
-                            </li>
-                            <li class="mb-2">
-                                <i class="fas fa-arrow-up text-primary me-2"></i>
-                                Optimiser les temps de traitement
-                            </li>
-                            <li class="mb-2">
-                                <i class="fas fa-arrow-up text-primary me-2"></i>
-                                Enrichir les schémas d'annotation
-                            </li>
-                        </ul>
-                    </div>
+                <div class="chart-container">
+                    <canvas id="typeChart"></canvas>
                 </div>
             </div>
         </div>
     </div>
     
-    <div class="col-lg-4">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title mb-0">
-                    <i class="fas fa-download me-2"></i>Export des données
+    <div class="col-lg-6 mb-4">
+        <div class="card chart-card">
+            <div class="chart-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Insights & Recommandations
                 </h5>
             </div>
             <div class="card-body">
-                <p class="text-muted small mb-3">
-                    Téléchargez les statistiques dans différents formats pour vos rapports.
-                </p>
-                
-                <div class="d-grid gap-2">
-                    <button class="btn btn-outline-primary btn-sm" onclick="exportStats('csv')">
-                        <i class="fas fa-file-csv me-1"></i>Export CSV
-                    </button>
-                    <button class="btn btn-outline-success btn-sm" onclick="exportStats('excel')">
-                        <i class="fas fa-file-excel me-1"></i>Export Excel
-                    </button>
-                    <button class="btn btn-outline-danger btn-sm" onclick="exportStats('pdf')">
-                        <i class="fas fa-file-pdf me-1"></i>Export PDF
-                    </button>
+                <div class="alert alert-info border-0">
+                    <i class="fas fa-lightbulb me-2"></i>
+                    <strong>Analyse Automatique</strong>
                 </div>
                 
-                <div class="mt-3">
-                    <small class="text-muted">
-                        <i class="fas fa-info-circle me-1"></i>
-                        Les exports incluent toutes les métriques affichées
-                    </small>
+                {% if quality_stats.final_validation_rate < 70 %}
+                <div class="alert alert-warning border-0">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    Le taux de validation est de {{ quality_stats.final_validation_rate|floatformat:1 }}%. 
+                    Considérez améliorer le processus de validation.
+                </div>
+                {% endif %}
+                
+                {% if quality_stats.avg_completion_percentage > 85 %}
+                <div class="alert alert-success border-0">
+                    <i class="fas fa-check-circle me-2"></i>
+                    Excellent taux de completion ({{ quality_stats.avg_completion_percentage|floatformat:1 }}%) ! 
+                    Vos utilisateurs sont très engagés.
+                </div>
+                {% endif %}
+                
+                <div class="alert alert-primary border-0">
+                    <i class="fas fa-chart-line me-2"></i>
+                    <strong>Tendance :</strong> 
+                    {% with last_month=monthly_stats|last first_month=monthly_stats|first %}
+                        {% if last_month and first_month and last_month.documents > first_month.documents %}
+                            Croissance positive du nombre de documents traités.
+                        {% else %}
+                            Stabilité dans le traitement des documents.
+                        {% endif %}
+                    {% endwith %}
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+.avatar-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+</style>
 {% endblock %}
 
 {% block extra_js %}
-<!-- Chart.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 
 <script>
-// Configuration des couleurs
-const colors = {
-    primary: '#0d6efd',
-    success: '#198754',
-    warning: '#ffc107',
-    danger: '#dc3545',
-    info: '#0dcaf0',
-    secondary: '#6c757d'
-};
+// Données des graphiques depuis Django
+const chartData = {{ chart_data_json|safe }};
 
-// Graphique des statuts
-{% if stats.by_status %}
-const statusData = {
-    labels: [
-        {% for status in stats.by_status %}
-            '{{ status.status|capfirst }}'{% if not forloop.last %},{% endif %}
-        {% endfor %}
-    ],
-    datasets: [{
-        data: [
-            {% for status in stats.by_status %}
-                {{ status.count }}{% if not forloop.last %},{% endif %}
-            {% endfor %}
-        ],
-        backgroundColor: [
-            '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#FF6384'
-        ],
-        borderWidth: 2,
-        borderColor: '#fff'
-    }]
-};
+// Animation des compteurs
+function animateCounters() {
+    const counters = document.querySelectorAll('.stat-number[data-target]');
+    
+    counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target'));
+        const duration = 2000;
+        const step = target / (duration / 16);
+        let current = 0;
+        
+        const timer = setInterval(() => {
+            current += step;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
+            }
+            counter.textContent = Math.floor(current);
+        }, 16);
+    });
+}
 
+// Configuration des graphiques
+Chart.defaults.font.family = "'Inter', sans-serif";
+Chart.defaults.color = '#6c757d';
+
+// Graphique en secteurs - Statut
 const statusCtx = document.getElementById('statusChart').getContext('2d');
-new Chart(statusCtx, {
+const statusChart = new Chart(statusCtx, {
     type: 'doughnut',
-    data: statusData,
+    data: {
+        labels: chartData.status_chart.labels,
+        datasets: [{
+            data: chartData.status_chart.data,
+            backgroundColor: chartData.status_chart.colors,
+            borderWidth: 0,
+            hoverBorderWidth: 3,
+            hoverBorderColor: '#fff'
+        }]
+    },
     options: {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
             legend: {
                 display: false
-            }
-        }
-    }
-});
-{% endif %}
-
-// Graphique des types de fichiers
-{% if stats.by_type %}
-const typeData = {
-    labels: [
-        {% for type in stats.by_type %}
-            '{{ type.file_type|upper }}'{% if not forloop.last %},{% endif %}
-        {% endfor %}
-    ],
-    datasets: [{
-        label: 'Nombre de documents',
-        data: [
-            {% for type in stats.by_type %}
-                {{ type.count }}{% if not forloop.last %},{% endif %}
-            {% endfor %}
-        ],
-        backgroundColor: colors.primary,
-        borderColor: colors.primary,
-        borderWidth: 1
-    }]
-};
-
-const typeCtx = document.getElementById('typeChart').getContext('2d');
-new Chart(typeCtx, {
-    type: 'bar',
-    data: typeData,
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                display: false
-            }
-        },
-        scales: {
-            y: {
-                beginAtZero: true,
-                ticks: {
-                    stepSize: 1
+            },
+            tooltip: {
+                backgroundColor: 'rgba(0,0,0,0.8)',
+                titleColor: '#fff',
+                bodyColor: '#fff',
+                borderColor: 'rgba(255,255,255,0.1)',
+                borderWidth: 1,
+                cornerRadius: 10,
+                callbacks: {
+                    label: function(context) {
+                        const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                        const percentage = ((context.parsed * 100) / total).toFixed(1);
+                        return `${context.label}: ${context.parsed} (${percentage}%)`;
+                    }
                 }
             }
+        },
+        animation: {
+            animateRotate: true,
+            duration: 2000,
+            easing: 'easeOutQuart'
         }
     }
 });
-{% endif %}
 
-// Graphique des temps de traitement
-{% if processing_times %}
-const processingTimeData = {
-    labels: [
-        {% for time in processing_times|slice:":10" %}
-            '{{ time.document__title|truncatechars:15 }}'{% if not forloop.last %},{% endif %}
-        {% endfor %}
-    ],
-    datasets: [{
-        label: 'Temps (heures)',
-        data: [
-            {% for time in processing_times|slice:":10" %}
-                {{ time.processing_time.total_seconds|div:3600|floatformat:1 }}{% if not forloop.last %},{% endif %}
-            {% endfor %}
-        ],
-        backgroundColor: colors.info,
-        borderColor: colors.info,
-        borderWidth: 1
-    }]
-};
-
-const processingTimeCtx = document.getElementById('processingTimeChart').getContext('2d');
-new Chart(processingTimeCtx, {
-    type: 'bar',
-    data: processingTimeData,
+// Graphique linéaire - Évolution
+const trendCtx = document.getElementById('trendChart').getContext('2d');
+const trendChart = new Chart(trendCtx, {
+    type: 'line',
+    data: {
+        labels: chartData.monthly_chart.labels,
+        datasets: [
+            {
+                label: 'Documents',
+                data: chartData.monthly_chart.documents,
+                borderColor: '#667eea',
+                backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#667eea',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 2,
+                pointRadius: 6,
+                pointHoverRadius: 8
+            },
+            {
+                label: 'Validés',
+                data: chartData.monthly_chart.validated,
+                borderColor: '#28a745',
+                backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#28a745',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 2,
+                pointRadius: 6,
+                pointHoverRadius: 8
+            }
+        ]
+    },
     options: {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
             legend: {
-                display: false
+                position: 'top',
+                labels: {
+                    usePointStyle: true,
+                    padding: 20
+                }
+            },
+            tooltip: {
+                backgroundColor: 'rgba(0,0,0,0.8)',
+                titleColor: '#fff',
+                bodyColor: '#fff',
+                borderColor: 'rgba(255,255,255,0.1)',
+                borderWidth: 1,
+                cornerRadius: 10
             }
         },
         scales: {
             y: {
                 beginAtZero: true,
-                title: {
-                    display: true,
-                    text: 'Heures'
+                grid: {
+                    color: 'rgba(0,0,0,0.05)'
                 }
             },
             x: {
-                ticks: {
-                    maxRotation: 45
+                grid: {
+                    display: false
                 }
             }
+        },
+        animation: {
+            duration: 2000,
+            easing: 'easeOutQuart'
         }
     }
 });
-{% endif %}
 
-// Graphique des tendances (données simulées)
-const trendsData = {
-    labels: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin'],
-    datasets: [{
-        label: 'Documents téléversés',
-        data: [12, 19, 3, 5, 2, 8],
-        borderColor: colors.primary,
-        backgroundColor: colors.primary + '20',
-        tension: 0.4
-    }, {
-        label: 'Documents validés',
-        data: [8, 15, 2, 4, 1, 6],
-        borderColor: colors.success,
-        backgroundColor: colors.success + '20',
-        tension: 0.4
-    }]
-};
-
-const trendsCtx = document.getElementById('trendsChart').getContext('2d');
-new Chart(trendsCtx, {
-    type: 'line',
-    data: trendsData,
+// Graphique en barres - Types de fichiers
+const typeCtx = document.getElementById('typeChart').getContext('2d');
+const typeChart = new Chart(typeCtx, {
+    type: 'bar',
+    data: {
+        labels: chartData.type_chart.labels,
+        datasets: [{
+            label: 'Nombre de fichiers',
+            data: chartData.type_chart.data,
+            backgroundColor: [
+                'rgba(102, 126, 234, 0.8)',
+                'rgba(40, 167, 69, 0.8)',
+                'rgba(255, 193, 7, 0.8)',
+                'rgba(220, 53, 69, 0.8)',
+                'rgba(23, 162, 184, 0.8)'
+            ],
+            borderColor: [
+                '#667eea',
+                '#28a745',
+                '#ffc107',
+                '#dc3545',
+                '#17a2b8'
+            ],
+            borderWidth: 2,
+            borderRadius: 8,
+            borderSkipped: false
+        }]
+    },
     options: {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
             legend: {
-                position: 'top'
+                display: false
+            },
+            tooltip: {
+                backgroundColor: 'rgba(0,0,0,0.8)',
+                titleColor: '#fff',
+                bodyColor: '#fff',
+                borderColor: 'rgba(255,255,255,0.1)',
+                borderWidth: 1,
+                cornerRadius: 10
             }
         },
         scales: {
             y: {
-                beginAtZero: true
+                beginAtZero: true,
+                grid: {
+                    color: 'rgba(0,0,0,0.05)'
+                }
+            },
+            x: {
+                grid: {
+                    display: false
+                }
             }
+        },
+        animation: {
+            duration: 2000,
+            easing: 'easeOutQuart'
         }
     }
 });
 
-// Fonctions d'export
-function exportStats(format) {
-    // Simulation d'export - à implémenter côté serveur
-    const data = {
-        total_documents: {{ stats.total_documents|default:0 }},
-        validated_annotations: {{ stats.validated_annotations|default:0 }},
-        by_status: {{ stats.by_status|safe }},
-        by_type: {{ stats.by_type|safe }}
-    };
+// Démarrer les animations au chargement
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(animateCounters, 500);
     
-    if (format === 'csv') {
-        downloadCSV(data);
-    } else if (format === 'excel') {
-        alert('Export Excel - Fonctionnalité à implémenter');
-    } else if (format === 'pdf') {
-        alert('Export PDF - Fonctionnalité à implémenter');
-    }
-}
-
-function downloadCSV(data) {
-    let csv = 'Métrique,Valeur\n';
-    csv += `Documents totaux,${data.total_documents}\n`;
-    csv += `Annotations validées,${data.validated_annotations}\n`;
-    
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'statistiques_data_structure.csv';
-    a.click();
-    window.URL.revokeObjectURL(url);
-}
-
-// Animation des cartes statistiques
-$(document).ready(function() {
-    $('.stat-card').hover(
-        function() {
-            $(this).addClass('shadow-lg').css('transform', 'translateY(-5px)');
-        },
-        function() {
-            $(this).removeClass('shadow-lg').css('transform', 'translateY(0)');
-        }
-    );
-    
-    // Animation d'apparition des chiffres
-    $('.stat-card h2').each(function() {
-        const $this = $(this);
-        const countTo = parseInt($this.text());
+    // Animation d'apparition des cartes
+    const cards = document.querySelectorAll('.stat-card, .chart-card');
+    cards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
         
-        $({ countNum: 0 }).animate({
-            countNum: countTo
-        }, {
-            duration: 2000,
-            easing: 'linear',
-            step: function() {
-                $this.text(Math.floor(this.countNum));
-            },
-            complete: function() {
-                $this.text(this.countNum);
-            }
-        });
+        setTimeout(() => {
+            card.style.transition = 'all 0.6s ease';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, index * 100);
+    });
+});
+
+// Effet de hover sur les cartes de statistiques
+document.querySelectorAll('.stat-card').forEach(card => {
+    card.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-10px) scale(1.02)';
+    });
+    
+    card.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0) scale(1)';
     });
 });
 </script>

@@ -647,34 +647,168 @@ def export_annotations(request, document_pk):
 
 @login_required
 def statistics(request):
-    """Page de statistiques globales"""
+    """Page de statistiques globales avec données avancées"""
     try:
+        from django.db.models import Avg, Count, F, Q, Sum
+        from django.utils import timezone
+        from datetime import datetime, timedelta
+        import json
+
+        # Statistiques de base
         annotation_service = AnnotationService()
-        stats = annotation_service.get_document_statistics()
+        base_stats = annotation_service.get_document_statistics()
 
-        # Statistiques supplémentaires
-        from django.db.models import Avg, Count, F
+        # Statistiques avancées
+        total_documents = Document.objects.count()
+        total_annotations = Annotation.objects.count()
+        total_schemas = AnnotationSchema.objects.count()
+        
+        # Répartition par statut avec couleurs
+        status_stats = Document.objects.values('status').annotate(
+            count=Count('id')
+        ).order_by('status')
+        
+        status_colors = {
+            'uploaded': '#6c757d',
+            'metadata_extracted': '#17a2b8', 
+            'schema_proposed': '#ffc107',
+            'schema_validated': '#28a745',
+            'pre_annotated': '#fd7e14',
+            'annotated': '#20c997',
+            'validated': '#198754',
+            'error': '#dc3545'
+        }
+        
+        status_data = []
+        for stat in status_stats:
+            status_data.append({
+                'status': stat['status'],
+                'count': stat['count'],
+                'color': status_colors.get(stat['status'], '#6c757d'),
+                'label': dict(Document.STATUS_CHOICES).get(stat['status'], stat['status'])
+            })
 
-        # Performance des utilisateurs
-        user_stats = Document.objects.values(
-            'uploaded_by__username'
+        # Répartition par type de fichier
+        type_stats = Document.objects.values('file_type').annotate(
+            count=Count('id')
+        ).order_by('-count')
+
+        # Performance des utilisateurs (top 10)
+        user_stats_raw = Document.objects.values(
+            'uploaded_by__username',
+            'uploaded_by__first_name',
+            'uploaded_by__last_name'
         ).annotate(
-            count=Count('id'),
-            validated_count=Count('id', filter=Q(status='validated'))
-        ).order_by('-count')[:10]
+            total_docs=Count('id'),
+            validated_docs=Count('id', filter=Q(status='validated')),
+            annotated_docs=Count('id', filter=Q(status__in=['annotated', 'validated'])),
+            avg_processing_time=Avg(
+                F('updated_at') - F('created_at'),
+                filter=Q(status='validated')
+            )
+        ).order_by('-total_docs')[:10]
+        
+        # Calculer les taux de réussite
+        user_stats = []
+        for user in user_stats_raw:
+            success_rate = (user['validated_docs'] * 100 / user['total_docs']) if user['total_docs'] > 0 else 0
+            user['success_rate'] = round(success_rate, 1)
+            user_stats.append(user)
 
-        # Temps de traitement moyen
-        processing_times = Document.objects.filter(
-            status='validated',
-            validated_at__isnull=False
-        ).annotate(
-            processing_time=F('validated_at') - F('created_at')
+        # Évolution temporelle (6 derniers mois)
+        six_months_ago = timezone.now() - timedelta(days=180)
+        monthly_stats = []
+        
+        for i in range(6):
+            month_start = six_months_ago + timedelta(days=30*i)
+            month_end = month_start + timedelta(days=30)
+            
+            month_data = {
+                'month': month_start.strftime('%b %Y'),
+                'documents': Document.objects.filter(
+                    created_at__gte=month_start,
+                    created_at__lt=month_end
+                ).count(),
+                'validated': Document.objects.filter(
+                    created_at__gte=month_start,
+                    created_at__lt=month_end,
+                    status='validated'
+                ).count(),
+                'annotations': Annotation.objects.filter(
+                    created_at__gte=month_start,
+                    created_at__lt=month_end
+                ).count()
+            }
+            monthly_stats.append(month_data)
+
+        # Statistiques de completion
+        completion_stats = Annotation.objects.aggregate(
+            avg_completion=Avg('completion_percentage'),
+            total_complete=Count('id', filter=Q(is_complete=True)),
+            total_validated=Count('id', filter=Q(is_validated=True))
         )
 
+        # Temps de traitement par étape
+        processing_stats = {
+            'upload_to_schema': Document.objects.filter(
+                status__in=['schema_proposed', 'schema_validated', 'pre_annotated', 'annotated', 'validated']
+            ).aggregate(
+                avg_time=Avg(F('updated_at') - F('created_at'))
+            )['avg_time'],
+            
+            'schema_to_annotation': Document.objects.filter(
+                status__in=['annotated', 'validated']
+            ).aggregate(
+                avg_time=Avg(F('updated_at') - F('created_at'))
+            )['avg_time'],
+            
+            'annotation_to_validation': Document.objects.filter(
+                status='validated'
+            ).aggregate(
+                avg_time=Avg(F('updated_at') - F('created_at'))
+            )['avg_time']
+        }
+
+        # Statistiques de qualité
+        quality_stats = {
+            'schema_validation_rate': AnnotationSchema.objects.filter(is_validated=True).count() / max(total_schemas, 1) * 100,
+            'annotation_completion_rate': completion_stats['total_complete'] / max(total_annotations, 1) * 100,
+            'final_validation_rate': completion_stats['total_validated'] / max(total_annotations, 1) * 100,
+            'avg_completion_percentage': completion_stats['avg_completion'] or 0
+        }
+
+        # Données pour les graphiques (JSON)
+        chart_data = {
+            'status_chart': {
+                'labels': [item['label'] for item in status_data],
+                'data': [item['count'] for item in status_data],
+                'colors': [item['color'] for item in status_data]
+            },
+            'type_chart': {
+                'labels': [dict(Document.FILE_TYPE_CHOICES).get(item['file_type'], item['file_type']) for item in type_stats],
+                'data': [item['count'] for item in type_stats]
+            },
+            'monthly_chart': {
+                'labels': [item['month'] for item in monthly_stats],
+                'documents': [item['documents'] for item in monthly_stats],
+                'validated': [item['validated'] for item in monthly_stats],
+                'annotations': [item['annotations'] for item in monthly_stats]
+            }
+        }
+
         context = {
-            'stats': stats,
+            'stats': base_stats,
+            'total_documents': total_documents,
+            'total_annotations': total_annotations,
+            'total_schemas': total_schemas,
+            'status_data': status_data,
+            'type_stats': type_stats,
             'user_stats': user_stats,
-            'processing_times': processing_times[:20]
+            'monthly_stats': monthly_stats,
+            'completion_stats': completion_stats,
+            'processing_stats': processing_stats,
+            'quality_stats': quality_stats,
+            'chart_data_json': json.dumps(chart_data)
         }
 
         return render(request, 'documents/statistics.html', context)

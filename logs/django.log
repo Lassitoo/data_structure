@@ -757,3 +757,382 @@ Suppression du document 398f9c5b-1c50-49a0-9af0-d89fcc125829 (Guideline II) par 
 Document 398f9c5b-1c50-49a0-9af0-d89fcc125829 et données associées supprimés de MongoDB
 Document 398f9c5b-1c50-49a0-9af0-d89fcc125829 supprimé de MongoDB
 Document 398f9c5b-1c50-49a0-9af0-d89fcc125829 supprimé avec succès
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Erreur statistiques: Invalid filter: 'mul'
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Erreur statistiques: Cannot resolve keyword 'completion_percentage' into field. Choices are: ai_pre_annotations, annotated_by, annotated_by_id, completed_at, confidence_score, created_at, document, document_id, final_annotations, history, id, is_complete, is_validated, schema, schema_id, updated_at, validated_at, validated_by, validated_by_id, validation_notes
+Nouveau document créé: Document Test 001 (ID: dbea2753-b806-40be-9160-c63941b01b37)
+Métadonnées document dbea2753-b806-40be-9160-c63941b01b37 créées dans MongoDB
+Document dbea2753-b806-40be-9160-c63941b01b37 synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 001 (ID: c1422257-ef3f-4399-aa7f-fc7c722f1bdd)
+Schéma d'annotation créé: 689e5dca4b6e6815e9b694c8 pour document dbea2753-b806-40be-9160-c63941b01b37
+Schéma c1422257-ef3f-4399-aa7f-fc7c722f1bdd synchronisé avec MongoDB
+Nouveau document créé: Document Test 002 (ID: daeef1d2-693d-40ae-b0b4-898fd822e3d5)
+Métadonnées document daeef1d2-693d-40ae-b0b4-898fd822e3d5 créées dans MongoDB
+Document daeef1d2-693d-40ae-b0b4-898fd822e3d5 synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 002 (ID: 789dfa86-8aa8-48b1-bb78-754f676d07f6)
+Schéma d'annotation créé: 689e5dcb4b6e6815e9b694ca pour document daeef1d2-693d-40ae-b0b4-898fd822e3d5
+Schéma 789dfa86-8aa8-48b1-bb78-754f676d07f6 synchronisé avec MongoDB
+Nouveau document créé: Document Test 001 (ID: 4b2c9dbc-ecb2-4caf-9383-2c9217c49f91)
+Métadonnées document 4b2c9dbc-ecb2-4caf-9383-2c9217c49f91 créées dans MongoDB
+Document 4b2c9dbc-ecb2-4caf-9383-2c9217c49f91 synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 001 (ID: 31228b72-8fd4-41c8-9b88-3f54e53747eb)
+Schéma d'annotation créé: 689e5dee6c58dfc56747cb27 pour document 4b2c9dbc-ecb2-4caf-9383-2c9217c49f91
+Schéma 31228b72-8fd4-41c8-9b88-3f54e53747eb synchronisé avec MongoDB
+Nouveau document créé: Document Test 002 (ID: 1ac7a509-83a2-4393-8489-61cd1d551612)
+Métadonnées document 1ac7a509-83a2-4393-8489-61cd1d551612 créées dans MongoDB
+Document 1ac7a509-83a2-4393-8489-61cd1d551612 synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 002 (ID: 1fa7773a-d873-43e5-b4f4-2d6c79205385)
+Schéma d'annotation créé: 689e5dee6c58dfc56747cb29 pour document 1ac7a509-83a2-4393-8489-61cd1d551612
+Schéma 1fa7773a-d873-43e5-b4f4-2d6c79205385 synchronisé avec MongoDB
+Nouvelle annotation créée pour document 1ac7a509-83a2-4393-8489-61cd1d551612
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation créée: 689e5dee6c58dfc56747cb2a pour document 1ac7a509-83a2-4393-8489-61cd1d551612
+Annotation c8fd5acc-8cc9-43d8-b7fd-5b9f61c4d89e synchronisée avec MongoDB
+Nouveau document créé: Document Test 003 (ID: ee14b58a-4159-4c7e-b915-cb482df691df)
+Métadonnées document ee14b58a-4159-4c7e-b915-cb482df691df créées dans MongoDB
+Document ee14b58a-4159-4c7e-b915-cb482df691df synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 003 (ID: 7aec0df0-31b2-4960-98c0-6e3d67043939)
+Schéma d'annotation créé: 689e5dee6c58dfc56747cb2c pour document ee14b58a-4159-4c7e-b915-cb482df691df
+Schéma 7aec0df0-31b2-4960-98c0-6e3d67043939 synchronisé avec MongoDB
+Nouveau document créé: Document Test 004 (ID: 7a5adfc2-9e66-4e43-9417-742acdafc18b)
+Métadonnées document 7a5adfc2-9e66-4e43-9417-742acdafc18b créées dans MongoDB
+Document 7a5adfc2-9e66-4e43-9417-742acdafc18b synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 004 (ID: fe1ae359-f7e2-4b49-8db6-ee45e4f79944)
+Schéma d'annotation créé: 689e5dee6c58dfc56747cb2e pour document 7a5adfc2-9e66-4e43-9417-742acdafc18b
+Schéma fe1ae359-f7e2-4b49-8db6-ee45e4f79944 synchronisé avec MongoDB
+Nouveau document créé: Document Test 005 (ID: ef6b7cf6-f189-4b97-87da-6c41640eeb89)
+Métadonnées document ef6b7cf6-f189-4b97-87da-6c41640eeb89 créées dans MongoDB
+Document ef6b7cf6-f189-4b97-87da-6c41640eeb89 synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 005 (ID: 94f43eb6-a244-4500-9832-c0fd9917ab0b)
+Schéma d'annotation créé: 689e5dee6c58dfc56747cb30 pour document ef6b7cf6-f189-4b97-87da-6c41640eeb89
+Schéma 94f43eb6-a244-4500-9832-c0fd9917ab0b synchronisé avec MongoDB
+Nouvelle annotation créée pour document ef6b7cf6-f189-4b97-87da-6c41640eeb89
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation créée: 689e5dee6c58dfc56747cb31 pour document ef6b7cf6-f189-4b97-87da-6c41640eeb89
+Annotation 7716d1f5-6161-488a-b4cb-e04d8d9904a3 synchronisée avec MongoDB
+Nouveau document créé: Document Test 006 (ID: d09f4485-7cdc-4d08-91fa-c793441afcb1)
+Métadonnées document d09f4485-7cdc-4d08-91fa-c793441afcb1 créées dans MongoDB
+Document d09f4485-7cdc-4d08-91fa-c793441afcb1 synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 006 (ID: 12ab5709-ce44-45eb-b333-4abfce1d8de9)
+Schéma d'annotation créé: 689e5dee6c58dfc56747cb33 pour document d09f4485-7cdc-4d08-91fa-c793441afcb1
+Schéma 12ab5709-ce44-45eb-b333-4abfce1d8de9 synchronisé avec MongoDB
+Nouveau document créé: Document Test 007 (ID: a2454edc-4056-4886-a819-9b4042dac07a)
+Métadonnées document a2454edc-4056-4886-a819-9b4042dac07a créées dans MongoDB
+Document a2454edc-4056-4886-a819-9b4042dac07a synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 007 (ID: 5af0ffab-96c4-421b-98eb-5e3c96d06adf)
+Schéma d'annotation créé: 689e5dee6c58dfc56747cb35 pour document a2454edc-4056-4886-a819-9b4042dac07a
+Schéma 5af0ffab-96c4-421b-98eb-5e3c96d06adf synchronisé avec MongoDB
+Nouvelle annotation créée pour document a2454edc-4056-4886-a819-9b4042dac07a
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation créée: 689e5dee6c58dfc56747cb36 pour document a2454edc-4056-4886-a819-9b4042dac07a
+Annotation 50ea39b7-fe5c-4465-9a93-7829d2300ec9 synchronisée avec MongoDB
+Nouveau document créé: Document Test 008 (ID: c0bb00b4-8ff2-4ebd-acb4-eb456fea36a8)
+Métadonnées document c0bb00b4-8ff2-4ebd-acb4-eb456fea36a8 créées dans MongoDB
+Document c0bb00b4-8ff2-4ebd-acb4-eb456fea36a8 synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 008 (ID: 7ae9945a-497a-462c-844e-8f0d177c02b8)
+Schéma d'annotation créé: 689e5dee6c58dfc56747cb38 pour document c0bb00b4-8ff2-4ebd-acb4-eb456fea36a8
+Schéma 7ae9945a-497a-462c-844e-8f0d177c02b8 synchronisé avec MongoDB
+Nouvelle annotation créée pour document c0bb00b4-8ff2-4ebd-acb4-eb456fea36a8
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation créée: 689e5dee6c58dfc56747cb39 pour document c0bb00b4-8ff2-4ebd-acb4-eb456fea36a8
+Annotation 74efc3e0-b8f3-4644-9d07-59ea240f4972 synchronisée avec MongoDB
+Nouveau document créé: Document Test 009 (ID: 32bb338b-ddea-4a2a-91db-aad6e8d8d590)
+Métadonnées document 32bb338b-ddea-4a2a-91db-aad6e8d8d590 créées dans MongoDB
+Document 32bb338b-ddea-4a2a-91db-aad6e8d8d590 synchronisé avec MongoDB
+Nouveau document créé: Document Test 010 (ID: f99b62ea-f626-4ff9-a703-a0eaa5619582)
+Métadonnées document f99b62ea-f626-4ff9-a703-a0eaa5619582 créées dans MongoDB
+Document f99b62ea-f626-4ff9-a703-a0eaa5619582 synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 010 (ID: 7beb813e-a5ad-4da2-adab-0dd9f3c5f8fd)
+Schéma d'annotation créé: 689e5dee6c58dfc56747cb3c pour document f99b62ea-f626-4ff9-a703-a0eaa5619582
+Schéma 7beb813e-a5ad-4da2-adab-0dd9f3c5f8fd synchronisé avec MongoDB
+Nouveau document créé: Document Test 011 (ID: bef6a2c0-7675-4ff8-b869-923548725748)
+Métadonnées document bef6a2c0-7675-4ff8-b869-923548725748 créées dans MongoDB
+Document bef6a2c0-7675-4ff8-b869-923548725748 synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 011 (ID: e6ad7d17-8fc7-4995-b129-d2003b1da4e0)
+Schéma d'annotation créé: 689e5dee6c58dfc56747cb3e pour document bef6a2c0-7675-4ff8-b869-923548725748
+Schéma e6ad7d17-8fc7-4995-b129-d2003b1da4e0 synchronisé avec MongoDB
+Nouvelle annotation créée pour document bef6a2c0-7675-4ff8-b869-923548725748
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation créée: 689e5dee6c58dfc56747cb3f pour document bef6a2c0-7675-4ff8-b869-923548725748
+Annotation 094d7c8a-e7de-4aaf-ab93-0b2e8ba32364 synchronisée avec MongoDB
+Nouveau document créé: Document Test 012 (ID: 05b5efb2-b054-4384-8530-df052a9f3e61)
+Métadonnées document 05b5efb2-b054-4384-8530-df052a9f3e61 créées dans MongoDB
+Document 05b5efb2-b054-4384-8530-df052a9f3e61 synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 012 (ID: d37cd96f-f002-4d6f-9955-38c333001a52)
+Schéma d'annotation créé: 689e5dee6c58dfc56747cb41 pour document 05b5efb2-b054-4384-8530-df052a9f3e61
+Schéma d37cd96f-f002-4d6f-9955-38c333001a52 synchronisé avec MongoDB
+Nouvelle annotation créée pour document 05b5efb2-b054-4384-8530-df052a9f3e61
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation créée: 689e5dee6c58dfc56747cb42 pour document 05b5efb2-b054-4384-8530-df052a9f3e61
+Annotation c8a4d09d-f6d7-4f9b-89a0-de525fb17754 synchronisée avec MongoDB
+Nouveau document créé: Document Test 013 (ID: 0a596018-ec47-4238-8388-5f0f751a37b1)
+Métadonnées document 0a596018-ec47-4238-8388-5f0f751a37b1 créées dans MongoDB
+Document 0a596018-ec47-4238-8388-5f0f751a37b1 synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 013 (ID: 7e7e5615-82d0-4b60-9256-aaad6ea054f5)
+Schéma d'annotation créé: 689e5dee6c58dfc56747cb44 pour document 0a596018-ec47-4238-8388-5f0f751a37b1
+Schéma 7e7e5615-82d0-4b60-9256-aaad6ea054f5 synchronisé avec MongoDB
+Nouveau document créé: Document Test 014 (ID: 6c1901f8-ff2a-468b-9f8f-7dc99a55b52a)
+Métadonnées document 6c1901f8-ff2a-468b-9f8f-7dc99a55b52a créées dans MongoDB
+Document 6c1901f8-ff2a-468b-9f8f-7dc99a55b52a synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 014 (ID: 9d60d253-883c-4bf6-87a8-8afaf09d73db)
+Schéma d'annotation créé: 689e5dee6c58dfc56747cb46 pour document 6c1901f8-ff2a-468b-9f8f-7dc99a55b52a
+Schéma 9d60d253-883c-4bf6-87a8-8afaf09d73db synchronisé avec MongoDB
+Nouvelle annotation créée pour document 6c1901f8-ff2a-468b-9f8f-7dc99a55b52a
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation créée: 689e5dee6c58dfc56747cb47 pour document 6c1901f8-ff2a-468b-9f8f-7dc99a55b52a
+Annotation 46b6d105-04a7-4596-881b-00b7f35680b1 synchronisée avec MongoDB
+Nouveau document créé: Document Test 015 (ID: ddb6e115-797d-4a24-abbb-0607a274e883)
+Métadonnées document ddb6e115-797d-4a24-abbb-0607a274e883 créées dans MongoDB
+Document ddb6e115-797d-4a24-abbb-0607a274e883 synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 015 (ID: e3afd992-5c0a-4417-a0b9-77b03cd00fa4)
+Schéma d'annotation créé: 689e5dee6c58dfc56747cb49 pour document ddb6e115-797d-4a24-abbb-0607a274e883
+Schéma e3afd992-5c0a-4417-a0b9-77b03cd00fa4 synchronisé avec MongoDB
+Nouveau document créé: Document Test 016 (ID: 5b98cd80-bf4b-48eb-9d43-c26fe16b1d6d)
+Métadonnées document 5b98cd80-bf4b-48eb-9d43-c26fe16b1d6d créées dans MongoDB
+Document 5b98cd80-bf4b-48eb-9d43-c26fe16b1d6d synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 016 (ID: 97912175-19e0-4009-871d-d9333faff43f)
+Schéma d'annotation créé: 689e5dee6c58dfc56747cb4b pour document 5b98cd80-bf4b-48eb-9d43-c26fe16b1d6d
+Schéma 97912175-19e0-4009-871d-d9333faff43f synchronisé avec MongoDB
+Nouveau document créé: Document Test 017 (ID: 555bd290-c30b-4fe1-8f8f-a9c6458aa7c3)
+Métadonnées document 555bd290-c30b-4fe1-8f8f-a9c6458aa7c3 créées dans MongoDB
+Document 555bd290-c30b-4fe1-8f8f-a9c6458aa7c3 synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 017 (ID: 55c47dd3-f211-4eea-b7b6-30217a7bd777)
+Schéma d'annotation créé: 689e5dee6c58dfc56747cb4d pour document 555bd290-c30b-4fe1-8f8f-a9c6458aa7c3
+Schéma 55c47dd3-f211-4eea-b7b6-30217a7bd777 synchronisé avec MongoDB
+Nouveau document créé: Document Test 018 (ID: 37573f85-6345-4c67-9121-6c6d309f6022)
+Métadonnées document 37573f85-6345-4c67-9121-6c6d309f6022 créées dans MongoDB
+Document 37573f85-6345-4c67-9121-6c6d309f6022 synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 018 (ID: 0ccb2993-367e-426e-8f77-9e9b873d10ec)
+Schéma d'annotation créé: 689e5dee6c58dfc56747cb4f pour document 37573f85-6345-4c67-9121-6c6d309f6022
+Schéma 0ccb2993-367e-426e-8f77-9e9b873d10ec synchronisé avec MongoDB
+Nouveau document créé: Document Test 019 (ID: 012d9c85-771f-454e-860c-eca67a6ce5b8)
+Métadonnées document 012d9c85-771f-454e-860c-eca67a6ce5b8 créées dans MongoDB
+Document 012d9c85-771f-454e-860c-eca67a6ce5b8 synchronisé avec MongoDB
+Nouveau document créé: Document Test 020 (ID: 630922a2-ef9c-485a-9640-0618682f2627)
+Métadonnées document 630922a2-ef9c-485a-9640-0618682f2627 créées dans MongoDB
+Document 630922a2-ef9c-485a-9640-0618682f2627 synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 020 (ID: 0652ca26-6723-45bc-9219-375c4afa831d)
+Schéma d'annotation créé: 689e5dee6c58dfc56747cb52 pour document 630922a2-ef9c-485a-9640-0618682f2627
+Schéma 0652ca26-6723-45bc-9219-375c4afa831d synchronisé avec MongoDB
+Nouveau document créé: Document Test 021 (ID: feb069e8-2da0-431d-9108-b522e36307e6)
+Métadonnées document feb069e8-2da0-431d-9108-b522e36307e6 créées dans MongoDB
+Document feb069e8-2da0-431d-9108-b522e36307e6 synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 021 (ID: 3cc82519-b6ca-4379-942f-005fd23e8de4)
+Schéma d'annotation créé: 689e5dee6c58dfc56747cb54 pour document feb069e8-2da0-431d-9108-b522e36307e6
+Schéma 3cc82519-b6ca-4379-942f-005fd23e8de4 synchronisé avec MongoDB
+Nouvelle annotation créée pour document feb069e8-2da0-431d-9108-b522e36307e6
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation créée: 689e5dee6c58dfc56747cb55 pour document feb069e8-2da0-431d-9108-b522e36307e6
+Annotation fe7747ff-3398-44ed-8ba2-7be0fd2e6453 synchronisée avec MongoDB
+Nouveau document créé: Document Test 022 (ID: b29ca443-1ab4-4e11-9cc2-507b04252f93)
+Métadonnées document b29ca443-1ab4-4e11-9cc2-507b04252f93 créées dans MongoDB
+Document b29ca443-1ab4-4e11-9cc2-507b04252f93 synchronisé avec MongoDB
+Nouveau document créé: Document Test 023 (ID: 39ad8a51-289f-4945-9a35-6307b1c04efd)
+Métadonnées document 39ad8a51-289f-4945-9a35-6307b1c04efd créées dans MongoDB
+Document 39ad8a51-289f-4945-9a35-6307b1c04efd synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 023 (ID: 815b0062-5e13-435a-b11e-d430cdbd4c60)
+Schéma d'annotation créé: 689e5dee6c58dfc56747cb58 pour document 39ad8a51-289f-4945-9a35-6307b1c04efd
+Schéma 815b0062-5e13-435a-b11e-d430cdbd4c60 synchronisé avec MongoDB
+Nouvelle annotation créée pour document 39ad8a51-289f-4945-9a35-6307b1c04efd
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation créée: 689e5dee6c58dfc56747cb59 pour document 39ad8a51-289f-4945-9a35-6307b1c04efd
+Annotation 0c75f7cc-d32d-4534-a465-666af4d18695 synchronisée avec MongoDB
+Nouveau document créé: Document Test 024 (ID: 61467d60-bc88-4fbb-8d60-b8c25229df77)
+Métadonnées document 61467d60-bc88-4fbb-8d60-b8c25229df77 créées dans MongoDB
+Document 61467d60-bc88-4fbb-8d60-b8c25229df77 synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 024 (ID: 526bd284-9920-4f2a-b1fc-3ebbfabc51bb)
+Schéma d'annotation créé: 689e5dee6c58dfc56747cb5b pour document 61467d60-bc88-4fbb-8d60-b8c25229df77
+Schéma 526bd284-9920-4f2a-b1fc-3ebbfabc51bb synchronisé avec MongoDB
+Nouvelle annotation créée pour document 61467d60-bc88-4fbb-8d60-b8c25229df77
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation créée: 689e5dee6c58dfc56747cb5c pour document 61467d60-bc88-4fbb-8d60-b8c25229df77
+Annotation 015c4f98-d0e9-4eaa-a151-0bbc1d488a4e synchronisée avec MongoDB
+Nouveau document créé: Document Test 025 (ID: eeda9c5f-abc4-4c1c-bf0a-dce6d28ed206)
+Métadonnées document eeda9c5f-abc4-4c1c-bf0a-dce6d28ed206 créées dans MongoDB
+Document eeda9c5f-abc4-4c1c-bf0a-dce6d28ed206 synchronisé avec MongoDB
+Nouveau document créé: Document Test 026 (ID: d71970ec-a475-41e4-8602-76e95af6e166)
+Métadonnées document d71970ec-a475-41e4-8602-76e95af6e166 créées dans MongoDB
+Document d71970ec-a475-41e4-8602-76e95af6e166 synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 026 (ID: 199108fc-b1c4-49f7-8e3f-05ec51d65e5b)
+Schéma d'annotation créé: 689e5dee6c58dfc56747cb5f pour document d71970ec-a475-41e4-8602-76e95af6e166
+Schéma 199108fc-b1c4-49f7-8e3f-05ec51d65e5b synchronisé avec MongoDB
+Nouveau document créé: Document Test 027 (ID: 5e30df34-bfcf-48bf-979e-cf638f262b55)
+Métadonnées document 5e30df34-bfcf-48bf-979e-cf638f262b55 créées dans MongoDB
+Document 5e30df34-bfcf-48bf-979e-cf638f262b55 synchronisé avec MongoDB
+Nouveau document créé: Document Test 028 (ID: b4e769cb-8902-4cd2-8960-93c67ff4f5eb)
+Métadonnées document b4e769cb-8902-4cd2-8960-93c67ff4f5eb créées dans MongoDB
+Document b4e769cb-8902-4cd2-8960-93c67ff4f5eb synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 028 (ID: 16c25ca8-cfd4-49a3-8f4b-1e1232782ca3)
+Schéma d'annotation créé: 689e5dee6c58dfc56747cb62 pour document b4e769cb-8902-4cd2-8960-93c67ff4f5eb
+Schéma 16c25ca8-cfd4-49a3-8f4b-1e1232782ca3 synchronisé avec MongoDB
+Nouvelle annotation créée pour document b4e769cb-8902-4cd2-8960-93c67ff4f5eb
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation créée: 689e5dee6c58dfc56747cb63 pour document b4e769cb-8902-4cd2-8960-93c67ff4f5eb
+Annotation 8ff67b27-5eb1-4b40-b1c0-5239f30d4c55 synchronisée avec MongoDB
+Nouveau document créé: Document Test 029 (ID: 511621e5-4eb2-41a5-8a8a-bb5373b22372)
+Métadonnées document 511621e5-4eb2-41a5-8a8a-bb5373b22372 créées dans MongoDB
+Document 511621e5-4eb2-41a5-8a8a-bb5373b22372 synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 029 (ID: fd841176-0791-4c20-9600-e9403b216046)
+Schéma d'annotation créé: 689e5dee6c58dfc56747cb65 pour document 511621e5-4eb2-41a5-8a8a-bb5373b22372
+Schéma fd841176-0791-4c20-9600-e9403b216046 synchronisé avec MongoDB
+Nouvelle annotation créée pour document 511621e5-4eb2-41a5-8a8a-bb5373b22372
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation créée: 689e5def6c58dfc56747cb66 pour document 511621e5-4eb2-41a5-8a8a-bb5373b22372
+Annotation 507dc9d7-b858-4fc5-a392-888b7c3cab31 synchronisée avec MongoDB
+Nouveau document créé: Document Test 030 (ID: 814c7248-f051-4366-810a-0000e044eeed)
+Métadonnées document 814c7248-f051-4366-810a-0000e044eeed créées dans MongoDB
+Document 814c7248-f051-4366-810a-0000e044eeed synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 030 (ID: 9925b9ed-2c52-4bf4-81a8-7036d042f58c)
+Schéma d'annotation créé: 689e5def6c58dfc56747cb68 pour document 814c7248-f051-4366-810a-0000e044eeed
+Schéma 9925b9ed-2c52-4bf4-81a8-7036d042f58c synchronisé avec MongoDB
+Nouvelle annotation créée pour document 814c7248-f051-4366-810a-0000e044eeed
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation créée: 689e5def6c58dfc56747cb69 pour document 814c7248-f051-4366-810a-0000e044eeed
+Annotation 64fc4578-909f-4ed2-b1a0-3fb9a03eced6 synchronisée avec MongoDB
+Nouveau document créé: Document Test 031 (ID: a15c9adb-d2ca-44ba-9141-65b08e699960)
+Métadonnées document a15c9adb-d2ca-44ba-9141-65b08e699960 créées dans MongoDB
+Document a15c9adb-d2ca-44ba-9141-65b08e699960 synchronisé avec MongoDB
+Nouveau document créé: Document Test 032 (ID: 38bfae7b-aa15-4901-b95d-ae3665aec1d9)
+Métadonnées document 38bfae7b-aa15-4901-b95d-ae3665aec1d9 créées dans MongoDB
+Document 38bfae7b-aa15-4901-b95d-ae3665aec1d9 synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 032 (ID: 5382cba8-b459-456d-bb54-fc85a710f0ce)
+Schéma d'annotation créé: 689e5def6c58dfc56747cb6c pour document 38bfae7b-aa15-4901-b95d-ae3665aec1d9
+Schéma 5382cba8-b459-456d-bb54-fc85a710f0ce synchronisé avec MongoDB
+Nouvelle annotation créée pour document 38bfae7b-aa15-4901-b95d-ae3665aec1d9
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation créée: 689e5def6c58dfc56747cb6d pour document 38bfae7b-aa15-4901-b95d-ae3665aec1d9
+Annotation aa861b22-6a4b-444f-ac5e-79f22970e2a7 synchronisée avec MongoDB
+Nouveau document créé: Document Test 033 (ID: 78794699-12f0-476f-be06-abc3e790a527)
+Métadonnées document 78794699-12f0-476f-be06-abc3e790a527 créées dans MongoDB
+Document 78794699-12f0-476f-be06-abc3e790a527 synchronisé avec MongoDB
+Nouveau document créé: Document Test 034 (ID: 97de147c-c958-4f83-862a-21d399c8a01c)
+Métadonnées document 97de147c-c958-4f83-862a-21d399c8a01c créées dans MongoDB
+Document 97de147c-c958-4f83-862a-21d399c8a01c synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 034 (ID: 59c2e143-d709-4f2a-a13f-e02a33b5d4f0)
+Schéma d'annotation créé: 689e5def6c58dfc56747cb70 pour document 97de147c-c958-4f83-862a-21d399c8a01c
+Schéma 59c2e143-d709-4f2a-a13f-e02a33b5d4f0 synchronisé avec MongoDB
+Nouveau document créé: Document Test 035 (ID: 9c27f247-2ba2-454e-b147-7e930cb393c5)
+Métadonnées document 9c27f247-2ba2-454e-b147-7e930cb393c5 créées dans MongoDB
+Document 9c27f247-2ba2-454e-b147-7e930cb393c5 synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 035 (ID: 77455aad-5aca-4c62-ae51-e4b1d69dde67)
+Schéma d'annotation créé: 689e5def6c58dfc56747cb72 pour document 9c27f247-2ba2-454e-b147-7e930cb393c5
+Schéma 77455aad-5aca-4c62-ae51-e4b1d69dde67 synchronisé avec MongoDB
+Nouvelle annotation créée pour document 9c27f247-2ba2-454e-b147-7e930cb393c5
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation créée: 689e5def6c58dfc56747cb73 pour document 9c27f247-2ba2-454e-b147-7e930cb393c5
+Annotation 984b1931-4e59-4f4f-a6ed-0c9e5e82bae8 synchronisée avec MongoDB
+Nouveau document créé: Document Test 036 (ID: b313ccee-48dc-418f-a7b5-24317ba91d70)
+Métadonnées document b313ccee-48dc-418f-a7b5-24317ba91d70 créées dans MongoDB
+Document b313ccee-48dc-418f-a7b5-24317ba91d70 synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 036 (ID: 8d9c8c88-0b06-49eb-9a47-29129e60411c)
+Schéma d'annotation créé: 689e5def6c58dfc56747cb75 pour document b313ccee-48dc-418f-a7b5-24317ba91d70
+Schéma 8d9c8c88-0b06-49eb-9a47-29129e60411c synchronisé avec MongoDB
+Nouveau document créé: Document Test 037 (ID: cfe5d134-d698-4eb9-bb19-763de4a85a2e)
+Métadonnées document cfe5d134-d698-4eb9-bb19-763de4a85a2e créées dans MongoDB
+Document cfe5d134-d698-4eb9-bb19-763de4a85a2e synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 037 (ID: ffe63ac2-f11e-456b-8c5c-b042809c5ce2)
+Schéma d'annotation créé: 689e5def6c58dfc56747cb77 pour document cfe5d134-d698-4eb9-bb19-763de4a85a2e
+Schéma ffe63ac2-f11e-456b-8c5c-b042809c5ce2 synchronisé avec MongoDB
+Nouvelle annotation créée pour document cfe5d134-d698-4eb9-bb19-763de4a85a2e
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation créée: 689e5def6c58dfc56747cb78 pour document cfe5d134-d698-4eb9-bb19-763de4a85a2e
+Annotation 28971ea0-ab99-4a28-9312-22d5d25a4613 synchronisée avec MongoDB
+Nouveau document créé: Document Test 038 (ID: b4144bcb-607f-4e07-9553-01ff51dd2801)
+Métadonnées document b4144bcb-607f-4e07-9553-01ff51dd2801 créées dans MongoDB
+Document b4144bcb-607f-4e07-9553-01ff51dd2801 synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 038 (ID: 5195bab2-6060-4c4e-81ca-397cc887e420)
+Schéma d'annotation créé: 689e5def6c58dfc56747cb7a pour document b4144bcb-607f-4e07-9553-01ff51dd2801
+Schéma 5195bab2-6060-4c4e-81ca-397cc887e420 synchronisé avec MongoDB
+Nouveau document créé: Document Test 039 (ID: d1210c09-935a-4c91-ad8f-3aa91f99cdf3)
+Métadonnées document d1210c09-935a-4c91-ad8f-3aa91f99cdf3 créées dans MongoDB
+Document d1210c09-935a-4c91-ad8f-3aa91f99cdf3 synchronisé avec MongoDB
+Nouveau document créé: Document Test 040 (ID: 69ec2085-7016-4106-bd18-f99bca120eb1)
+Métadonnées document 69ec2085-7016-4106-bd18-f99bca120eb1 créées dans MongoDB
+Document 69ec2085-7016-4106-bd18-f99bca120eb1 synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 040 (ID: 544b5208-9eb8-41cb-a7c7-d6fb0a030f16)
+Schéma d'annotation créé: 689e5def6c58dfc56747cb7d pour document 69ec2085-7016-4106-bd18-f99bca120eb1
+Schéma 544b5208-9eb8-41cb-a7c7-d6fb0a030f16 synchronisé avec MongoDB
+Nouvelle annotation créée pour document 69ec2085-7016-4106-bd18-f99bca120eb1
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation créée: 689e5def6c58dfc56747cb7e pour document 69ec2085-7016-4106-bd18-f99bca120eb1
+Annotation 8630ee51-59a1-4642-b3fa-0a284f83f81d synchronisée avec MongoDB
+Nouveau document créé: Document Test 041 (ID: 73fb864d-9a34-4adb-8e9c-faca8b8a40e2)
+Métadonnées document 73fb864d-9a34-4adb-8e9c-faca8b8a40e2 créées dans MongoDB
+Document 73fb864d-9a34-4adb-8e9c-faca8b8a40e2 synchronisé avec MongoDB
+Nouveau document créé: Document Test 042 (ID: 5df4ebdd-27cb-49f7-bf46-a50da16a84a3)
+Métadonnées document 5df4ebdd-27cb-49f7-bf46-a50da16a84a3 créées dans MongoDB
+Document 5df4ebdd-27cb-49f7-bf46-a50da16a84a3 synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 042 (ID: f929c48a-e730-44b9-bbb0-2fc1c247e416)
+Schéma d'annotation créé: 689e5def6c58dfc56747cb81 pour document 5df4ebdd-27cb-49f7-bf46-a50da16a84a3
+Schéma f929c48a-e730-44b9-bbb0-2fc1c247e416 synchronisé avec MongoDB
+Nouvelle annotation créée pour document 5df4ebdd-27cb-49f7-bf46-a50da16a84a3
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation créée: 689e5def6c58dfc56747cb82 pour document 5df4ebdd-27cb-49f7-bf46-a50da16a84a3
+Annotation e358e991-3aef-4eb0-948d-6df1d469dd2a synchronisée avec MongoDB
+Nouveau document créé: Document Test 043 (ID: de92919c-de8e-463d-af98-2a3aa52e7918)
+Métadonnées document de92919c-de8e-463d-af98-2a3aa52e7918 créées dans MongoDB
+Document de92919c-de8e-463d-af98-2a3aa52e7918 synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 043 (ID: 1a016318-6f74-4838-a6d7-82408cc101cf)
+Schéma d'annotation créé: 689e5def6c58dfc56747cb84 pour document de92919c-de8e-463d-af98-2a3aa52e7918
+Schéma 1a016318-6f74-4838-a6d7-82408cc101cf synchronisé avec MongoDB
+Nouvelle annotation créée pour document de92919c-de8e-463d-af98-2a3aa52e7918
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation créée: 689e5def6c58dfc56747cb85 pour document de92919c-de8e-463d-af98-2a3aa52e7918
+Annotation 2bb197ad-38b4-4b88-aa82-0311af0ee498 synchronisée avec MongoDB
+Nouveau document créé: Document Test 044 (ID: 5ce4f3b4-9b59-4ddc-8a5e-18ac3d1851cf)
+Métadonnées document 5ce4f3b4-9b59-4ddc-8a5e-18ac3d1851cf créées dans MongoDB
+Document 5ce4f3b4-9b59-4ddc-8a5e-18ac3d1851cf synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 044 (ID: 2f78414b-e682-4b26-ba06-5b2b964aabcd)
+Schéma d'annotation créé: 689e5def6c58dfc56747cb87 pour document 5ce4f3b4-9b59-4ddc-8a5e-18ac3d1851cf
+Schéma 2f78414b-e682-4b26-ba06-5b2b964aabcd synchronisé avec MongoDB
+Nouveau document créé: Document Test 045 (ID: 8fa64951-4811-4f94-9173-3c5f8ef50d62)
+Métadonnées document 8fa64951-4811-4f94-9173-3c5f8ef50d62 créées dans MongoDB
+Document 8fa64951-4811-4f94-9173-3c5f8ef50d62 synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 045 (ID: e659c4ff-df6b-4eb3-a429-68c75eda7db2)
+Schéma d'annotation créé: 689e5def6c58dfc56747cb89 pour document 8fa64951-4811-4f94-9173-3c5f8ef50d62
+Schéma e659c4ff-df6b-4eb3-a429-68c75eda7db2 synchronisé avec MongoDB
+Nouvelle annotation créée pour document 8fa64951-4811-4f94-9173-3c5f8ef50d62
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation créée: 689e5def6c58dfc56747cb8a pour document 8fa64951-4811-4f94-9173-3c5f8ef50d62
+Annotation 6225f16e-c3a5-45d4-bd9d-0bbf755bebaa synchronisée avec MongoDB
+Nouveau document créé: Document Test 046 (ID: 057f3e68-c9db-4f9f-b6e7-4f0441606eb6)
+Métadonnées document 057f3e68-c9db-4f9f-b6e7-4f0441606eb6 créées dans MongoDB
+Document 057f3e68-c9db-4f9f-b6e7-4f0441606eb6 synchronisé avec MongoDB
+Nouveau document créé: Document Test 047 (ID: 2bad1507-f3f6-4f09-9d43-5e9b8f5ba6cd)
+Métadonnées document 2bad1507-f3f6-4f09-9d43-5e9b8f5ba6cd créées dans MongoDB
+Document 2bad1507-f3f6-4f09-9d43-5e9b8f5ba6cd synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 047 (ID: 031287c5-ab08-48ca-a006-69f31494f207)
+Schéma d'annotation créé: 689e5def6c58dfc56747cb8d pour document 2bad1507-f3f6-4f09-9d43-5e9b8f5ba6cd
+Schéma 031287c5-ab08-48ca-a006-69f31494f207 synchronisé avec MongoDB
+Nouveau document créé: Document Test 048 (ID: 48312ca2-f651-400b-b291-d8b953ffee08)
+Métadonnées document 48312ca2-f651-400b-b291-d8b953ffee08 créées dans MongoDB
+Document 48312ca2-f651-400b-b291-d8b953ffee08 synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 048 (ID: 2c8bf587-0d38-4860-abc1-28d420d3f362)
+Schéma d'annotation créé: 689e5def6c58dfc56747cb8f pour document 48312ca2-f651-400b-b291-d8b953ffee08
+Schéma 2c8bf587-0d38-4860-abc1-28d420d3f362 synchronisé avec MongoDB
+Nouvelle annotation créée pour document 48312ca2-f651-400b-b291-d8b953ffee08
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation créée: 689e5def6c58dfc56747cb90 pour document 48312ca2-f651-400b-b291-d8b953ffee08
+Annotation bedfc73b-60b4-4348-a7ff-50093207bbbf synchronisée avec MongoDB
+Nouveau document créé: Document Test 049 (ID: 6ac95294-a37a-4378-ba13-8d0528c8c165)
+Métadonnées document 6ac95294-a37a-4378-ba13-8d0528c8c165 créées dans MongoDB
+Document 6ac95294-a37a-4378-ba13-8d0528c8c165 synchronisé avec MongoDB
+Nouveau document créé: Document Test 050 (ID: 2e6ed8f7-de01-443f-9dae-e56a45117fda)
+Métadonnées document 2e6ed8f7-de01-443f-9dae-e56a45117fda créées dans MongoDB
+Document 2e6ed8f7-de01-443f-9dae-e56a45117fda synchronisé avec MongoDB
+Nouveau schéma créé: Schéma Document Test 050 (ID: abd42628-e750-494c-8cd7-31b4ecea9942)
+Schéma d'annotation créé: 689e5def6c58dfc56747cb93 pour document 2e6ed8f7-de01-443f-9dae-e56a45117fda
+Schéma abd42628-e750-494c-8cd7-31b4ecea9942 synchronisé avec MongoDB
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Erreur statistiques: Cannot resolve keyword 'completion_percentage' into field. Choices are: ai_pre_annotations, annotated_by, annotated_by_id, completed_at, confidence_score, created_at, document, document_id, final_annotations, history, id, is_complete, is_validated, schema, schema_id, updated_at, validated_at, validated_by, validated_by_id, validation_notes
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Erreur statistiques: Cannot resolve keyword 'completion_percentage' into field. Choices are: ai_pre_annotations, annotated_by, annotated_by_id, completed_at, confidence_score, created_at, document, document_id, final_annotations, history, id, is_complete, is_validated, schema, schema_id, updated_at, validated_at, validated_by, validated_by_id, validation_notes
+Erreur validation annotation: The 'file' attribute has no file associated with it.
+Erreur détail document: The 'file' attribute has no file associated with it.
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Erreur statistiques: Cannot resolve keyword 'completion_percentage' into field. Choices are: ai_pre_annotations, annotated_by, annotated_by_id, completed_at, confidence_score, created_at, document, document_id, final_annotations, history, id, is_complete, is_validated, schema, schema_id, updated_at, validated_at, validated_by, validated_by_id, validation_notes
+Erreur détail document: The 'file' attribute has no file associated with it.
+Erreur détail document: The 'file' attribute has no file associated with it.
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Erreur statistiques: Cannot resolve keyword 'completion_percentage' into field. Choices are: ai_pre_annotations, annotated_by, annotated_by_id, completed_at, confidence_score, created_at, document, document_id, final_annotations, history, id, is_complete, is_validated, schema, schema_id, updated_at, validated_at, validated_by, validated_by_id, validation_notes
