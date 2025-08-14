@@ -308,6 +308,33 @@
                     {% progress_bar annotation.completion_percentage 100 "mb-3" %}
                 </div>
                 
+                <!-- Alerte pour annotation complète -->
+                {% if annotation.is_complete and not annotation.is_validated %}
+                <div class="alert alert-info d-flex align-items-center mb-3">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <div>
+                        <strong>Annotation complète !</strong> 
+                        Cette annotation est prête pour validation.
+                        {% if can_validate %}
+                            <a href="{% url 'documents:validate_annotation' document.pk %}" class="btn btn-sm btn-outline-warning ms-2">
+                                <i class="fas fa-check me-1"></i>Valider maintenant
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% elif annotation.completion_percentage < 100 %}
+                <div class="alert alert-warning d-flex align-items-center mb-3">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <div>
+                        <strong>Annotation incomplète</strong> 
+                        Complétez tous les champs requis pour pouvoir valider.
+                        <a href="{% url 'documents:annotate_document' document.pk %}" class="btn btn-sm btn-outline-primary ms-2">
+                            <i class="fas fa-edit me-1"></i>Continuer l'annotation
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+                
                 {% if annotation.final_annotations %}
                     <div class="row">
                         {% for field in annotation_schema.fields.all %}

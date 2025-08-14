@@ -353,13 +353,30 @@ def annotate_document(request, document_pk):
                 )
 
                 if result['success']:
-                    messages.success(request, "Annotations sauvegardées!")
-
-                    # Redirection selon l'action
-                    if 'save_and_continue' in request.POST:
-                        return redirect('documents:annotate_document', document_pk=document.pk)
+                    # Recharger l'annotation pour avoir l'état à jour
+                    annotation.refresh_from_db()
+                    
+                    # Vérifier si l'annotation est maintenant complète
+                    if annotation.is_complete:
+                        messages.success(request, "Annotations sauvegardées et marquées comme complètes!")
+                        messages.info(request, "Votre annotation est maintenant prête pour validation.")
+                        
+                        # Redirection selon l'action
+                        if 'save_and_validate' in request.POST:
+                            return redirect('documents:validate_annotation', document_pk=document.pk)
+                        elif 'save_and_continue' in request.POST:
+                            return redirect('documents:annotate_document', document_pk=document.pk)
+                        else:
+                            return redirect('documents:document_detail', pk=document.pk)
                     else:
-                        return redirect('documents:document_detail', pk=document.pk)
+                        completion_pct = annotation.completion_percentage
+                        messages.success(request, f"Annotations sauvegardées! ({completion_pct:.0f}% complété)")
+                        
+                        # Redirection selon l'action
+                        if 'save_and_continue' in request.POST:
+                            return redirect('documents:annotate_document', document_pk=document.pk)
+                        else:
+                            return redirect('documents:document_detail', pk=document.pk)
                 else:
                     messages.error(request, f"Erreur sauvegarde: {result.get('error')}")
 
@@ -666,3 +683,112 @@ def statistics(request):
         logger.error(f"Erreur statistiques: {str(e)}")
         messages.error(request, f"Erreur lors du chargement des statistiques: {str(e)}")
         return render(request, 'documents/statistics.html', {'stats': {}})
+
+
+@login_required
+@require_http_methods(["POST"])
+def delete_document(request, pk):
+    """Suppression d'un document et de tous ses éléments associés"""
+    try:
+        document = get_object_or_404(Document, pk=pk)
+        
+        # Vérifier les permissions (optionnel - ajustez selon vos besoins)
+        if document.uploaded_by != request.user and not request.user.is_staff:
+            messages.error(request, "Vous n'avez pas l'autorisation de supprimer ce document.")
+            return redirect('documents:document_list')
+        
+        # Sauvegarder les informations pour le message
+        document_title = document.title
+        document_id = str(document.id)
+        
+        # Compter les éléments associés avant suppression
+        annotation_count = 0
+        schema_count = 0
+        history_count = 0
+        
+        try:
+            if hasattr(document, 'annotation'):
+                annotation_count = 1
+                history_count = document.annotation.history.count()
+            if hasattr(document, 'annotation_schema'):
+                schema_count = 1
+        except:
+            pass
+        
+        logger.info(f"Suppression du document {document_id} ({document_title}) par {request.user.username}")
+        logger.info(f"Éléments associés: {annotation_count} annotation(s), {schema_count} schéma(s), {history_count} entrée(s) d'historique")
+        
+        # Suppression du document (cascade automatique vers les éléments liés)
+        document.delete()
+        
+        # Message de confirmation
+        elements_deleted = []
+        if annotation_count > 0:
+            elements_deleted.append(f"{annotation_count} annotation(s)")
+        if schema_count > 0:
+            elements_deleted.append(f"{schema_count} schéma(s)")
+        if history_count > 0:
+            elements_deleted.append(f"{history_count} entrée(s) d'historique")
+        
+        if elements_deleted:
+            elements_msg = " et " + ", ".join(elements_deleted)
+        else:
+            elements_msg = ""
+        
+        messages.success(
+            request, 
+            f'Document "{document_title}" supprimé avec succès{elements_msg}.'
+        )
+        
+        logger.info(f"Document {document_id} supprimé avec succès")
+        
+        # Redirection vers la liste des documents
+        return redirect('documents:document_list')
+        
+    except Exception as e:
+        logger.error(f"Erreur suppression document: {str(e)}")
+        messages.error(request, f"Erreur lors de la suppression du document: {str(e)}")
+        return redirect('documents:document_list')
+
+
+@login_required
+def confirm_delete_document(request, pk):
+    """Page de confirmation de suppression d'un document"""
+    try:
+        document = get_object_or_404(Document, pk=pk)
+        
+        # Vérifier les permissions
+        if document.uploaded_by != request.user and not request.user.is_staff:
+            messages.error(request, "Vous n'avez pas l'autorisation de supprimer ce document.")
+            return redirect('documents:document_list')
+        
+        # Compter les éléments associés
+        associated_elements = {
+            'annotation': None,
+            'schema': None,
+            'history_count': 0,
+            'fields_count': 0
+        }
+        
+        try:
+            if hasattr(document, 'annotation'):
+                associated_elements['annotation'] = document.annotation
+                associated_elements['history_count'] = document.annotation.history.count()
+            
+            if hasattr(document, 'annotation_schema'):
+                associated_elements['schema'] = document.annotation_schema
+                associated_elements['fields_count'] = document.annotation_schema.fields.count()
+        except:
+            pass
+        
+        context = {
+            'document': document,
+            'associated_elements': associated_elements
+        }
+        
+        return render(request, 'documents/confirm_delete.html', context)
+        
+    except Exception as e:
+        logger.error(f"Erreur confirmation suppression: {str(e)}")
+        messages.error(request, f"Erreur lors du chargement de la confirmation: {str(e)}")
+        return redirect('documents:document_list')

@@ -1,0 +1,202 @@
+{% extends 'documents/base.html' %}
+{% load document_filters %}
+
+{% block title %}Supprimer {{ document.title }} - Data Structure{% endblock %}
+
+{% block breadcrumb %}
+<div class="container mt-3">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'documents:dashboard' %}">Tableau de bord</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'documents:document_list' %}">Documents</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'documents:document_detail' document.pk %}">{{ document.title|truncatechars:30 }}</a></li>
+            <li class="breadcrumb-item active">Supprimer</li>
+        </ol>
+    </nav>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card border-danger">
+            <div class="card-header bg-danger text-white">
+                <h4 class="card-title mb-0">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    Confirmation de suppression
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-danger d-flex align-items-start">
+                    <i class="fas fa-exclamation-triangle fa-2x me-3 mt-1"></i>
+                    <div>
+                        <h5 class="alert-heading">Attention ! Cette action est irréversible</h5>
+                        <p class="mb-0">
+                            Vous êtes sur le point de supprimer définitivement le document 
+                            <strong>"{{ document.title }}"</strong> et tous ses éléments associés.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Informations du document -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h6 class="mb-0">
+                            <i class="fas fa-file me-2"></i>
+                            Informations du document
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <table class="table table-sm table-borderless">
+                                    <tr>
+                                        <td><strong>Titre :</strong></td>
+                                        <td>{{ document.title }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Type :</strong></td>
+                                        <td>
+                                            <i class="{{ document.file_type|file_icon }} me-1"></i>
+                                            {{ document.get_file_type_display }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Taille :</strong></td>
+                                        <td>{{ document.file_size|format_file_size }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <table class="table table-sm table-borderless">
+                                    <tr>
+                                        <td><strong>Téléversé par :</strong></td>
+                                        <td>{{ document.uploaded_by.get_full_name|default:document.uploaded_by.username }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Créé le :</strong></td>
+                                        <td>{{ document.created_at|date:"d/m/Y H:i" }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Statut :</strong></td>
+                                        <td>{% status_badge document.status %}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Éléments associés qui seront supprimés -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h6 class="mb-0">
+                            <i class="fas fa-link me-2"></i>
+                            Éléments associés qui seront supprimés
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        {% if associated_elements.schema or associated_elements.annotation %}
+                            <div class="list-group list-group-flush">
+                                {% if associated_elements.schema %}
+                                <div class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <i class="fas fa-sitemap text-info me-2"></i>
+                                        <strong>Schéma d'annotation :</strong> {{ associated_elements.schema.name }}
+                                        <br>
+                                        <small class="text-muted">{{ associated_elements.schema.description|default:"Aucune description" }}</small>
+                                    </div>
+                                    <span class="badge bg-info">{{ associated_elements.fields_count }} champ(s)</span>
+                                </div>
+                                {% endif %}
+
+                                {% if associated_elements.annotation %}
+                                <div class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <i class="fas fa-tags text-success me-2"></i>
+                                        <strong>Annotation :</strong> 
+                                        {% if associated_elements.annotation.is_validated %}
+                                            <span class="badge bg-success ms-1">Validée</span>
+                                        {% elif associated_elements.annotation.is_complete %}
+                                            <span class="badge bg-warning ms-1">Complète</span>
+                                        {% else %}
+                                            <span class="badge bg-secondary ms-1">En cours</span>
+                                        {% endif %}
+                                        <br>
+                                        <small class="text-muted">
+                                            Complétée à {{ associated_elements.annotation.completion_percentage|floatformat:0 }}%
+                                        </small>
+                                    </div>
+                                    <span class="badge bg-success">{{ associated_elements.history_count }} entrée(s) d'historique</span>
+                                </div>
+                                {% endif %}
+                            </div>
+                        {% else %}
+                            <div class="text-center text-muted py-3">
+                                <i class="fas fa-info-circle fa-2x mb-2"></i>
+                                <p>Aucun élément associé à supprimer</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Récapitulatif de la suppression -->
+                <div class="alert alert-warning">
+                    <h6 class="alert-heading">
+                        <i class="fas fa-list me-2"></i>
+                        Récapitulatif de la suppression
+                    </h6>
+                    <ul class="mb-0">
+                        <li>Le document <strong>"{{ document.title }}"</strong> sera supprimé définitivement</li>
+                        <li>Le fichier physique sera supprimé du serveur</li>
+                        {% if associated_elements.schema %}
+                            <li>Le schéma d'annotation <strong>"{{ associated_elements.schema.name }}"</strong> et ses {{ associated_elements.fields_count }} champ(s) seront supprimés</li>
+                        {% endif %}
+                        {% if associated_elements.annotation %}
+                            <li>L'annotation et ses {{ associated_elements.history_count }} entrée(s) d'historique seront supprimées</li>
+                        {% endif %}
+                        <li>Toutes les métadonnées associées seront supprimées</li>
+                        <li><strong>Cette action ne peut pas être annulée</strong></li>
+                    </ul>
+                </div>
+
+                <!-- Boutons d'action -->
+                <div class="d-flex justify-content-between">
+                    <a href="{% url 'documents:document_list' %}" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left me-1"></i>
+                        Annuler
+                    </a>
+                    
+                    <div>
+                        <a href="{% url 'documents:document_detail' document.pk %}" class="btn btn-outline-secondary me-2">
+                            <i class="fas fa-eye me-1"></i>
+                            Voir le document
+                        </a>
+                        
+                        <form method="post" action="{% url 'documents:delete_document' document.pk %}" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger" onclick="return confirmDeletion()">
+                                <i class="fas fa-trash me-1"></i>
+                                Supprimer définitivement
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function confirmDeletion() {
+    return confirm(
+        'Êtes-vous absolument certain de vouloir supprimer ce document ?\n\n' +
+        'Cette action est IRRÉVERSIBLE et supprimera :\n' +
+        '- Le document "{{ document.title }}"\n' +
+        '- Tous ses éléments associés (schémas, annotations, historique)\n' +
+        '- Le fichier physique\n\n' +
+        'Tapez "SUPPRIMER" pour confirmer :'
+    );
+}
+</script>
+{% endblock %}

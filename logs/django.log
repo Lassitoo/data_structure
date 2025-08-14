@@ -380,3 +380,380 @@ Contenu COMPLET extrait: 33463 caractères pour DTC I
 [API] Appel API Ollama (tentative 1) - 35973 chars
 [TIMEOUT] Timeout tentative 1
 [API] Appel API Ollama (tentative 2) - 35973 chars
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Début du traitement du document: Guideline ICH
+Extraction des métadonnées pour: Guideline ICH
+Métadonnées extraites pour: C:\Users\lasss\data_structure\media\documents\2025\08\14\ICH_Q9R1_Annex_1_Q8Q9Q10_QAsR5_1030_6XL1jsc.pdf
+Métadonnées extraites pour: Guideline ICH
+Analyse du contenu pour: Guideline ICH
+Contenu extrait: 33463 caractères au total
+[ANALYZE] Analyse type document: 33463 chars
+[API] Appel API Ollama (tentative 1) - 10367 chars
+Reponse API: 617 chars
+[RESULT] Type detecte: RAPPORT
+Analyse terminée pour: Guideline ICH - Type détecté: RAPPORT
+Génération du schéma d'annotation pour: Guideline ICH
+Contenu extrait: 33463 caractères au total
+Contenu COMPLET extrait: 33463 caractères pour Guideline ICH
+[SCHEMA] Generation schema: 33463 chars
+[API] Appel API Ollama (tentative 1) - 35981 chars
+Reponse API: 2198 chars
+Schema genere: 8 champs
+Schéma généré pour: Guideline ICH
+Traitement terminé pour: Guideline ICH
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Validation du schéma pour: Guideline ICH
+Schéma validé pour: Guideline ICH
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Génération des pré-annotations pour: Guideline ICH
+Contenu extrait: 33463 caractères au total
+Contenu COMPLET extrait: 33463 caractères pour Guideline ICH
+[ANNOTATIONS] Generation pre-annotations
+[API] Appel API Ollama (tentative 1) - 36069 chars
+Reponse API: 1552 chars
+[SUCCESS] Pre-annotations generees: 8 champs
+Pré-annotations générées pour: Guideline ICH
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Mise à jour des annotations pour: Guideline ICH
+Annotations mises à jour pour: Guideline ICH
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Validation des annotations pour: Guideline ICH
+Annotations validées pour: Guideline ICH
+Nouveau document créé: Test synchronisation automatique (ID: 9deefc0a-ec3d-498c-8ebf-97537b074b5e)
+Erreur création métadonnées document: The fields "{'status', 'uploaded_by', 'metadata', 'title', 'description', 'file_type', 'file_size'}" do not exist on the document "DocumentMetadataMongo"
+Document 9deefc0a-ec3d-498c-8ebf-97537b074b5e synchronisé avec MongoDB
+Document 9deefc0a-ec3d-498c-8ebf-97537b074b5e et données associées supprimés de MongoDB
+Document 9deefc0a-ec3d-498c-8ebf-97537b074b5e supprimé de MongoDB
+Nouveau document créé: Test synchronisation automatique (ID: c708bd6e-1d73-4520-99bd-3a13735619c3)
+Métadonnées document c708bd6e-1d73-4520-99bd-3a13735619c3 créées dans MongoDB
+Document c708bd6e-1d73-4520-99bd-3a13735619c3 synchronisé avec MongoDB
+Document mis à jour: Document mis à jour - test sync (ID: c708bd6e-1d73-4520-99bd-3a13735619c3)
+Métadonnées document c708bd6e-1d73-4520-99bd-3a13735619c3 mises à jour dans MongoDB
+Document c708bd6e-1d73-4520-99bd-3a13735619c3 mis à jour dans MongoDB
+Document c708bd6e-1d73-4520-99bd-3a13735619c3 et données associées supprimés de MongoDB
+Document c708bd6e-1d73-4520-99bd-3a13735619c3 supprimé de MongoDB
+Nouveau document créé: Document de test synchronisation (ID: 6cd26701-eb2c-42e5-bc03-677054af8b98)
+Métadonnées document 6cd26701-eb2c-42e5-bc03-677054af8b98 créées dans MongoDB
+Document 6cd26701-eb2c-42e5-bc03-677054af8b98 synchronisé avec MongoDB
+Document mis à jour: Document modifié - sync test (ID: 6cd26701-eb2c-42e5-bc03-677054af8b98)
+Métadonnées document 6cd26701-eb2c-42e5-bc03-677054af8b98 mises à jour dans MongoDB
+Document 6cd26701-eb2c-42e5-bc03-677054af8b98 mis à jour dans MongoDB
+Nouveau schéma créé: Schéma de test sync (ID: 55017232-db8c-4bff-ac1b-cc0c31290bd0)
+Schéma d'annotation créé: 689e51d7d24059d021b2d6d7 pour document 6cd26701-eb2c-42e5-bc03-677054af8b98
+Schéma 55017232-db8c-4bff-ac1b-cc0c31290bd0 synchronisé avec MongoDB
+Nouvelle annotation créée pour document 6cd26701-eb2c-42e5-bc03-677054af8b98
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation créée: 689e51d7d24059d021b2d6d8 pour document 6cd26701-eb2c-42e5-bc03-677054af8b98
+Annotation 90cb675c-a941-40ca-9bc4-8e684c66c00f synchronisée avec MongoDB
+Annotation mise à jour pour document 6cd26701-eb2c-42e5-bc03-677054af8b98
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation mise à jour pour document 6cd26701-eb2c-42e5-bc03-677054af8b98
+Annotation 90cb675c-a941-40ca-9bc4-8e684c66c00f mise à jour dans MongoDB
+Annotation mise à jour pour document 6cd26701-eb2c-42e5-bc03-677054af8b98
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation mise à jour pour document 6cd26701-eb2c-42e5-bc03-677054af8b98
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation validée pour document 6cd26701-eb2c-42e5-bc03-677054af8b98 par test_sync_user
+Annotation 90cb675c-a941-40ca-9bc4-8e684c66c00f mise à jour dans MongoDB
+Annotation pour document 6cd26701-eb2c-42e5-bc03-677054af8b98 supprimée de MongoDB
+Annotation 90cb675c-a941-40ca-9bc4-8e684c66c00f supprimée de MongoDB
+Schéma pour document 6cd26701-eb2c-42e5-bc03-677054af8b98 supprimé de MongoDB
+Schéma 55017232-db8c-4bff-ac1b-cc0c31290bd0 supprimé de MongoDB
+Document 6cd26701-eb2c-42e5-bc03-677054af8b98 et données associées supprimés de MongoDB
+Document 6cd26701-eb2c-42e5-bc03-677054af8b98 supprimé de MongoDB
+Nouveau document créé: Document perf 0 (ID: a1e2ca5f-d232-4afe-9cc4-4de0a9da6c74)
+Métadonnées document a1e2ca5f-d232-4afe-9cc4-4de0a9da6c74 créées dans MongoDB
+Document a1e2ca5f-d232-4afe-9cc4-4de0a9da6c74 synchronisé avec MongoDB
+Nouveau document créé: Document perf 1 (ID: 5fd3b69f-9966-4340-b61e-0ee441435a7f)
+Métadonnées document 5fd3b69f-9966-4340-b61e-0ee441435a7f créées dans MongoDB
+Document 5fd3b69f-9966-4340-b61e-0ee441435a7f synchronisé avec MongoDB
+Nouveau document créé: Document perf 2 (ID: 3655d4bb-66f9-46ba-9f0a-a9804a8df919)
+Métadonnées document 3655d4bb-66f9-46ba-9f0a-a9804a8df919 créées dans MongoDB
+Document 3655d4bb-66f9-46ba-9f0a-a9804a8df919 synchronisé avec MongoDB
+Nouveau document créé: Document perf 3 (ID: dbbf85d6-a2f5-45dc-89c1-4bccc3af69a7)
+Métadonnées document dbbf85d6-a2f5-45dc-89c1-4bccc3af69a7 créées dans MongoDB
+Document dbbf85d6-a2f5-45dc-89c1-4bccc3af69a7 synchronisé avec MongoDB
+Nouveau document créé: Document perf 4 (ID: 432b8a6a-930f-4194-ada8-0835f10da6b7)
+Métadonnées document 432b8a6a-930f-4194-ada8-0835f10da6b7 créées dans MongoDB
+Document 432b8a6a-930f-4194-ada8-0835f10da6b7 synchronisé avec MongoDB
+Nouveau document créé: Document perf 5 (ID: 44ee0924-dbc5-49dd-8b0f-70ef2415bba8)
+Métadonnées document 44ee0924-dbc5-49dd-8b0f-70ef2415bba8 créées dans MongoDB
+Document 44ee0924-dbc5-49dd-8b0f-70ef2415bba8 synchronisé avec MongoDB
+Nouveau document créé: Document perf 6 (ID: 3f0e7128-8ec7-4a70-8d20-c3247a08a2e7)
+Métadonnées document 3f0e7128-8ec7-4a70-8d20-c3247a08a2e7 créées dans MongoDB
+Document 3f0e7128-8ec7-4a70-8d20-c3247a08a2e7 synchronisé avec MongoDB
+Nouveau document créé: Document perf 7 (ID: 82c4af21-e869-469a-9666-06f1a2e2835a)
+Métadonnées document 82c4af21-e869-469a-9666-06f1a2e2835a créées dans MongoDB
+Document 82c4af21-e869-469a-9666-06f1a2e2835a synchronisé avec MongoDB
+Nouveau document créé: Document perf 8 (ID: a1e71209-5aba-4bab-8ba4-3d59f2d2cd32)
+Métadonnées document a1e71209-5aba-4bab-8ba4-3d59f2d2cd32 créées dans MongoDB
+Document a1e71209-5aba-4bab-8ba4-3d59f2d2cd32 synchronisé avec MongoDB
+Nouveau document créé: Document perf 9 (ID: 6cdb2304-d9b0-4949-8b42-0bf888ff5678)
+Métadonnées document 6cdb2304-d9b0-4949-8b42-0bf888ff5678 créées dans MongoDB
+Document 6cdb2304-d9b0-4949-8b42-0bf888ff5678 synchronisé avec MongoDB
+Document a1e2ca5f-d232-4afe-9cc4-4de0a9da6c74 et données associées supprimés de MongoDB
+Document a1e2ca5f-d232-4afe-9cc4-4de0a9da6c74 supprimé de MongoDB
+Document 5fd3b69f-9966-4340-b61e-0ee441435a7f et données associées supprimés de MongoDB
+Document 5fd3b69f-9966-4340-b61e-0ee441435a7f supprimé de MongoDB
+Document 3655d4bb-66f9-46ba-9f0a-a9804a8df919 et données associées supprimés de MongoDB
+Document 3655d4bb-66f9-46ba-9f0a-a9804a8df919 supprimé de MongoDB
+Document dbbf85d6-a2f5-45dc-89c1-4bccc3af69a7 et données associées supprimés de MongoDB
+Document dbbf85d6-a2f5-45dc-89c1-4bccc3af69a7 supprimé de MongoDB
+Document 432b8a6a-930f-4194-ada8-0835f10da6b7 et données associées supprimés de MongoDB
+Document 432b8a6a-930f-4194-ada8-0835f10da6b7 supprimé de MongoDB
+Document 44ee0924-dbc5-49dd-8b0f-70ef2415bba8 et données associées supprimés de MongoDB
+Document 44ee0924-dbc5-49dd-8b0f-70ef2415bba8 supprimé de MongoDB
+Document 3f0e7128-8ec7-4a70-8d20-c3247a08a2e7 et données associées supprimés de MongoDB
+Document 3f0e7128-8ec7-4a70-8d20-c3247a08a2e7 supprimé de MongoDB
+Document 82c4af21-e869-469a-9666-06f1a2e2835a et données associées supprimés de MongoDB
+Document 82c4af21-e869-469a-9666-06f1a2e2835a supprimé de MongoDB
+Document a1e71209-5aba-4bab-8ba4-3d59f2d2cd32 et données associées supprimés de MongoDB
+Document a1e71209-5aba-4bab-8ba4-3d59f2d2cd32 supprimé de MongoDB
+Document 6cdb2304-d9b0-4949-8b42-0bf888ff5678 et données associées supprimés de MongoDB
+Document 6cdb2304-d9b0-4949-8b42-0bf888ff5678 supprimé de MongoDB
+Nouveau document créé: DTC IV (ID: 4e18cde8-ef6e-449b-a238-efd3a4f14257)
+Métadonnées document 4e18cde8-ef6e-449b-a238-efd3a4f14257 créées dans MongoDB
+Document 4e18cde8-ef6e-449b-a238-efd3a4f14257 synchronisé avec MongoDB
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Début du traitement du document: DTC IV
+Extraction des métadonnées pour: DTC IV
+Métadonnées extraites pour: C:\Users\lasss\data_structure\media\documents\2025\08\14\DTC_S006490_PF_R_STA_64331_EN_2.0.pdf
+Document mis à jour: DTC IV (ID: 4e18cde8-ef6e-449b-a238-efd3a4f14257)
+Métadonnées document 4e18cde8-ef6e-449b-a238-efd3a4f14257 mises à jour dans MongoDB
+Document 4e18cde8-ef6e-449b-a238-efd3a4f14257 mis à jour dans MongoDB
+Métadonnées extraites pour: DTC IV
+Analyse du contenu pour: DTC IV
+Contenu extrait: 4213 caractères au total
+[ANALYZE] Analyse type document: 4213 chars
+[API] Appel API Ollama (tentative 1) - 4570 chars
+Reponse API: 365 chars
+[RESULT] Type detecte: RAPPORT
+Document mis à jour: DTC IV (ID: 4e18cde8-ef6e-449b-a238-efd3a4f14257)
+Métadonnées document 4e18cde8-ef6e-449b-a238-efd3a4f14257 mises à jour dans MongoDB
+Document 4e18cde8-ef6e-449b-a238-efd3a4f14257 mis à jour dans MongoDB
+Analyse terminée pour: DTC IV - Type détecté: RAPPORT
+Génération du schéma d'annotation pour: DTC IV
+Contenu extrait: 4213 caractères au total
+Contenu COMPLET extrait: 4213 caractères pour DTC IV
+[SCHEMA] Generation schema: 4213 chars
+[API] Appel API Ollama (tentative 1) - 6918 chars
+Reponse API: 2460 chars
+Schema genere: 7 champs
+Nouveau schéma créé: schema_descriptif (ID: 99508115-b027-4b84-8bf0-bee5e020bd85)
+Schéma d'annotation créé: 689e53db19bbe61d58a75966 pour document 4e18cde8-ef6e-449b-a238-efd3a4f14257
+Schéma 99508115-b027-4b84-8bf0-bee5e020bd85 synchronisé avec MongoDB
+Document mis à jour: DTC IV (ID: 4e18cde8-ef6e-449b-a238-efd3a4f14257)
+Métadonnées document 4e18cde8-ef6e-449b-a238-efd3a4f14257 mises à jour dans MongoDB
+Document 4e18cde8-ef6e-449b-a238-efd3a4f14257 mis à jour dans MongoDB
+Schéma généré pour: DTC IV
+Traitement terminé pour: DTC IV
+Schéma mis à jour: schema_descriptif (ID: 99508115-b027-4b84-8bf0-bee5e020bd85)
+Erreur mise à jour schéma: ValidationError (AnnotationSchemaMongo:689e53db19bbe61d58a75966) (Invalid embedded document instance provided to an EmbeddedDocumentField 1.Invalid embedded document instance provided to an EmbeddedDocumentField 2.Invalid embedded document instance provided to an EmbeddedDocumentField 3.Invalid embedded document instance provided to an EmbeddedDocumentField 4.Invalid embedded document instance provided to an EmbeddedDocumentField 5.Invalid embedded document instance provided to an EmbeddedDocumentField 6.Invalid embedded document instance provided to an EmbeddedDocumentField: ['fields'])
+Schéma 99508115-b027-4b84-8bf0-bee5e020bd85 mis à jour dans MongoDB
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Validation du schéma pour: DTC IV
+Schéma mis à jour: schema_descriptif (ID: 99508115-b027-4b84-8bf0-bee5e020bd85)
+Erreur mise à jour schéma: ValidationError (AnnotationSchemaMongo:689e53db19bbe61d58a75966) (Invalid embedded document instance provided to an EmbeddedDocumentField 1.Invalid embedded document instance provided to an EmbeddedDocumentField 2.Invalid embedded document instance provided to an EmbeddedDocumentField 3.Invalid embedded document instance provided to an EmbeddedDocumentField 4.Invalid embedded document instance provided to an EmbeddedDocumentField 5.Invalid embedded document instance provided to an EmbeddedDocumentField 6.Invalid embedded document instance provided to an EmbeddedDocumentField: ['fields'])
+Schéma 99508115-b027-4b84-8bf0-bee5e020bd85 mis à jour dans MongoDB
+Document mis à jour: DTC IV (ID: 4e18cde8-ef6e-449b-a238-efd3a4f14257)
+Métadonnées document 4e18cde8-ef6e-449b-a238-efd3a4f14257 mises à jour dans MongoDB
+Document 4e18cde8-ef6e-449b-a238-efd3a4f14257 mis à jour dans MongoDB
+Schéma validé pour: DTC IV
+Nouvelle annotation créée pour document 4e18cde8-ef6e-449b-a238-efd3a4f14257
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation créée: 689e540319bbe61d58a75967 pour document 4e18cde8-ef6e-449b-a238-efd3a4f14257
+Annotation 19aff7fb-7df9-42ca-bffb-488e08daf2f5 synchronisée avec MongoDB
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Génération des pré-annotations pour: DTC IV
+Contenu extrait: 4213 caractères au total
+Contenu COMPLET extrait: 4213 caractères pour DTC IV
+[ANNOTATIONS] Generation pre-annotations
+[API] Appel API Ollama (tentative 1) - 6460 chars
+Reponse API: 3302 chars
+[SUCCESS] Pre-annotations generees: 7 champs
+Annotation mise à jour pour document 4e18cde8-ef6e-449b-a238-efd3a4f14257
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation mise à jour pour document 4e18cde8-ef6e-449b-a238-efd3a4f14257
+Annotation 19aff7fb-7df9-42ca-bffb-488e08daf2f5 mise à jour dans MongoDB
+Nouvelle entrée d'historique créée pour annotation 19aff7fb-7df9-42ca-bffb-488e08daf2f5
+Erreur création historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'])
+Historique bd6ddf2b-9425-4ba2-84fd-9035aadfff89 synchronisé avec MongoDB
+Document mis à jour: DTC IV (ID: 4e18cde8-ef6e-449b-a238-efd3a4f14257)
+Métadonnées document 4e18cde8-ef6e-449b-a238-efd3a4f14257 mises à jour dans MongoDB
+Document 4e18cde8-ef6e-449b-a238-efd3a4f14257 mis à jour dans MongoDB
+Pré-annotations générées pour: DTC IV
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Mise à jour des annotations pour: DTC IV
+Nouvelle entrée d'historique créée pour annotation 19aff7fb-7df9-42ca-bffb-488e08daf2f5
+Erreur création historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Only dictionaries may be used in a DictField: ['old_value', 'new_value'])
+Historique ff705267-ac26-4b93-95ba-3ecf6fa4e7be synchronisé avec MongoDB
+Nouvelle entrée d'historique créée pour annotation 19aff7fb-7df9-42ca-bffb-488e08daf2f5
+Erreur création historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Only dictionaries may be used in a DictField: ['old_value', 'new_value'])
+Historique 36e3766b-2000-4ce2-89dc-23364a8b7546 synchronisé avec MongoDB
+Annotation mise à jour pour document 4e18cde8-ef6e-449b-a238-efd3a4f14257
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation mise à jour pour document 4e18cde8-ef6e-449b-a238-efd3a4f14257
+Annotation 19aff7fb-7df9-42ca-bffb-488e08daf2f5 mise à jour dans MongoDB
+Annotations mises à jour pour: DTC IV
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Mise à jour des annotations pour: DTC IV
+Annotations mises à jour pour: DTC IV
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Mise à jour des annotations pour: DTC IV
+Annotations mises à jour pour: DTC IV
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Génération des pré-annotations pour: DTC IV
+Contenu extrait: 4213 caractères au total
+Contenu COMPLET extrait: 4213 caractères pour DTC IV
+[ANNOTATIONS] Generation pre-annotations
+[API] Appel API Ollama (tentative 1) - 6460 chars
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Mise à jour des annotations pour: DTC IV
+Annotations mises à jour pour: DTC IV
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Mise à jour des annotations pour: DTC IV
+Annotations mises à jour pour: DTC IV
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Mise à jour des annotations pour: DTC IV
+Annotations mises à jour pour: DTC IV
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Mise à jour des annotations pour: DTC IV
+Annotations mises à jour pour: DTC IV
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Mise à jour des annotations pour: DTC IV
+Annotations mises à jour pour: DTC IV
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Mise à jour des annotations pour: DTC IV
+Nouvelle entrée d'historique créée pour annotation 19aff7fb-7df9-42ca-bffb-488e08daf2f5
+Erreur création historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Only dictionaries may be used in a DictField: ['old_value', 'new_value'])
+Historique b4178046-3f37-430b-98fb-073d25c6c6e2 synchronisé avec MongoDB
+Annotation mise à jour pour document 4e18cde8-ef6e-449b-a238-efd3a4f14257
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation mise à jour pour document 4e18cde8-ef6e-449b-a238-efd3a4f14257
+Annotation 19aff7fb-7df9-42ca-bffb-488e08daf2f5 mise à jour dans MongoDB
+Annotations mises à jour pour: DTC IV
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Génération des pré-annotations pour: DTC IV
+Contenu extrait: 4213 caractères au total
+Contenu COMPLET extrait: 4213 caractères pour DTC IV
+[ANNOTATIONS] Generation pre-annotations
+[API] Appel API Ollama (tentative 1) - 6460 chars
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Génération des pré-annotations pour: DTC IV
+Contenu extrait: 4213 caractères au total
+Contenu COMPLET extrait: 4213 caractères pour DTC IV
+[ANNOTATIONS] Generation pre-annotations
+[API] Appel API Ollama (tentative 1) - 6460 chars
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Mise à jour des annotations pour: DTC IV
+Nouvelle entrée d'historique créée pour annotation 19aff7fb-7df9-42ca-bffb-488e08daf2f5
+Erreur création historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Only dictionaries may be used in a DictField: ['old_value', 'new_value'])
+Historique 5597d7f8-bb2b-4947-a10b-e409ffd297a8 synchronisé avec MongoDB
+Nouvelle entrée d'historique créée pour annotation 19aff7fb-7df9-42ca-bffb-488e08daf2f5
+Erreur création historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Only dictionaries may be used in a DictField: ['old_value', 'new_value'])
+Historique 9c61278a-fa54-4fba-899b-908bb2e27c96 synchronisé avec MongoDB
+Nouvelle entrée d'historique créée pour annotation 19aff7fb-7df9-42ca-bffb-488e08daf2f5
+Erreur création historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Only dictionaries may be used in a DictField: ['old_value', 'new_value'])
+Historique a3ed36a5-afa9-4dad-b8aa-ab862b490fe9 synchronisé avec MongoDB
+Annotation mise à jour pour document 4e18cde8-ef6e-449b-a238-efd3a4f14257
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation mise à jour pour document 4e18cde8-ef6e-449b-a238-efd3a4f14257
+Annotation 19aff7fb-7df9-42ca-bffb-488e08daf2f5 mise à jour dans MongoDB
+Annotations mises à jour pour: DTC IV
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Mise à jour des annotations pour: DTC IV
+Annotations mises à jour pour: DTC IV
+Nouveau document créé: Guideline II (ID: 398f9c5b-1c50-49a0-9af0-d89fcc125829)
+Métadonnées document 398f9c5b-1c50-49a0-9af0-d89fcc125829 créées dans MongoDB
+Document 398f9c5b-1c50-49a0-9af0-d89fcc125829 synchronisé avec MongoDB
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Début du traitement du document: Guideline II
+Extraction des métadonnées pour: Guideline II
+Métadonnées extraites pour: C:\Users\lasss\data_structure\media\documents\2025\08\14\VRAM-Guidance_508-remediated.pdf
+Document mis à jour: Guideline II (ID: 398f9c5b-1c50-49a0-9af0-d89fcc125829)
+Métadonnées document 398f9c5b-1c50-49a0-9af0-d89fcc125829 mises à jour dans MongoDB
+Document 398f9c5b-1c50-49a0-9af0-d89fcc125829 mis à jour dans MongoDB
+Métadonnées extraites pour: Guideline II
+Analyse du contenu pour: Guideline II
+Contenu extrait: 80851 caractères au total
+[ANALYZE] Analyse type document: 80851 chars
+[API] Appel API Ollama (tentative 1) - 10352 chars
+Reponse API: 1736 chars
+[SUCCESS] Pre-annotations generees: 7 champs
+Annotation mise à jour pour document 4e18cde8-ef6e-449b-a238-efd3a4f14257
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation mise à jour pour document 4e18cde8-ef6e-449b-a238-efd3a4f14257
+Annotation 19aff7fb-7df9-42ca-bffb-488e08daf2f5 mise à jour dans MongoDB
+Nouvelle entrée d'historique créée pour annotation 19aff7fb-7df9-42ca-bffb-488e08daf2f5
+Erreur création historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'])
+Historique fffd7d81-a181-4377-9887-d9e50af5e45b synchronisé avec MongoDB
+Document mis à jour: DTC IV (ID: 4e18cde8-ef6e-449b-a238-efd3a4f14257)
+Métadonnées document 4e18cde8-ef6e-449b-a238-efd3a4f14257 mises à jour dans MongoDB
+Document 4e18cde8-ef6e-449b-a238-efd3a4f14257 mis à jour dans MongoDB
+Pré-annotations générées pour: DTC IV
+[TIMEOUT] Timeout tentative 1
+[API] Appel API Ollama (tentative 2) - 6460 chars
+Reponse API: 324 chars
+[RESULT] Type detecte: RAPPORT
+Document mis à jour: Guideline II (ID: 398f9c5b-1c50-49a0-9af0-d89fcc125829)
+Métadonnées document 398f9c5b-1c50-49a0-9af0-d89fcc125829 mises à jour dans MongoDB
+Document 398f9c5b-1c50-49a0-9af0-d89fcc125829 mis à jour dans MongoDB
+Analyse terminée pour: Guideline II - Type détecté: RAPPORT
+Génération du schéma d'annotation pour: Guideline II
+Contenu extrait: 80851 caractères au total
+Contenu COMPLET extrait: 80851 caractères pour Guideline II
+[SCHEMA] Generation schema: 80851 chars
+[API] Appel API Ollama (tentative 1) - 83013 chars
+Reponse API: 1499 chars
+[SUCCESS] Pre-annotations generees: 7 champs
+Annotation mise à jour pour document 4e18cde8-ef6e-449b-a238-efd3a4f14257
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation mise à jour pour document 4e18cde8-ef6e-449b-a238-efd3a4f14257
+Annotation 19aff7fb-7df9-42ca-bffb-488e08daf2f5 mise à jour dans MongoDB
+Nouvelle entrée d'historique créée pour annotation 19aff7fb-7df9-42ca-bffb-488e08daf2f5
+Erreur création historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'])
+Historique 13f2a15c-94f6-489e-9363-0805c8c7567f synchronisé avec MongoDB
+Document mis à jour: DTC IV (ID: 4e18cde8-ef6e-449b-a238-efd3a4f14257)
+Métadonnées document 4e18cde8-ef6e-449b-a238-efd3a4f14257 mises à jour dans MongoDB
+Document 4e18cde8-ef6e-449b-a238-efd3a4f14257 mis à jour dans MongoDB
+Pré-annotations générées pour: DTC IV
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Mise à jour des annotations pour: DTC IV
+Nouvelle entrée d'historique créée pour annotation 19aff7fb-7df9-42ca-bffb-488e08daf2f5
+Erreur création historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Only dictionaries may be used in a DictField: ['old_value', 'new_value'])
+Historique 908e1661-f42b-4cfb-9504-00df8c5dc407 synchronisé avec MongoDB
+Nouvelle entrée d'historique créée pour annotation 19aff7fb-7df9-42ca-bffb-488e08daf2f5
+Erreur création historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Only dictionaries may be used in a DictField: ['new_value'])
+Historique 48d45268-30ae-4ccd-a2ac-c362e3353428 synchronisé avec MongoDB
+Annotation mise à jour pour document 4e18cde8-ef6e-449b-a238-efd3a4f14257
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation mise à jour pour document 4e18cde8-ef6e-449b-a238-efd3a4f14257
+Annotation 19aff7fb-7df9-42ca-bffb-488e08daf2f5 mise à jour dans MongoDB
+Document mis à jour: DTC IV (ID: 4e18cde8-ef6e-449b-a238-efd3a4f14257)
+Métadonnées document 4e18cde8-ef6e-449b-a238-efd3a4f14257 mises à jour dans MongoDB
+Document 4e18cde8-ef6e-449b-a238-efd3a4f14257 mis à jour dans MongoDB
+Annotation mise à jour pour document 4e18cde8-ef6e-449b-a238-efd3a4f14257
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation mise à jour pour document 4e18cde8-ef6e-449b-a238-efd3a4f14257
+Annotation 19aff7fb-7df9-42ca-bffb-488e08daf2f5 mise à jour dans MongoDB
+Annotations mises à jour pour: DTC IV
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Validation des annotations pour: DTC IV
+Annotation mise à jour pour document 4e18cde8-ef6e-449b-a238-efd3a4f14257
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation mise à jour pour document 4e18cde8-ef6e-449b-a238-efd3a4f14257
+Erreur lors de l'ajout à l'historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'] Field is required: ['performed_by_username'])
+Annotation validée pour document 4e18cde8-ef6e-449b-a238-efd3a4f14257 par lasss
+Annotation 19aff7fb-7df9-42ca-bffb-488e08daf2f5 mise à jour dans MongoDB
+Document mis à jour: DTC IV (ID: 4e18cde8-ef6e-449b-a238-efd3a4f14257)
+Métadonnées document 4e18cde8-ef6e-449b-a238-efd3a4f14257 mises à jour dans MongoDB
+Document 4e18cde8-ef6e-449b-a238-efd3a4f14257 mis à jour dans MongoDB
+Nouvelle entrée d'historique créée pour annotation 19aff7fb-7df9-42ca-bffb-488e08daf2f5
+Erreur création historique: ValidationError (AnnotationHistoryMongo:None) (Could not convert to UUID: badly formed hexadecimal UUID string: ['annotation_id'])
+Historique 6398edea-6bc7-4414-a377-31e702626c56 synchronisé avec MongoDB
+Annotations validées pour: DTC IV
+Suppression du document 398f9c5b-1c50-49a0-9af0-d89fcc125829 (Guideline II) par lasss
+Éléments associés: 0 annotation(s), 0 schéma(s), 0 entrée(s) d'historique
+Document 398f9c5b-1c50-49a0-9af0-d89fcc125829 et données associées supprimés de MongoDB
+Document 398f9c5b-1c50-49a0-9af0-d89fcc125829 supprimé de MongoDB
+Document 398f9c5b-1c50-49a0-9af0-d89fcc125829 supprimé avec succès

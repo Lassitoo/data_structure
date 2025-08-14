@@ -135,9 +135,19 @@
                     <button type="submit" name="save_draft" class="btn btn-outline-primary me-2">
                         <i class="fas fa-save me-1"></i>Sauvegarder brouillon
                     </button>
-                    <button type="submit" name="save_and_continue" class="btn btn-primary">
+                    <button type="submit" name="save_and_continue" class="btn btn-primary me-2">
                         <i class="fas fa-check me-1"></i>Sauvegarder et continuer
                     </button>
+                    {% if completion_percentage >= 100 or annotation.is_complete %}
+                    <button type="submit" name="save_and_validate" class="btn btn-success">
+                        <i class="fas fa-check-double me-1"></i>Sauvegarder et Valider
+                    </button>
+                    {% else %}
+                    <button type="submit" name="save_and_validate" class="btn btn-outline-success" 
+                            title="Complétez tous les champs requis pour valider">
+                        <i class="fas fa-check-double me-1"></i>Sauvegarder et Valider
+                    </button>
+                    {% endif %}
                 </div>
             </div>
         </form>

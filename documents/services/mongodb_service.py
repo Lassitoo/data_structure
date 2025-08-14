@@ -394,6 +394,190 @@ class MongoDBService:
                 'status': 'mongodb_error',
                 'error': str(e)
             }
+    
+    # ==================== GESTION DES DOCUMENTS ====================
+    
+    def create_document_metadata(self, document_id: str, title: str, description: str,
+                                file_type: str, file_size: int, status: str,
+                                metadata: Dict, uploaded_by: str, created_at: datetime) -> bool:
+        """Crée les métadonnées d'un document dans MongoDB"""
+        try:
+            if not self.ensure_connection():
+                return False
+            
+            doc_metadata = DocumentMetadataMongo(
+                document_id=document_id,
+                title=title,
+                description=description,
+                file_type=file_type,
+                file_size=file_size,
+                status=status,
+                metadata=metadata,
+                uploaded_by=uploaded_by,
+                created_at=created_at
+            )
+            doc_metadata.save()
+            
+            logger.info(f"Métadonnées document {document_id} créées dans MongoDB")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Erreur création métadonnées document: {e}")
+            return False
+    
+    def update_document_metadata(self, document_id: str, title: str = None, 
+                                description: str = None, status: str = None,
+                                metadata: Dict = None, updated_at: datetime = None) -> bool:
+        """Met à jour les métadonnées d'un document dans MongoDB"""
+        try:
+            if not self.ensure_connection():
+                return False
+            
+            doc_metadata = DocumentMetadataMongo.objects(document_id=document_id).first()
+            if not doc_metadata:
+                return False
+            
+            if title is not None:
+                doc_metadata.title = title
+            if description is not None:
+                doc_metadata.description = description
+            if status is not None:
+                doc_metadata.status = status
+            if metadata is not None:
+                doc_metadata.metadata = metadata
+            if updated_at is not None:
+                doc_metadata.updated_at = updated_at
+            
+            doc_metadata.save()
+            
+            logger.info(f"Métadonnées document {document_id} mises à jour dans MongoDB")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Erreur mise à jour métadonnées document: {e}")
+            return False
+    
+    def delete_document_metadata(self, document_id: str) -> bool:
+        """Supprime les métadonnées d'un document de MongoDB"""
+        try:
+            if not self.ensure_connection():
+                return False
+            
+            # Supprimer les métadonnées du document
+            DocumentMetadataMongo.objects(document_id=document_id).delete()
+            
+            # Supprimer aussi les schémas et annotations associés
+            AnnotationSchemaMongo.objects(document_id=document_id).delete()
+            AnnotationMongo.objects(document_id=document_id).delete()
+            AnnotationHistoryMongo.objects(document_id=document_id).delete()
+            
+            logger.info(f"Document {document_id} et données associées supprimés de MongoDB")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Erreur suppression document: {e}")
+            return False
+    
+    def update_annotation_schema(self, document_id: str, schema_data: Dict) -> bool:
+        """Met à jour un schéma d'annotation dans MongoDB"""
+        try:
+            if not self.ensure_connection():
+                return False
+            
+            schema = AnnotationSchemaMongo.objects(document_id=document_id).first()
+            if not schema:
+                return False
+            
+            schema.name = schema_data.get('name', schema.name)
+            schema.description = schema_data.get('description', schema.description)
+            schema.ai_generated_schema = schema_data.get('ai_generated_schema', schema.ai_generated_schema)
+            schema.final_schema = schema_data.get('final_schema', schema.final_schema)
+            schema.is_validated = schema_data.get('is_validated', schema.is_validated)
+            schema.fields = schema_data.get('fields', schema.fields)
+            schema.updated_at = datetime.utcnow()
+            
+            schema.save()
+            
+            logger.info(f"Schéma pour document {document_id} mis à jour dans MongoDB")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Erreur mise à jour schéma: {e}")
+            return False
+    
+    def delete_annotation_schema(self, document_id: str) -> bool:
+        """Supprime un schéma d'annotation de MongoDB"""
+        try:
+            if not self.ensure_connection():
+                return False
+            
+            AnnotationSchemaMongo.objects(document_id=document_id).delete()
+            
+            logger.info(f"Schéma pour document {document_id} supprimé de MongoDB")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Erreur suppression schéma: {e}")
+            return False
+    
+    def delete_annotation(self, document_id: str) -> bool:
+        """Supprime une annotation de MongoDB"""
+        try:
+            if not self.ensure_connection():
+                return False
+            
+            # Supprimer l'annotation et son historique
+            AnnotationMongo.objects(document_id=document_id).delete()
+            AnnotationHistoryMongo.objects(document_id=document_id).delete()
+            
+            logger.info(f"Annotation pour document {document_id} supprimée de MongoDB")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Erreur suppression annotation: {e}")
+            return False
+    
+    def create_annotation_history(self, document_id: str, action_type: str,
+                                 field_name: str = None, old_value: Any = None,
+                                 new_value: Any = None, comment: str = '',
+                                 user: User = None) -> bool:
+        """Crée une entrée d'historique pour une annotation"""
+        try:
+            if not self.ensure_connection():
+                return False
+            
+            # Récupérer l'annotation pour obtenir son ID
+            annotation = AnnotationMongo.objects(document_id=document_id).first()
+            if not annotation:
+                return False
+            
+            history = AnnotationHistoryMongo(
+                annotation_id=annotation.id,
+                document_id=document_id,
+                action_type=action_type,
+                field_name=field_name,
+                old_value=old_value,
+                new_value=new_value,
+                comment=comment,
+                performed_by_id=user.id if user else None,
+                performed_by_username=user.username if user else 'system',
+                created_at=datetime.utcnow()
+            )
+            history.save()
+            
+            logger.info(f"Historique créé pour document {document_id}")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Erreur création historique: {e}")
+            return False
+    
+    def is_connected(self) -> bool:
+        """Vérifie si MongoDB est connecté"""
+        try:
+            return self.ensure_connection()
+        except Exception:
+            return False
 
 
 # Instance globale du service (créée à la demande)

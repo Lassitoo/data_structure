@@ -12,6 +12,8 @@ urlpatterns = [
     # Gestion des documents
     path('upload/', views.upload_document, name='upload_document'),
     path('document/<uuid:pk>/', views.document_detail, name='document_detail'),
+    path('document/<uuid:pk>/delete/', views.confirm_delete_document, name='confirm_delete_document'),
+    path('document/<uuid:pk>/delete/confirm/', views.delete_document, name='delete_document'),
     path('document/<uuid:document_pk>/export/', views.export_annotations, name='export_annotations'),
 
     # Schémas d'annotation

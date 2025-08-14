@@ -134,6 +134,7 @@ class AnnotationHistoryMongo(MongoDocument):
     
     # Métadonnées
     performed_by_id = IntField(required=True)
+    performed_by_username = StringField(required=True)
     created_at = DateTimeField(default=datetime.utcnow)
     
     # Informations contextuelles
@@ -155,7 +156,16 @@ class DocumentMetadataMongo(MongoDocument):
     # Référence vers le document Django
     document_id = UUIDField(required=True, unique=True)
     
-    # Métadonnées extraites
+    # Informations de base du document (synchronisées depuis Django)
+    title = StringField(required=True, max_length=255)
+    description = StringField()
+    file_type = StringField(required=True, max_length=20)
+    file_size = IntField(required=True)
+    status = StringField(required=True, max_length=20)
+    metadata = DictField()  # Métadonnées JSON du document Django
+    uploaded_by = StringField(required=True)  # Username de l'utilisateur
+    
+    # Métadonnées extraites (étendues)
     extracted_text = StringField()
     extracted_entities = ListField(DictField())
     extracted_keywords = ListField(StringField())
@@ -176,7 +186,11 @@ class DocumentMetadataMongo(MongoDocument):
     
     meta = {
         'collection': 'document_metadata',
-        'indexes': ['document_id', 'language_detected', 'document_type_detected']
+        'indexes': [
+            'document_id', 'title', 'status', 'file_type', 
+            'uploaded_by', 'language_detected', 'document_type_detected',
+            'created_at'
+        ]
     }
     
     def save(self, *args, **kwargs):
