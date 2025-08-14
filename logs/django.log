@@ -359,3 +359,24 @@ Annotations mises à jour pour: Guideline
 [OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
 Validation des annotations pour: Guideline
 Annotations validées pour: Guideline
+[OK] Connexion Ollama OK - Modele: llama3.1:8b-instruct-q4_K_M
+Début du traitement du document: DTC I
+Extraction des métadonnées pour: DTC I
+Métadonnées extraites pour: C:\Users\lasss\data_structure\media\documents\2025\08\14\ICH_Q9R1_Annex_1_Q8Q9Q10_QAsR5_1030.pdf
+Métadonnées extraites pour: DTC I
+Analyse du contenu pour: DTC I
+Contenu extrait: 33463 caractères au total
+[ANALYZE] Analyse type document: 33463 chars
+[API] Appel API Ollama (tentative 1) - 10359 chars
+[WARNING] Reponse vide ou trop courte: 7 chars
+[API] Appel API Ollama (tentative 2) - 10359 chars
+Reponse API: 724 chars
+[RESULT] Type detecte: RAPPORT
+Analyse terminée pour: DTC I - Type détecté: RAPPORT
+Génération du schéma d'annotation pour: DTC I
+Contenu extrait: 33463 caractères au total
+Contenu COMPLET extrait: 33463 caractères pour DTC I
+[SCHEMA] Generation schema: 33463 chars
+[API] Appel API Ollama (tentative 1) - 35973 chars
+[TIMEOUT] Timeout tentative 1
+[API] Appel API Ollama (tentative 2) - 35973 chars
